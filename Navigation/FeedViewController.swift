@@ -2,7 +2,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    // Button
+    // Open Post Button
     private var button: UIButton = {
         let button = UIButton(type: .roundedRect)
         button.setTitle("Open Post", for: .normal)
