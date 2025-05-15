@@ -4,8 +4,6 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.view.backgroundColor = .systemGray3
+        self.view.backgroundColor = .lightGray
     }
-    
 }
