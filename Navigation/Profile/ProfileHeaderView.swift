@@ -126,10 +126,10 @@ class ProfileHeaderView: UIView {
     // Moves Status Field text to Status Lable on button press
     @objc func didPressButton() {
         profileStatus.text = statusText
+        print(statusText)
     }
     @objc func statusTextChanged(_ textField: UITextField) {
         statusText = textField.text!
-        
     }
     
     // INIT
