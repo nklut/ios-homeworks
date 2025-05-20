@@ -90,20 +90,11 @@ class ProfileHeaderView: UIView {
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.7
         
-         // Functions
-         view.addTarget(self, action: #selector(didPressButton), for: .touchUpInside)
+        // Functions
+        view.addTarget(self, action: #selector(didPressStatusButton), for: .touchUpInside)
         
         return view
     }()
-    
-    // Moves Status Field text to Status Lable on button press
-    @objc func didPressButton() {
-        statusLabel.text = statusText
-        print(statusText)
-    }
-    @objc func statusTextChanged(_ textField: UITextField) {
-        statusText = statusTextField.text!
-    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,6 +112,14 @@ class ProfileHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Moves Status Field text to Status Lable on button press
+    @objc func didPressStatusButton() {
+        statusLabel.text = statusText
+        print(statusText)
+    }
+    @objc func statusTextChanged(_ textField: UITextField) {
+        statusText = statusTextField.text!
+    }
     // Setup Constraints for Profile Header view
     private func setupConstraints() {
         
@@ -177,9 +176,6 @@ class ProfileHeaderView: UIView {
                 equalTo: avatarImageView.bottomAnchor,
                 constant: 16.0
             ),
-    
         ])
-        
     }
-    
 }
