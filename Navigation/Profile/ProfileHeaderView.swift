@@ -52,7 +52,7 @@ class ProfileHeaderView: UIView {
     lazy var statusTextField: UITextField = {
        // Declaration
         let view = UITextField()
-        view.placeholder = "Enter new status"
+        view.placeholder = "Enter new status or title"
 
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false

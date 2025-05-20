@@ -61,10 +61,6 @@ class ProfileViewController: UIViewController {
             setTitleButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor),
             setTitleButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
             setTitleButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor)
-            
         ])
-        
     }
-    
 }
-
