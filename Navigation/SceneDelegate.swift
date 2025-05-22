@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let profileNavigationController = UINavigationController()
         profileNavigationController.tabBarItem.title = "Profile"
         profileNavigationController.tabBarItem.image = UIImage(systemName: "person")
-        profileNavigationController.viewControllers = [ProfileViewController()]
+        profileNavigationController.viewControllers = [LogInViewController()]
         
         // Tab bar Controller Setup
         let tabBarController = UITabBarController()
