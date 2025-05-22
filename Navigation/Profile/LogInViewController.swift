@@ -10,7 +10,7 @@ class LogInViewController: UIViewController {
         return view
     }()
     
-    private lazy var userNameField: UITextField = { [unowned self] in
+    private lazy var userNameField: UITextField = {
         let view = UITextField()
         view.placeholder = "E-mail or phone"
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -27,17 +27,17 @@ class LogInViewController: UIViewController {
         view.clearButtonMode = UITextField.ViewMode.whileEditing
         view.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         
-        view.delegate = self
-        
         // Padding
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: 10.0, height: 0))
         view.leftView = padding
         view.leftViewMode = .always
         
+        view.delegate = self
+        
         return view
     }()
     
-    private lazy var passwordField: UITextField = { [unowned self] in
+    private lazy var passwordField: UITextField = {
         let view = UITextField()
         view.placeholder = "Password"
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -55,12 +55,12 @@ class LogInViewController: UIViewController {
         view.clearButtonMode = UITextField.ViewMode.whileEditing
         view.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         
-        view.delegate = self
-        
         // Padding
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: 10.0, height: 0))
         view.leftView = padding
         view.leftViewMode = .always
+        
+        view.delegate = self
         
         return view
     }()
@@ -90,10 +90,20 @@ class LogInViewController: UIViewController {
         return view
     }()
     
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
         self.tabBarController?.tabBar.isHidden = true
+
         view.addSubview(scrollView)
         scrollView.addSubview(logInLogo)
         scrollView.addSubview(userNameField)
@@ -161,32 +171,38 @@ class LogInViewController: UIViewController {
         let safeArea = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-    
-            logInLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logInLogo.heightAnchor.constraint(equalToConstant: 100),
-            logInLogo.widthAnchor.constraint(equalToConstant: 100),
-            logInLogo.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 120),
-            
-            userNameField.topAnchor.constraint(equalTo: logInLogo.bottomAnchor, constant: 120),
-            userNameField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
-            userNameField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-            userNameField.heightAnchor.constraint(equalToConstant: 50),
-            
-            passwordField.topAnchor.constraint(equalTo: userNameField.bottomAnchor),
-            passwordField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
-            passwordField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-            passwordField.heightAnchor.constraint(equalToConstant: 50),
-            
-            logInButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),
-            logInButton.heightAnchor.constraint(equalToConstant: 50),
-            logInButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
-            logInButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
-            
             scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -16.0)
-            
+            scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            logInLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logInLogo.heightAnchor.constraint(equalToConstant: 100),
+            logInLogo.widthAnchor.constraint(equalToConstant: 100),
+            logInLogo.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 120)
+        ])
+        
+        NSLayoutConstraint.activate([
+            userNameField.topAnchor.constraint(equalTo: logInLogo.bottomAnchor, constant: 120),
+            userNameField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            userNameField.heightAnchor.constraint(equalToConstant: 50),
+            userNameField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
+        ])
+        
+        NSLayoutConstraint.activate([
+            passwordField.topAnchor.constraint(equalTo: userNameField.bottomAnchor),
+            passwordField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            passwordField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
+            passwordField.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            logInButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
+            logInButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            logInButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
         ])
     }
 }
