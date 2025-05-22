@@ -19,12 +19,15 @@ class LogInViewController: UIViewController {
         view.layer.cornerRadius = 10
         view.textColor = .black
         view.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
-        //view.tintColor = .accentColor
         view.autocapitalizationType = .none
         view.backgroundColor = .systemGray6
         
-        return view
+        // Padding
+        let padding = UIView(frame: CGRect(x: 0, y: 0, width: 10.0, height: 0))
+        view.leftView = padding
+        view.leftViewMode = .always
         
+        return view
     }()
     
     private lazy var passwordField: UITextField = {
@@ -36,33 +39,36 @@ class LogInViewController: UIViewController {
         view.layer.cornerRadius = 10
         view.textColor = .black
         view.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
-        //view.tintColor = .accentColor
         view.autocapitalizationType = .none
         view.backgroundColor = .systemGray6
         view.isSecureTextEntry = true
         
-        return view
+        // Padding
+        let padding = UIView(frame: CGRect(x: 0, y: 0, width: 10.0, height: 0))
+        view.leftView = padding
+        view.leftViewMode = .always
         
+        return view
     }()
     
     private lazy var logInButton: UIButton = {
         let view = UIButton(type: .roundedRect)
+        
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
         view.setTitle("Log In", for: .normal)
         view.setTitleColor(.white, for: .normal)
-        
-        // TODO
-        let pic = UIImage(named: "logInButton")
-        view.setBackgroundImage(pic, for: .normal)
-        view.alpha = 0.3
+        view.setBackgroundImage(UIImage(named: "logInButton"), for: .normal)
         
         view.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        
         return view
     }()
     
     @objc func didTapButton() {
         let pvc = ProfileViewController()
+        passwordField.text = ""
+        userNameField.text = ""
         self.navigationController?.pushViewController(pvc, animated: true)
     }
     
@@ -76,7 +82,6 @@ class LogInViewController: UIViewController {
         view.addSubview(logInButton)
         
         setupConstraints()
-        
     }
     
     private func setupConstraints() {
@@ -84,7 +89,7 @@ class LogInViewController: UIViewController {
         let safeArea = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            
+    
             logInLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logInLogo.heightAnchor.constraint(equalToConstant: 100),
             logInLogo.widthAnchor.constraint(equalToConstant: 100),
@@ -104,8 +109,6 @@ class LogInViewController: UIViewController {
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16)
-        
         ])
     }
-    
 }
