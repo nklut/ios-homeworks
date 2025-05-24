@@ -25,7 +25,6 @@ class LogInViewController: UIViewController {
         view.keyboardType = UIKeyboardType.default
         view.returnKeyType = UIReturnKeyType.done
         view.clearButtonMode = UITextField.ViewMode.whileEditing
-        view.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         
         // Padding
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: 10.0, height: 0))
@@ -37,7 +36,7 @@ class LogInViewController: UIViewController {
         return view
     }()
     
-    private lazy var passwordField: UITextField = {
+    private lazy var passwordField: UITextField = { [unowned self] in
         let view = UITextField()
         view.placeholder = "Password"
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +52,6 @@ class LogInViewController: UIViewController {
         view.keyboardType = UIKeyboardType.default
         view.returnKeyType = UIReturnKeyType.done
         view.clearButtonMode = UITextField.ViewMode.whileEditing
-        view.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         
         // Padding
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: 10.0, height: 0))
@@ -69,7 +67,7 @@ class LogInViewController: UIViewController {
         let view = UIButton(type: .roundedRect)
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = 10.0
         view.setTitle("Log In", for: .normal)
         view.setTitleColor(.white, for: .normal)
         view.setBackgroundImage(UIImage(named: "logInButton"), for: .normal)
@@ -82,7 +80,7 @@ class LogInViewController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         
-        view.showsVerticalScrollIndicator = true
+        view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -103,14 +101,12 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
     
         self.tabBarController?.tabBar.isHidden = true
-
-        view.addSubview(scrollView)
-        scrollView.addSubview(logInLogo)
-        scrollView.addSubview(userNameField)
-        scrollView.addSubview(passwordField)
-        scrollView.addSubview(logInButton)
         
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+            
         setupConstraints()
+        addContentSubviews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +132,8 @@ class LogInViewController: UIViewController {
         let keyboardHeight = (notification
             .userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?
             .cgRectValue.height
-        scrollView.contentInset.bottom += keyboardHeight ?? 0.0
+        
+        scrollView.contentInset.bottom = keyboardHeight ?? 0.0
     }
     
     @objc func willHideKeyboard(_ notification:NSNotification) {
@@ -166,6 +163,49 @@ class LogInViewController: UIViewController {
         notificationCenter.removeObserver(self)
     }
     
+    private func addContentSubviews() {
+        
+        contentView.addSubview(logInLogo)
+        contentView.addSubview(userNameField)
+        contentView.addSubview(passwordField)
+        contentView.addSubview(logInButton)
+        
+        NSLayoutConstraint.activate([
+            logInLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            logInLogo.heightAnchor.constraint(equalToConstant: 100),
+            logInLogo.widthAnchor.constraint(equalToConstant: 100),
+            logInLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120)
+        ])
+        
+        NSLayoutConstraint.activate([
+            userNameField.topAnchor.constraint(equalTo: logInLogo.bottomAnchor, constant: 120),
+            userNameField.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: 16
+            ),
+            userNameField.heightAnchor.constraint(equalToConstant: 50),
+            userNameField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32)
+        ])
+        
+        NSLayoutConstraint.activate([
+            passwordField.topAnchor.constraint(equalTo: userNameField.bottomAnchor),
+            passwordField.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: 16
+            ),
+            passwordField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
+            passwordField.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            logInButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
+            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            logInButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
+            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+    }
+    
     private func setupConstraints() {
         
         let safeArea = view.safeAreaLayoutGuide
@@ -178,31 +218,11 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            logInLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logInLogo.heightAnchor.constraint(equalToConstant: 100),
-            logInLogo.widthAnchor.constraint(equalToConstant: 100),
-            logInLogo.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 120)
-        ])
-        
-        NSLayoutConstraint.activate([
-            userNameField.topAnchor.constraint(equalTo: logInLogo.bottomAnchor, constant: 120),
-            userNameField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            userNameField.heightAnchor.constraint(equalToConstant: 50),
-            userNameField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
-        ])
-        
-        NSLayoutConstraint.activate([
-            passwordField.topAnchor.constraint(equalTo: userNameField.bottomAnchor),
-            passwordField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            passwordField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32),
-            passwordField.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            logInButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),
-            logInButton.heightAnchor.constraint(equalToConstant: 50),
-            logInButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            logInButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
 }

@@ -99,6 +99,7 @@ class ProfileHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        backgroundColor = .systemGray6
         avatarImageView.clipsToBounds = true
         addSubview(avatarImageView)
         addSubview(fullNameLabel)
