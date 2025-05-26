@@ -1,8 +1,8 @@
 import UIKit
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProfileViewController: UIViewController {
     
-    //fileprivate let data = postList
+    fileprivate let data = postList
 
     private lazy var tableView: UITableView = {
         let view = UITableView.init(
@@ -10,68 +10,29 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             style: .plain
         )
         
-        // TODO TEST COLOR
-        view.backgroundColor = .red
+        view.backgroundColor = .systemBackground
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
-//    private enum CellReuseID: String {
-//        case post = "Post_ReuseID"
-//    }
-    
-    func numberOfSections(
-        in tableView: UITableView
-    ) -> Int {
-        1
+    private enum CellReuseID: String {
+        case post = "PostTableViewCell_ReuseID"
     }
     
-    func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
-    ) -> Int {
-        postList.count
-    }
-
-    func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CellReuseID.post.rawValue,
-            for: indexPath
-        ) as? PostTableViewCell else {
-            fatalError("could not dequeueReusableCell")
-        }
-        
-        cell.update(postList[indexPath.row])
-        
-        return cell
-    }
-    
-    func tableView(
-        _ tableView: UITableView,
-        heightForHeaderInSection section: Int
-    ) -> CGFloat {
-        UITableView.automaticDimension
-    }
-
-    func tableView(
-        _ tableView: UITableView,
-        heightForFooterInSection section: Int
-    ) -> CGFloat {
-        UITableView.automaticDimension
+    private enum HeaderFooterReuseID: String {
+        case base = "TableSectionFooterHeaderView_ReuseID"
     }
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBarController?.tabBar.isHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        
         setupView()
         addSubviews()
-        
         setupConstraints()
-        
         setupTableView()
     }
     
@@ -105,16 +66,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     private func setupTableView() {
         
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 220.0
+        // TODO !!!!!
+        //tableView.rowHeight = UITableView.automaticDimension
+        tableView.rowHeight = 800
+        tableView.estimatedRowHeight = 800.0
         
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0.0
-        }
 
         // TODO
-        //let headerView = ProfileHeaderView()
-        //tableView.setAndLayout(headerView: headerView)
+        let headerView = ProfileHeaderView()
+        tableView.setAndLayout(headerView: headerView)
         tableView.setAndLayout(headerView: UIView())
         tableView.tableFooterView = UIView()
         
@@ -123,105 +83,107 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             forCellReuseIdentifier: CellReuseID.post.rawValue
         )
         
+        tableView.register(
+            TableSectionFooterHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: HeaderFooterReuseID.base.rawValue
+        )
+        
         tableView.dataSource = self
-        tableView.delegate = self
+        //tableView.delegate = self
         
     }
 }
 
-//extension ViewController: UITableViewDataSource {
+extension ProfileViewController: UITableViewDataSource {
     
-//    func numberOfSections(
-//        in tableView: UITableView
-//    ) -> Int {
-//        1
-//    }
-//    
+    func numberOfSections(
+        in tableView: UITableView
+    ) -> Int {
+        1
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
+        postList.count
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellReuseID.post.rawValue,
+            for: indexPath
+        ) as? PostTableViewCell else {
+            fatalError("could not dequeueReusableCell")
+        }
+        
+        cell.update(postList[indexPath.row])
+        
+        return cell
+    }
+}
+
+extension ProfileViewController: UITableViewDelegate {
+    
+    func tableView(
+        _ tableView: UITableView,
+        heightForHeaderInSection section: Int
+    ) -> CGFloat {
+        UITableView.automaticDimension
+    }
+
 //    func tableView(
 //        _ tableView: UITableView,
-//        numberOfRowsInSection section: Int
-//    ) -> Int {
-//        postList.count
-//    }
+//        viewForHeaderInSection section: Int
+//    ) -> UIView? {
 //
-//    func tableView(
-//        _ tableView: UITableView,
-//        cellForRowAt indexPath: IndexPath
-//    ) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(
-//            withIdentifier: CellReuseID.post.rawValue,
-//            for: indexPath
-//        ) as? PostTableViewCell else {
+//        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+//            withIdentifier: CellReuseID.post.rawValue
+//        ) as? TableSectionFooterHeaderView else {
 //            fatalError("could not dequeueReusableCell")
 //        }
-//        
-//        cell.update(postList[indexPath.row])
-//        
-//        return cell
+//
+//        headerView.update(title: "TESTTTTTTT")
+//
+//        return headerView
 //    }
-//}
 
-//extension ViewController: UITableViewDelegate {
-//    
+ }
+
+
+// func tableView(
+//        _ tableView: UITableView,
+//        didSelectRowAt indexPath: IndexPath
+//    ) {
+//        print("Did select cell at \(indexPath)")
+//        let nextViewController = LanguageDetailsViewController()
+//
+//        let model = data[indexPath.row]
+//        nextViewController.update(model: model)
+//
+//        navigationController?.pushViewController(
+//            nextViewController,
+//            animated: true
+//        )
+//    }
+
 //    func tableView(
 //        _ tableView: UITableView,
-//        heightForHeaderInSection section: Int
-//    ) -> CGFloat {
-//        UITableView.automaticDimension
-//    }
+//        viewForFooterInSection section: Int
+//    ) -> UIView? {
 //
-//    func tableView(
-//        _ tableView: UITableView,
-//        heightForFooterInSection section: Int
-//    ) -> CGFloat {
-//        UITableView.automaticDimension
-//    }
-//    
-////    func tableView(
-////        _ tableView: UITableView,
-////        viewForHeaderInSection section: Int
-////    ) -> UIView? {
-////
-////        guard let headerView = tableView.dequeueReusableHeaderFooterView(
-////            withIdentifier: HeaderFooterReuseID.base.rawValue
-////        ) as? Pos else {
-////            fatalError("could not dequeueReusableCell")
-////        }
-////
-////        headerView.update(title: "Пример работы с UITableViewDelegate")
-////
-////        return headerView
-////    }
+//        guard let footerView = tableView.dequeueReusableHeaderFooterView(
+//            withIdentifier: HeaderFooterReuseID.base.rawValue
+//        ) as? TableSectionFooterHeaderView else {
+//            fatalError("could not dequeueReusableCell")
+//        }
 //
-////    func tableView(
-////        _ tableView: UITableView,
-////        viewForFooterInSection section: Int
-////    ) -> UIView? {
-////
-////        guard let footerView = tableView.dequeueReusableHeaderFooterView(
-////            withIdentifier: HeaderFooterReuseID.base.rawValue
-////        ) as? TableSectionFooterHeaderView else {
-////            fatalError("could not dequeueReusableCell")
-////        }
-////
-////        footerView.update(title: DateProvider.currentTime)
-////
-////        return footerView
-////    }
-//    
-////    func tableView(
-////        _ tableView: UITableView,
-////        didSelectRowAt indexPath: IndexPath
-////    ) {
-////        print("Did select cell at \(indexPath)")
-////        let nextViewController = LanguageDetailsViewController()
-////        
-////        let model = data[indexPath.row]
-////        nextViewController.update(model: model)
-////        
-////        navigationController?.pushViewController(
-////            nextViewController,
-////            animated: true
-////        )
-////    }
-//}
+//        footerView.update(title: DateProvider.currentTime)
+//
+//        return footerView
+//    }
+
+// }

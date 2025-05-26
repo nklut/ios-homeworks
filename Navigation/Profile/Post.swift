@@ -1,13 +1,11 @@
+import UIKit
+
 struct profilePost {
     let author: String
     let description: String
     let image: String
     let likes: Int
     let views: Int
-}
-
-enum CellReuseID: String {
-    case post = "Post_ReuseID"
 }
 
 let desc1 = """
@@ -62,4 +60,4 @@ let post4 = profilePost(
     views: 2023
 )
 
-let postList = [post1, post2, post3, post4]
+var postList = [post1, post2, post3, post4]
