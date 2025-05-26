@@ -2,6 +2,7 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    // Login screen Logo
     private lazy var logInLogo: UIImageView = {
         let view = UIImageView(image: UIImage(named: "logo"))
         
@@ -10,6 +11,7 @@ class LogInViewController: UIViewController {
         return view
     }()
     
+    // Login Screen USername Field
     private lazy var userNameField: UITextField = {
         let view = UITextField()
         view.placeholder = "E-mail or phone"
@@ -36,6 +38,7 @@ class LogInViewController: UIViewController {
         return view
     }()
     
+    // Login Screen Pasword Field
     private lazy var passwordField: UITextField = { [unowned self] in
         let view = UITextField()
         view.placeholder = "Password"
@@ -63,6 +66,7 @@ class LogInViewController: UIViewController {
         return view
     }()
     
+    // Login Screen Log-in button
     private lazy var logInButton: UIButton = {
         let view = UIButton(type: .roundedRect)
         
@@ -77,31 +81,35 @@ class LogInViewController: UIViewController {
         return view
     }()
     
+    // Scroll view for position adaptation when keyboard appears
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         
         view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
+    // Main content view for login subviews
     private lazy var contentView: UIView = {
         let view = UIView()
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        // hide Tab bar, when not logged in
         self.tabBarController?.tabBar.isHidden = true
         
+        // Add and setup subviews
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
             
@@ -109,18 +117,21 @@ class LogInViewController: UIViewController {
         addContentSubviews()
     }
     
+    // Keyboard appears handler
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupKeyboardObservers()
     }
     
+    // Keyboard disappears handler
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         removeKeyboardObservers()
     }
     
+    // On login button press, clear fields and open Profile screen
     @objc func didTapButton() {
         let pvc = ProfileViewController()
         passwordField.text = ""
@@ -128,6 +139,7 @@ class LogInViewController: UIViewController {
         self.navigationController?.pushViewController(pvc, animated: true)
     }
     
+    // move text Fields higher on keyboard appearance
     @objc func willShowKeyboard(_ notification: NSNotification) {
         let keyboardHeight = (notification
             .userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?
@@ -136,10 +148,12 @@ class LogInViewController: UIViewController {
         scrollView.contentInset.bottom = keyboardHeight ?? 0.0
     }
     
+    // move text fields back on keyboard disappearance
     @objc func willHideKeyboard(_ notification:NSNotification) {
         scrollView.contentInset.bottom = 0.0
     }
     
+    //Setup keyboard observers
     private func setupKeyboardObservers() {
         let notificationCenter = NotificationCenter.default
         
@@ -158,11 +172,13 @@ class LogInViewController: UIViewController {
         )
     }
     
+    //Setup remove keyboard observers
     private func removeKeyboardObservers() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
     }
     
+    // Add subviews to content view
     private func addContentSubviews() {
         
         contentView.addSubview(logInLogo)
@@ -170,6 +186,7 @@ class LogInViewController: UIViewController {
         contentView.addSubview(passwordField)
         contentView.addSubview(logInButton)
         
+        // Setup subviews positions
         NSLayoutConstraint.activate([
             logInLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             logInLogo.heightAnchor.constraint(equalToConstant: 100),
@@ -209,7 +226,7 @@ class LogInViewController: UIViewController {
     private func setupConstraints() {
         
         let safeArea = view.safeAreaLayoutGuide
-        
+        // Setup content and scroll view positions
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
@@ -227,6 +244,7 @@ class LogInViewController: UIViewController {
     }
 }
 
+// REsponder for textfield text input
 extension LogInViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(

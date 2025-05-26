@@ -1,5 +1,5 @@
-import UIKit
 
+// Structure of post for Profile Posts Table
 struct profilePost {
     let author: String
     let description: String

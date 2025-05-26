@@ -1,31 +1,16 @@
 import UIKit
 
 class TableSectionFooterHeaderView: UITableViewHeaderFooterView {
-
-    // MARK: - Subviews
-//    
-//    private lazy var profileHeader: ProfileHeaderView = {
-//        let view = ProfileHeaderView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        return view
-//    }()
     
-    private lazy var profileHeader: UILabel = {
-            let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            
-            label.font = UIFont.preferredFont(forTextStyle: .footnote)
-            
-            return label
-        }()
-
-    // MARK: - Lifecycle
+    private lazy var profileHeader: ProfileHeaderView = {
+        let profileHeader = ProfileHeaderView()
+        profileHeader.translatesAutoresizingMaskIntoConstraints = false
+        return profileHeader
+    }()
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        
-        tuneView()
+        contentView.backgroundColor = .systemGray6
         addSubviews()
         setupConstraints()
     }
@@ -33,38 +18,19 @@ class TableSectionFooterHeaderView: UITableViewHeaderFooterView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-     //MARK: - Public
-
-    func update(title: String) {
-       profileHeader.text = title
-    }
     
-    // MARK: - Private
-    
-    private func tuneView() {
-        contentView.backgroundColor = .red
-    }
-    
-    private func addSubviews() {
+    func addSubviews() {
         contentView.addSubview(profileHeader)
     }
     
-    private func setupConstraints() {
+    func setupConstraints() {
+        let safeArea = contentView.safeAreaLayoutGuide
+        
         NSLayoutConstraint.activate([
-            profileHeader.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: 0.0
-            ),
-            profileHeader.trailingAnchor.constraint(
-                equalTo:contentView.trailingAnchor
-            ),
-            profileHeader.heightAnchor.constraint(
-                equalToConstant: 230.0
-            ),
-            profileHeader.centerYAnchor.constraint(
-                equalTo: contentView.centerYAnchor
-            ),
+            profileHeader.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            profileHeader.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            profileHeader.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            profileHeader.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
     }
 }

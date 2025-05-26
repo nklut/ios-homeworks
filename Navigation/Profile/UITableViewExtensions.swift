@@ -1,7 +1,6 @@
 import UIKit
 
 extension UITableView {
-    
     func setAndLayout(headerView: UIView) {
         tableHeaderView = headerView
         headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -14,5 +13,4 @@ extension UITableView {
         headerView.layoutIfNeeded()
         headerView.frame.size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }
-    
 }

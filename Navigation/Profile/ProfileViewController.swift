@@ -2,8 +2,10 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    // List of sample Posts(4 items)
     fileprivate let data = postList
-
+    
+    // Declare table for posts
     private lazy var tableView: UITableView = {
         let view = UITableView.init(
             frame: .zero,
@@ -16,10 +18,12 @@ class ProfileViewController: UIViewController {
         return view
     }()
     
+    // IDs for base cells
     private enum CellReuseID: String {
         case post = "PostTableViewCell_ReuseID"
     }
     
+    // IDs for Headers and Footers of cells
     private enum HeaderFooterReuseID: String {
         case base = "TableSectionFooterHeaderView_ReuseID"
     }
@@ -27,15 +31,18 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Show tab bar again(was hidden on logo screen) and hide "Back" button
         self.tabBarController?.tabBar.isHidden = false
         self.navigationItem.setHidesBackButton(true, animated: false)
         
+        // Setup design, add subviews and main view, setup positions
         setupView()
         addSubviews()
         setupConstraints()
         setupTableView()
     }
     
+    // Table handler
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -44,20 +51,23 @@ class ProfileViewController: UIViewController {
         }
     }
 
+    // Basic main design
     private func setupView() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemGray6
     }
     
+    // Add table subview
     private func addSubviews() {
         view.addSubview(tableView)
     }
     
+    // Setup table position
     private func setupConstraints() {
         
         let safeAreaGuide = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor)
@@ -66,18 +76,13 @@ class ProfileViewController: UIViewController {
     
     private func setupTableView() {
         
-        // TODO !!!!!
-        //tableView.rowHeight = UITableView.automaticDimension
-        tableView.rowHeight = 800
-        tableView.estimatedRowHeight = 800.0
-        
-
-        // TODO
-        let headerView = ProfileHeaderView()
-        tableView.setAndLayout(headerView: headerView)
-        tableView.setAndLayout(headerView: UIView())
+        // Initial table setup
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 700
+        tableView.tableHeaderView = UIView()
         tableView.tableFooterView = UIView()
         
+        // Register table cell types IDs
         tableView.register(
             PostTableViewCell.self,
             forCellReuseIdentifier: CellReuseID.post.rawValue
@@ -88,20 +93,23 @@ class ProfileViewController: UIViewController {
             forHeaderFooterViewReuseIdentifier: HeaderFooterReuseID.base.rawValue
         )
         
+        // Init behaviour
         tableView.dataSource = self
-        //tableView.delegate = self
-        
+        tableView.delegate = self
     }
 }
 
+// Table Data setup
 extension ProfileViewController: UITableViewDataSource {
     
+    // Define Number of Sections
     func numberOfSections(
         in tableView: UITableView
     ) -> Int {
         1
     }
     
+    // Define Number of cells in 1 section equal to the Amount of posts in postList
     func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
@@ -109,6 +117,7 @@ extension ProfileViewController: UITableViewDataSource {
         postList.count
     }
 
+    // Add post to cell according to index(Path)
     func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
@@ -126,64 +135,30 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
+// Table delegate setup
 extension ProfileViewController: UITableViewDelegate {
     
+    // Define header height
     func tableView(
         _ tableView: UITableView,
         heightForHeaderInSection section: Int
     ) -> CGFloat {
-        UITableView.automaticDimension
+        
+        return UITableView.automaticDimension
     }
 
-//    func tableView(
-//        _ tableView: UITableView,
-//        viewForHeaderInSection section: Int
-//    ) -> UIView? {
-//
-//        guard let headerView = tableView.dequeueReusableHeaderFooterView(
-//            withIdentifier: CellReuseID.post.rawValue
-//        ) as? TableSectionFooterHeaderView else {
-//            fatalError("could not dequeueReusableCell")
-//        }
-//
-//        headerView.update(title: "TESTTTTTTT")
-//
-//        return headerView
-//    }
+    // Set header as Profile Header View
+    func tableView(
+        _ tableView: UITableView,
+        viewForHeaderInSection section: Int
+    ) -> UIView? {
+        
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: HeaderFooterReuseID.base.rawValue
+        ) as? TableSectionFooterHeaderView else {
+            fatalError("could not dequeueReusableCell")
+        }
 
- }
-
-
-// func tableView(
-//        _ tableView: UITableView,
-//        didSelectRowAt indexPath: IndexPath
-//    ) {
-//        print("Did select cell at \(indexPath)")
-//        let nextViewController = LanguageDetailsViewController()
-//
-//        let model = data[indexPath.row]
-//        nextViewController.update(model: model)
-//
-//        navigationController?.pushViewController(
-//            nextViewController,
-//            animated: true
-//        )
-//    }
-
-//    func tableView(
-//        _ tableView: UITableView,
-//        viewForFooterInSection section: Int
-//    ) -> UIView? {
-//
-//        guard let footerView = tableView.dequeueReusableHeaderFooterView(
-//            withIdentifier: HeaderFooterReuseID.base.rawValue
-//        ) as? TableSectionFooterHeaderView else {
-//            fatalError("could not dequeueReusableCell")
-//        }
-//
-//        footerView.update(title: DateProvider.currentTime)
-//
-//        return footerView
-//    }
-
-// }
+        return headerView
+    }
+}
