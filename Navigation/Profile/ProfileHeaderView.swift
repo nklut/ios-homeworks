@@ -100,12 +100,7 @@ class ProfileHeaderView: UIView {
         super.init(frame: frame)
         
         backgroundColor = .systemGray6
-        avatarImageView.clipsToBounds = true
-        addSubview(avatarImageView)
-        addSubview(fullNameLabel)
-        addSubview(statusLabel)
-        addSubview(setStatusButton)
-        addSubview(statusTextField)
+        addSubviews()
         setupConstraints()
     }
     
@@ -121,6 +116,16 @@ class ProfileHeaderView: UIView {
     @objc func statusTextChanged(_ textField: UITextField) {
         statusText = statusTextField.text!
     }
+    
+    private func addSubviews() {
+        avatarImageView.clipsToBounds = true
+        addSubview(avatarImageView)
+        addSubview(fullNameLabel)
+        addSubview(statusLabel)
+        addSubview(setStatusButton)
+        addSubview(statusTextField)
+    }
+    
     // Setup Constraints for Profile Header view
     private func setupConstraints() {
         

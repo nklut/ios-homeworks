@@ -20,6 +20,7 @@
 		115C0FDF2DDF3EE500C3EF99 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FDE2DDF3EE500C3EF99 /* LogInViewController.swift */; };
 		115C0FE32DE0276C00C3EF99 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FE22DE0276C00C3EF99 /* Post.swift */; };
 		115C0FE52DE18A2500C3EF99 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FE42DE18A2500C3EF99 /* UITableViewExtensions.swift */; };
+		115C0FE72DE1905600C3EF99 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		115C0FDE2DDF3EE500C3EF99 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		115C0FE22DE0276C00C3EF99 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		115C0FE42DE18A2500C3EF99 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
+		115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				115C0FDE2DDF3EE500C3EF99 /* LogInViewController.swift */,
 				115C0FE22DE0276C00C3EF99 /* Post.swift */,
 				115C0FE42DE18A2500C3EF99 /* UITableViewExtensions.swift */,
+				115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 				115414022C9291FE0051640B /* SceneDelegate.swift in Sources */,
 				115C0FDC2DDC792200C3EF99 /* ProfileHeaderView.swift in Sources */,
 				115C0FE32DE0276C00C3EF99 /* Post.swift in Sources */,
+				115C0FE72DE1905600C3EF99 /* PostTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
