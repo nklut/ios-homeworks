@@ -255,7 +255,7 @@ class LogInViewController: UIViewController {
             userNameField.topAnchor.constraint(equalTo: userDataContentView.topAnchor),
             userNameField.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
             userNameField.heightAnchor.constraint(equalToConstant: 50),
-            userNameField.trailingAnchor.constraint(equalTo: userDataContentView.trailingAnchor),
+            userNameField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
             
             // Setup text fields separator Line
             separatorView.topAnchor.constraint(equalTo: userNameField.bottomAnchor),
@@ -267,7 +267,7 @@ class LogInViewController: UIViewController {
             passwordField.topAnchor.constraint(equalTo: separatorView.bottomAnchor),
             passwordField.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
             passwordField.heightAnchor.constraint(equalToConstant: 50),
-            passwordField.widthAnchor.constraint(equalTo: userDataContentView.widthAnchor),
+            passwordField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
             
             // Setup Log-in button position
             logInButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),

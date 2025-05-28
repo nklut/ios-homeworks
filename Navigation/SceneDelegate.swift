@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Tab bar Controller Setup
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [feedNavigationController, profileNavigationController]
+        tabBarController.viewControllers = [profileNavigationController, feedNavigationController]
            
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
