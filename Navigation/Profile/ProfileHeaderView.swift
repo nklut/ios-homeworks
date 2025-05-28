@@ -126,8 +126,6 @@ class ProfileHeaderView: UIView {
         addSubview(statusTextField)
     }
     
-    
-    
     // Setup Constraints for Profile Header view
     private func setupConstraints() {
         

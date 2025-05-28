@@ -16,9 +16,6 @@ class LogInViewController: UIViewController {
         let view = UITextField()
         view.placeholder = "E-mail or phone"
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 0.5
-        view.layer.cornerRadius = 10
         view.textColor = .black
         view.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
         view.autocapitalizationType = .none
@@ -43,9 +40,6 @@ class LogInViewController: UIViewController {
         let view = UITextField()
         view.placeholder = "Password"
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 0.5
-        view.layer.cornerRadius = 10
         view.textColor = .black
         view.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
         view.autocapitalizationType = .none
@@ -62,6 +56,42 @@ class LogInViewController: UIViewController {
         view.leftViewMode = .always
         
         view.delegate = self
+        
+        return view
+    }()
+    
+    private lazy var separatorView: UIView = {
+        let view = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray
+        
+        return view
+    }()
+    
+    // Scroll view for position adaptation when keyboard appears
+    private lazy var userDataScrollView: UIScrollView = {
+        let view = UIScrollView()
+        
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
+        view.backgroundColor = .systemGray6
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        //Border style
+        view.layer.cornerRadius = 10
+        view.layer.borderWidth = 0.5
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        
+        return view
+    }()
+    
+    // User Data content view for login subviews
+    private lazy var userDataContentView: UIView = {
+        let view = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemBackground
         
         return view
     }()
@@ -115,6 +145,7 @@ class LogInViewController: UIViewController {
             
         setupConstraints()
         addContentSubviews()
+        setupSubviewsConstraints()
     }
     
     // Keyboard appears handler
@@ -181,40 +212,64 @@ class LogInViewController: UIViewController {
     // Add subviews to content view
     private func addContentSubviews() {
         
+        // Add Logo to main content View
         contentView.addSubview(logInLogo)
-        contentView.addSubview(userNameField)
-        contentView.addSubview(passwordField)
-        contentView.addSubview(logInButton)
         
-        // Setup subviews positions
+        // Add User Data Text Fields to User Data content View
+        userDataContentView.addSubview(userNameField)
+        userDataContentView.addSubview(separatorView)
+        userDataContentView.addSubview(passwordField)
+        
+        // Add User Data content View to User Data scroll View
+        userDataScrollView.addSubview(userDataContentView)
+        
+        // Add User Data scroll view and Log-in Button to mai content view
+        contentView.addSubview(userDataScrollView)
+        contentView.addSubview(logInButton)
+    }
+    
+    // Setup subviews positions for elements inside scrollview
+    private func setupSubviewsConstraints() {
+        
         NSLayoutConstraint.activate([
+            
+            // Setup Logo position
             logInLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             logInLogo.heightAnchor.constraint(equalToConstant: 100),
             logInLogo.widthAnchor.constraint(equalToConstant: 100),
-            logInLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120)
-        ])
-        
-        NSLayoutConstraint.activate([
-            userNameField.topAnchor.constraint(equalTo: logInLogo.bottomAnchor, constant: 120),
-            userNameField.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: 16
-            ),
+            logInLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
+
+            // Setup User Data scroll view position
+            userDataScrollView.topAnchor.constraint(equalTo: logInLogo.bottomAnchor, constant: 120),
+            userDataScrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            userDataScrollView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            userDataScrollView.heightAnchor.constraint(equalToConstant: 100.5),
+            
+            // Setup User Data content view position
+            userDataContentView.topAnchor.constraint(equalTo: userDataScrollView.bottomAnchor),
+            userDataContentView.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
+            userDataContentView.trailingAnchor.constraint(equalTo: userDataScrollView.trailingAnchor),
+            userDataContentView.bottomAnchor.constraint(equalTo: userDataScrollView.bottomAnchor),
+            
+            // Setup User name position
+            userNameField.topAnchor.constraint(equalTo: userDataContentView.topAnchor),
+            userNameField.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
             userNameField.heightAnchor.constraint(equalToConstant: 50),
-            userNameField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32)
-        ])
-        
-        NSLayoutConstraint.activate([
-            passwordField.topAnchor.constraint(equalTo: userNameField.bottomAnchor),
-            passwordField.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: 16
-            ),
-            passwordField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
-            passwordField.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
+            userNameField.trailingAnchor.constraint(equalTo: userDataContentView.trailingAnchor),
+            
+            // Setup text fields separator Line
+            separatorView.topAnchor.constraint(equalTo: userNameField.bottomAnchor),
+            separatorView.heightAnchor.constraint(equalToConstant: 0.5),
+            separatorView.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
+            separatorView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            
+            // Setup Password position
+            passwordField.topAnchor.constraint(equalTo: separatorView.bottomAnchor),
+            passwordField.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
+            passwordField.heightAnchor.constraint(equalToConstant: 50),
+            passwordField.widthAnchor.constraint(equalTo: userDataContentView.widthAnchor),
+            
+            // Setup Log-in button position
             logInButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -223,18 +278,18 @@ class LogInViewController: UIViewController {
         ])
     }
     
+    // Setup Main views position
     private func setupConstraints() {
         
         let safeArea = view.safeAreaLayoutGuide
-        // Setup content and scroll view positions
+        // Setup scroll view position
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+            
+            // Setup content view position
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -244,7 +299,7 @@ class LogInViewController: UIViewController {
     }
 }
 
-// REsponder for textfield text input
+// Responder for textfield text input
 extension LogInViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(

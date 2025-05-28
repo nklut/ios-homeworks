@@ -94,40 +94,48 @@ class PostTableViewCell: UITableViewCell {
             return view
         }()
         
+        // Add post subviews to Cell content view
+        func addSubviews() {
+            postImage.clipsToBounds = true
+            contentView.addSubview(postLabelView)
+            contentView.addSubview(postImage)
+            contentView.addSubview(postContentView)
+            contentView.addSubview(postLikesView)
+            contentView.addSubview(postViewsView)
+        }
+        
         // Setup positions of views inside content view
         func setupConstraints() {
             
             let safeArea = contentView.safeAreaLayoutGuide
             
             NSLayoutConstraint.activate([
+                
+                // Setup Post Label position
                 postLabelView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
                 postLabelView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
                 postLabelView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 16),
-                postLabelView.heightAnchor.constraint(equalToConstant: 40)
-            ])
-            
-            NSLayoutConstraint.activate([
+                postLabelView.heightAnchor.constraint(equalToConstant: 40),
+                
+                // Setup Post Image position
                 postImage.topAnchor.constraint(equalTo: postLabelView.bottomAnchor, constant: 12),
                 postImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                 postImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
                 postImage.heightAnchor.constraint(equalTo: contentView.widthAnchor),
-                postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor)
-            ])
-            
-            NSLayoutConstraint.activate([
+                postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+                
+                // Setup Post Content position
                 postContentView.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: 16),
                 postContentView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
-                postContentView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16)
-            ])
-            
-            NSLayoutConstraint.activate([
+                postContentView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
+                
+                // Setup Post Likes counter position
                 postLikesView.topAnchor.constraint(equalTo: postContentView.bottomAnchor),
                 postLikesView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
                 postLikesView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -150),
-                postLikesView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -16)
-            ])
-            
-            NSLayoutConstraint.activate([
+                postLikesView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -16),
+                
+                // Setup Views Counter position
                 postViewsView.heightAnchor.constraint(equalTo: postLikesView.heightAnchor),
                 postViewsView.topAnchor.constraint(equalTo: postLikesView.topAnchor),
                 postViewsView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
@@ -135,13 +143,7 @@ class PostTableViewCell: UITableViewCell {
             ])
         }
         
-        // Add post subviews to Cell content view
-        postImage.clipsToBounds = true
-        contentView.addSubview(postLabelView)
-        contentView.addSubview(postImage)
-        contentView.addSubview(postContentView)
-        contentView.addSubview(postLikesView)
-        contentView.addSubview(postViewsView)
+        addSubviews()
         setupConstraints()
     }
 }
