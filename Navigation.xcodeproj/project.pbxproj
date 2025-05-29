@@ -22,6 +22,7 @@
 		115C0FE52DE18A2500C3EF99 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FE42DE18A2500C3EF99 /* UITableViewExtensions.swift */; };
 		115C0FE72DE1905600C3EF99 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */; };
 		115C0FED2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FEC2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift */; };
+		115C0FEF2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FEE2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		115C0FE42DE18A2500C3EF99 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
 		115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		115C0FEC2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSectionFooterHeaderView.swift; sourceTree = "<group>"; };
+		115C0FEE2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				115C0FE42DE18A2500C3EF99 /* UITableViewExtensions.swift */,
 				115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */,
 				115C0FEC2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift */,
+				115C0FEE2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				1154141A2C92A12F0051640B /* InfoViewController.swift in Sources */,
 				115414162C9294290051640B /* ProfileViewController.swift in Sources */,
 				115414142C92941F0051640B /* FeedViewController.swift in Sources */,
+				115C0FEF2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift in Sources */,
 				115414022C9291FE0051640B /* SceneDelegate.swift in Sources */,
 				115C0FDC2DDC792200C3EF99 /* ProfileHeaderView.swift in Sources */,
 				115C0FED2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift in Sources */,

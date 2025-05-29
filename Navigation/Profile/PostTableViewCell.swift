@@ -13,6 +13,10 @@ class PostTableViewCell: UITableViewCell {
         tuneView()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder: not implemented")
+    }
+    
     // Cell design setup
     private func tuneView() {
         backgroundColor = .tertiarySystemBackground
@@ -22,10 +26,6 @@ class PostTableViewCell: UITableViewCell {
         imageView?.backgroundColor = .clear
         contentMode = .scaleAspectFit
         accessoryType = .none
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder: not implemented")
     }
     
     // Update and build the view for post view element

@@ -19,11 +19,11 @@ class TableSectionFooterHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         contentView.addSubview(profileHeader)
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         let safeArea = contentView.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([

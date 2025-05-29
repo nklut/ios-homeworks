@@ -4,6 +4,7 @@ class ProfileViewController: UIViewController {
     
     // List of sample Posts(4 items)
     fileprivate let data = postList
+    private var sectionsList = ["Photos", "Posts"]
     
     // Declare table for posts
     private lazy var tableView: UITableView = {
@@ -12,7 +13,7 @@ class ProfileViewController: UIViewController {
             style: .plain
         )
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemGray6
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -21,6 +22,7 @@ class ProfileViewController: UIViewController {
     // IDs for base cells
     private enum CellReuseID: String {
         case post = "PostTableViewCell_ReuseID"
+        case photo = "PhotosTableViewCell_ReuseID"
     }
     
     // IDs for Headers and Footers of cells
@@ -40,6 +42,7 @@ class ProfileViewController: UIViewController {
         addSubviews()
         setupConstraints()
         setupTableView()
+        print("MAin view width: ", view.bounds.size.width)
     }
     
     // Table handler
@@ -79,13 +82,19 @@ class ProfileViewController: UIViewController {
         // Initial table setup
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 700
-        tableView.tableHeaderView = UIView()
-        tableView.tableFooterView = UIView()
+        if #available(iOS 15.0, *)  {
+            tableView.sectionHeaderTopPadding = 0
+        }
         
         // Register table cell types IDs
         tableView.register(
             PostTableViewCell.self,
             forCellReuseIdentifier: CellReuseID.post.rawValue
+        )
+        
+        tableView.register(
+            PhotosTableViewCell.self,
+            forCellReuseIdentifier: CellReuseID.photo.rawValue
         )
         
         tableView.register(
@@ -106,7 +115,7 @@ extension ProfileViewController: UITableViewDataSource {
     func numberOfSections(
         in tableView: UITableView
     ) -> Int {
-        1
+        sectionsList.count
     }
     
     // Define Number of cells in 1 section equal to the Amount of posts in postList
@@ -114,7 +123,11 @@ extension ProfileViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        postList.count
+        if section == 1 {
+            return postList.count
+        } else {
+            return 1
+        }
     }
 
     // Add post to cell according to index(Path)
@@ -122,16 +135,27 @@ extension ProfileViewController: UITableViewDataSource {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CellReuseID.post.rawValue,
-            for: indexPath
-        ) as? PostTableViewCell else {
-            fatalError("could not dequeueReusableCell")
+        if indexPath.section == 1
+        {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: CellReuseID.post.rawValue,
+                for: indexPath
+            ) as? PostTableViewCell else {
+                fatalError("could not dequeueReusableCell")
+            }
+        
+            cell.update(postList[indexPath.row])
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: CellReuseID.photo.rawValue,
+                for: indexPath
+            ) as? PhotosTableViewCell else {
+                fatalError("could not dequeueReusableCell")
+            }
+            cell.update()
+            return cell
         }
-        
-        cell.update(postList[indexPath.row])
-        
-        return cell
     }
 }
 
@@ -143,8 +167,33 @@ extension ProfileViewController: UITableViewDelegate {
         _ tableView: UITableView,
         heightForHeaderInSection section: Int
     ) -> CGFloat {
-        
         return UITableView.automaticDimension
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        heightForFooterInSection section: Int
+    ) -> CGFloat {
+        return 0
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
+        if indexPath.section == 0 {
+            return UITableView.automaticDimension
+        }
+        else {
+            return UITableView.automaticDimension
+        }
+    }
+    
+    // REDO!!!
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            navigationController?.pushViewController(FeedViewController(), animated: true)
+        }
     }
 
     // Set header as Profile Header View
@@ -152,13 +201,27 @@ extension ProfileViewController: UITableViewDelegate {
         _ tableView: UITableView,
         viewForHeaderInSection section: Int
     ) -> UIView? {
-        
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(
-            withIdentifier: HeaderFooterReuseID.base.rawValue
-        ) as? TableSectionFooterHeaderView else {
-            fatalError("could not dequeueReusableCell")
-        }
+        if section == 0 {
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(
+                withIdentifier: HeaderFooterReuseID.base.rawValue
+            ) as? TableSectionFooterHeaderView else {
+                fatalError("could not dequeueReusableCell")
+            }
 
-        return headerView
+            return headerView
+        
+        } else {
+            return UIView()
+        }
     }
+    
+    func tableView(
+        _ tableView: UITableView,
+        viewForFooterInSection section: Int
+    ) -> UIView? {
+        
+        return UIView()
+
+    }
+    
 }
