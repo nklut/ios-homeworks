@@ -2,6 +2,7 @@ struct Photo {
     let imageName: String
 }
 
+// List of Photos for the gallery
 extension Photo {
     static func make() -> [Photo] {
         [

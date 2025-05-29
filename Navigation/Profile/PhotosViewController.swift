@@ -2,9 +2,11 @@ import UIKit
 
 class PhotosViewController: UIViewController {
     
+    // Define spacing between photos and list of photos
     private let layoutSpacing = 8.0
     fileprivate lazy var photos: [Photo] = Photo.make()
     
+    // Create instance of collection view for the Photo Gallery
     private let photoCollectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
@@ -12,6 +14,7 @@ class PhotosViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray6
         
+        // Register collection cell ID
         view.register(
             PhotosCollectionViewCell.self,
             forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier
@@ -22,17 +25,20 @@ class PhotosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Setup views and positions
         setupView()
         setupSubviews()
         setupConstraints()
     }
     
+    // Main view setup
     private func setupView() {
         title = "Photo Gallery"
         view.backgroundColor = .systemGray6
     }
     
+    // Subviews setup
     private func setupSubviews() {
         view.addSubview(photoCollectionView)
         
@@ -40,6 +46,7 @@ class PhotosViewController: UIViewController {
         photoCollectionView.delegate = self
     }
     
+    // Positions setup
     private func setupConstraints() {
         let safeArea = view.safeAreaLayoutGuide
         
@@ -54,8 +61,10 @@ class PhotosViewController: UIViewController {
     }
 }
 
+
 extension PhotosViewController: UICollectionViewDataSource {
-    
+        
+    // Amount of cells in section as amount of photos
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -63,6 +72,7 @@ extension PhotosViewController: UICollectionViewDataSource {
         photos.count
     }
         
+    // create and update cell using photo name from photoList
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -81,6 +91,7 @@ extension PhotosViewController: UICollectionViewDataSource {
 
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     
+    // image size calculations
     private func itemWidth(
         for width: CGFloat,
         spacing: CGFloat
@@ -93,6 +104,7 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         return floor(finalWidth)
     }
     
+    // set image size
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -103,6 +115,7 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: width)
     }
     
+    // set Edge insets
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -116,6 +129,7 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         )
     }
     
+    // set line spacing
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -124,6 +138,7 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         layoutSpacing
     }
     
+    // set item spasing
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

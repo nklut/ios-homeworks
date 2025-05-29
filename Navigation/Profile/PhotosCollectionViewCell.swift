@@ -1,7 +1,8 @@
 import UIKit
 
 class PhotosCollectionViewCell: UICollectionViewCell {
-
+    
+    // Define and setup image view
     private lazy var galleryImage: UIImageView = {
         let view = UIImageView(frame: .zero)
         
@@ -18,17 +19,21 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
+        // setup main view
         contentView.clipsToBounds = true
         contentView.backgroundColor = .white
         
+        // add and setup subviews
         addSubviews()
         setupConstraints()
     }
     
+    // Add subview
     private func addSubviews() {
         contentView.addSubview(galleryImage)
     }
     
+    // Position subview
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             galleryImage.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -38,6 +43,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    // setup image by image name in photos list
     func setup(with photo: Photo) {
         galleryImage.image = UIImage(named: photo.imageName)
     }
