@@ -42,7 +42,6 @@ class ProfileViewController: UIViewController {
         addSubviews()
         setupConstraints()
         setupTableView()
-        print("MAin view width: ", view.bounds.size.width)
     }
     
     // Table handler
@@ -189,10 +188,9 @@ extension ProfileViewController: UITableViewDelegate {
         }
     }
     
-    // REDO!!!
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            navigationController?.pushViewController(FeedViewController(), animated: true)
+            navigationController?.pushViewController(PhotosViewController(), animated: true)
         }
     }
 

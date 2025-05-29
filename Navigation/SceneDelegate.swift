@@ -15,7 +15,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         feedNavigationController.tabBarItem.image = UIImage(systemName: "book.pages")
         feedNavigationController.viewControllers = [FeedViewController()]
         
-        
         // Profile Nav Controller Setup
         let profileNavigationController = UINavigationController()
         profileNavigationController.tabBarItem.title = "Profile"

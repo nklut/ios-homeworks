@@ -46,7 +46,6 @@ class PhotosTableViewCell: UITableViewCell {
             view.text = "Photos"
             view.font = UIFont.systemFont(ofSize: 24, weight: .bold)
             view.textColor = .black
-            view.sizeToFit()
             
             return view
         }()
@@ -122,7 +121,7 @@ class PhotosTableViewCell: UITableViewCell {
                 lableView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 12),
                 lableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 12),
                 lableView.widthAnchor.constraint(equalToConstant: 150),
-                lableView.heightAnchor.constraint(equalToConstant: 24),
+                //lableView.heightAnchor.constraint(equalToConstant: 24),
 
                 arrow.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -12),
                 arrow.centerYAnchor.constraint(equalTo: lableView.centerYAnchor),

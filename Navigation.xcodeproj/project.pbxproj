@@ -23,6 +23,10 @@
 		115C0FE72DE1905600C3EF99 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */; };
 		115C0FED2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FEC2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift */; };
 		115C0FEF2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FEE2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift */; };
+		115C0FF12DE815F300C3EF99 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FF02DE815F300C3EF99 /* PhotosViewController.swift */; };
+		115C0FF32DE81E4B00C3EF99 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FF22DE81E4B00C3EF99 /* PhotosCollectionViewCell.swift */; };
+		115C0FF62DE820D500C3EF99 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FF52DE820D500C3EF99 /* Photo.swift */; };
+		115C0FF82DE8332700C3EF99 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C0FF72DE8332700C3EF99 /* Reusable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,10 @@
 		115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		115C0FEC2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSectionFooterHeaderView.swift; sourceTree = "<group>"; };
 		115C0FEE2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
+		115C0FF02DE815F300C3EF99 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		115C0FF22DE81E4B00C3EF99 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
+		115C0FF52DE820D500C3EF99 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		115C0FF72DE8332700C3EF99 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,16 +101,28 @@
 		115C0FDD2DDC923D00C3EF99 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				115C0FF42DE820AA00C3EF99 /* Models */,
 				115C0FDB2DDC792200C3EF99 /* ProfileHeaderView.swift */,
 				115414152C9294290051640B /* ProfileViewController.swift */,
 				115C0FDE2DDF3EE500C3EF99 /* LogInViewController.swift */,
-				115C0FE22DE0276C00C3EF99 /* Post.swift */,
 				115C0FE42DE18A2500C3EF99 /* UITableViewExtensions.swift */,
 				115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */,
 				115C0FEC2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift */,
 				115C0FEE2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift */,
+				115C0FF02DE815F300C3EF99 /* PhotosViewController.swift */,
+				115C0FF22DE81E4B00C3EF99 /* PhotosCollectionViewCell.swift */,
+				115C0FF72DE8332700C3EF99 /* Reusable.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		115C0FF42DE820AA00C3EF99 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				115C0FE22DE0276C00C3EF99 /* Post.swift */,
+				115C0FF52DE820D500C3EF99 /* Photo.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,9 +204,13 @@
 				115414162C9294290051640B /* ProfileViewController.swift in Sources */,
 				115414142C92941F0051640B /* FeedViewController.swift in Sources */,
 				115C0FEF2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift in Sources */,
+				115C0FF12DE815F300C3EF99 /* PhotosViewController.swift in Sources */,
+				115C0FF62DE820D500C3EF99 /* Photo.swift in Sources */,
 				115414022C9291FE0051640B /* SceneDelegate.swift in Sources */,
+				115C0FF82DE8332700C3EF99 /* Reusable.swift in Sources */,
 				115C0FDC2DDC792200C3EF99 /* ProfileHeaderView.swift in Sources */,
 				115C0FED2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift in Sources */,
+				115C0FF32DE81E4B00C3EF99 /* PhotosCollectionViewCell.swift in Sources */,
 				115C0FE32DE0276C00C3EF99 /* Post.swift in Sources */,
 				115C0FE72DE1905600C3EF99 /* PostTableViewCell.swift in Sources */,
 			);
