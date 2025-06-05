@@ -41,7 +41,7 @@ class ProfileViewController: UIViewController {
         setupView()
         addSubviews()
         setupConstraints()
-        setupTableView()
+        setupTableView()        
     }
     
     // Table handler
@@ -217,7 +217,6 @@ extension ProfileViewController: UITableViewDelegate {
         _ tableView: UITableView,
         viewForFooterInSection section: Int
     ) -> UIView? {
-        
         return UIView()
 
     }

@@ -4,7 +4,7 @@ class ProfileHeaderView: UIView {
     
     private var picRadius = 150.0
     private var statusText = "Waiting for something..."
-    
+
     // Add and setup Profile Avatar Image
     private lazy var avatarImageView: UIImageView = {
         // Declaration
@@ -16,9 +16,29 @@ class ProfileHeaderView: UIView {
         view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 3
         
+        // Add gesture on tap
+        let tapRoot = UITapGestureRecognizer(
+            target: self,
+            action: #selector(didTapAvatar)
+        )
+        
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapRoot)
+        
         return view
     }()
     
+    // Image background
+    private lazy var avatarImageBackground: UIView = {
+        let view = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.alpha = 0
+        view.backgroundColor = .systemGray6
+        
+        return view
+    }()
+
     // Add and setup Full Name Label
     private lazy var fullNameLabel: UILabel = {
         // Declaration
@@ -27,10 +47,9 @@ class ProfileHeaderView: UIView {
             
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.sizeToFit()
         view.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
         view.textColor = .black
-            
+        
         return view
         }()
     
@@ -100,8 +119,10 @@ class ProfileHeaderView: UIView {
         super.init(frame: frame)
         
         backgroundColor = .systemGray6
+        
         addSubviews()
         setupConstraints()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -111,82 +132,128 @@ class ProfileHeaderView: UIView {
     // Moves Status Field text to Status Lable on button press
     @objc func didPressStatusButton() {
         statusLabel.text = statusText
-        print(statusText)
     }
+    
+    // Changes status Text based on text field input
     @objc func statusTextChanged(_ textField: UITextField) {
         statusText = statusTextField.text!
+    }
+    
+    //Animation on avatar image Tap
+    @objc func didTapAvatar() {
+        launchAnimation()
+    }
+    
+    private func launchAnimation() {
+       
+        let midX = UIScreen.main.bounds.midX
+        let tabH = self.inputViewController?.tabBarController?.tabBar.frame.size.height ?? 83
+        let midY = UIScreen.main.bounds.midY - tabH
+        
+        let screenW = UIScreen.main.bounds.width
+        let picScale = screenW / picRadius
+        
+        let animator = UIViewPropertyAnimator(
+            duration: 0.5,
+            curve: .linear
+        ) {
+            
+            // 1 Move to center of the screen
+            self.avatarImageView.center = CGPoint(x: midX, y: midY)
+            self.avatarImageBackground.center = CGPoint(x: midX, y: midY)
+            
+            // 2 Change size
+            self.avatarImageView.layer.borderWidth = 0
+            self.avatarImageView.layer.cornerRadius = 0
+            self.avatarImageView.transform = CGAffineTransform(
+                scaleX: picScale,
+                y: picScale
+            )
+            self.avatarImageBackground.transform = CGAffineTransform(
+                scaleX: picScale,
+                y: picScale * 3
+            )
+            
+            // 3 Change background opacity
+            self.avatarImageBackground.alpha = 0.95
+            
+        }
+        
+        animator.addCompletion { finishedPosition in
+            print("Did finish UIViewPropertyAnimator example")
+        }
+
+        animator.startAnimation(afterDelay: 0.5)
+        
     }
     
     private func addSubviews() {
         avatarImageView.clipsToBounds = true
         addSubview(avatarImageView)
-        addSubview(fullNameLabel)
-        addSubview(statusLabel)
-        addSubview(setStatusButton)
-        addSubview(statusTextField)
+        insertSubview(avatarImageBackground, belowSubview: avatarImageView)
+        insertSubview(fullNameLabel, belowSubview: avatarImageBackground)
+        insertSubview(statusLabel, belowSubview: avatarImageBackground)
+        insertSubview(statusTextField, belowSubview: avatarImageBackground)
+        insertSubview(setStatusButton, belowSubview: avatarImageBackground)
+
     }
     
     // Setup Constraints for Profile Header view
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            // Avatar image view constraints
-            avatarImageView.heightAnchor.constraint(equalToConstant: picRadius),
-            avatarImageView.widthAnchor.constraint(equalToConstant: picRadius),
-            avatarImageView.leadingAnchor.constraint(
+
+            // Avatar image view background constraints
+            avatarImageBackground.heightAnchor.constraint(equalToConstant: picRadius),
+            avatarImageBackground.widthAnchor.constraint(equalToConstant: picRadius),
+            avatarImageBackground.leadingAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.leadingAnchor,
                 constant: 16.0
             ),
-            avatarImageView.topAnchor.constraint(
+            avatarImageBackground.topAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.topAnchor,
                 constant: 16.0
             ),
             
+            // Avatar image view constraints
+            avatarImageView.heightAnchor.constraint(equalToConstant: picRadius),
+            avatarImageView.widthAnchor.constraint(equalToConstant: picRadius),
+            avatarImageView.leadingAnchor.constraint(equalTo: avatarImageBackground.leadingAnchor),
+            avatarImageView.topAnchor.constraint(equalTo: avatarImageBackground.topAnchor),
+
             // Name label view constraints
-            fullNameLabel.leadingAnchor.constraint(
-                equalTo: avatarImageView.trailingAnchor,
-                constant: 16.0
-            ),
+            fullNameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             fullNameLabel.topAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.topAnchor,
                 constant: 27.0
             ),
             fullNameLabel.heightAnchor.constraint(equalToConstant: 18),
-            fullNameLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            
+            fullNameLabel.trailingAnchor.constraint(
+                equalTo: safeAreaLayoutGuide.trailingAnchor,
+                constant: -16),
+
             // Status label view constraints
             statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
-            statusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            statusLabel.bottomAnchor.constraint(
-                equalTo: statusTextField.topAnchor,
-                constant: -16.0
-            ),
-            statusLabel.topAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 20),
-            
+            statusLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 110),
+            statusLabel.trailingAnchor.constraint(equalTo: fullNameLabel.trailingAnchor),
+            statusLabel.heightAnchor.constraint(equalToConstant: 14),
+
             // Status text field view constraints
-            statusTextField.bottomAnchor.constraint(
-                equalTo: setStatusButton.topAnchor,
-                constant: -16.0
-            ),
-            statusTextField.trailingAnchor.constraint(equalTo: setStatusButton.trailingAnchor),
+            statusTextField.trailingAnchor.constraint(equalTo: statusLabel.trailingAnchor),
             statusTextField.leadingAnchor.constraint(equalTo: statusLabel.leadingAnchor),
             statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 16),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
-            
+
             // Status Button view constraints
+            setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50.0),
-            setStatusButton.leadingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.leadingAnchor,
-                constant: 16.0
-            ),
-            setStatusButton.trailingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.trailingAnchor,
-                constant: -16.0
-            ),
+            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: fullNameLabel.trailingAnchor),
             setStatusButton.bottomAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.bottomAnchor,
                 constant: -16.0
             )
+
         ])
     }
 }
