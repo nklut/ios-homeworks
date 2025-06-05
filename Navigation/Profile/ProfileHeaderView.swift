@@ -150,11 +150,12 @@ class ProfileHeaderView: UIView {
         statusText = statusTextField.text!
     }
     
-    //Animation on avatar image Tap
+    // Animation on avatar image Tap
     @objc func didTapAvatar() {
         launchAnimation()
     }
     
+    // Animation on close button Tap
     @objc func didTapCloseButton() {
         launchReversedAnimation()
     }
@@ -162,10 +163,12 @@ class ProfileHeaderView: UIView {
     // Avatar image animation
     private func launchAnimation() {
        
+        // Get screen center position
         let midX = UIScreen.main.bounds.midX
         let tabH = self.inputViewController?.tabBarController?.tabBar.frame.size.height ?? 83
         let midY = UIScreen.main.bounds.midY - tabH
         
+        // Get size scale multiplier
         let screenW = UIScreen.main.bounds.width
         let picScale = screenW / picRadius
     
@@ -227,7 +230,6 @@ class ProfileHeaderView: UIView {
         }
         
         animator.startAnimation(afterDelay: 0.5)
-        
     }
     
     private func addSubviews() {
@@ -239,7 +241,6 @@ class ProfileHeaderView: UIView {
         insertSubview(statusLabel, belowSubview: avatarImageBackground)
         insertSubview(statusTextField, belowSubview: avatarImageBackground)
         insertSubview(setStatusButton, belowSubview: avatarImageBackground)
-
     }
     
     // Setup Constraints for Profile Header view
@@ -303,7 +304,6 @@ class ProfileHeaderView: UIView {
                 equalTo: safeAreaLayoutGuide.bottomAnchor,
                 constant: -16.0
             )
-
         ])
     }
 }
