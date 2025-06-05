@@ -4,6 +4,18 @@ class ProfileHeaderView: UIView {
     
     private var picRadius = 150.0
     private var statusText = "Waiting for something..."
+    
+    private lazy var closeButton: UIButton = {
+        let view = UIButton(type: .close)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.backgroundColor = .white
+        view.alpha = 0
+        
+        view.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        
+        return view
+    }()
 
     // Add and setup Profile Avatar Image
     private lazy var avatarImageView: UIImageView = {
@@ -122,7 +134,6 @@ class ProfileHeaderView: UIView {
         
         addSubviews()
         setupConstraints()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -144,6 +155,11 @@ class ProfileHeaderView: UIView {
         launchAnimation()
     }
     
+    @objc func didTapCloseButton() {
+        launchReversedAnimation()
+    }
+    
+    // Avatar image animation
     private func launchAnimation() {
        
         let midX = UIScreen.main.bounds.midX
@@ -152,17 +168,16 @@ class ProfileHeaderView: UIView {
         
         let screenW = UIScreen.main.bounds.width
         let picScale = screenW / picRadius
-        
+    
         let animator = UIViewPropertyAnimator(
             duration: 0.5,
             curve: .linear
         ) {
-            
             // 1 Move to center of the screen
             self.avatarImageView.center = CGPoint(x: midX, y: midY)
             self.avatarImageBackground.center = CGPoint(x: midX, y: midY)
             
-            // 2 Change size
+            // 2 Change size and corner radius
             self.avatarImageView.layer.borderWidth = 0
             self.avatarImageView.layer.cornerRadius = 0
             self.avatarImageView.transform = CGAffineTransform(
@@ -176,13 +191,41 @@ class ProfileHeaderView: UIView {
             
             // 3 Change background opacity
             self.avatarImageBackground.alpha = 0.95
-            
+            self.closeButton.alpha = 1
         }
         
-        animator.addCompletion { finishedPosition in
-            print("Did finish UIViewPropertyAnimator example")
+        animator.startAnimation(afterDelay: 0.5)
+    }
+    
+    // Reverse Avatar image animation
+    private func launchReversedAnimation() {
+        let originP = 16 + picRadius / 2
+        
+        let animator = UIViewPropertyAnimator(
+            duration: 0.5,
+            curve: .linear
+        ) {
+            // 1 Move to origin position
+            self.avatarImageView.center = CGPoint(x: originP, y: originP)
+            self.avatarImageBackground.center = CGPoint(x: originP, y: originP)
+            
+            // 2 Change size and corner radius to original values
+            self.avatarImageView.layer.borderWidth = 3
+            self.avatarImageView.layer.cornerRadius = self.picRadius / 2
+            self.avatarImageView.transform = CGAffineTransform(
+                scaleX: 1.0,
+                y: 1.0
+            )
+            self.avatarImageBackground.transform = CGAffineTransform(
+                scaleX: 1.0,
+                y: 1.0
+            )
+            
+            // 3 Change background opacity to original values
+            self.avatarImageBackground.alpha = 0
+            self.closeButton.alpha = 0
         }
-
+        
         animator.startAnimation(afterDelay: 0.5)
         
     }
@@ -191,6 +234,7 @@ class ProfileHeaderView: UIView {
         avatarImageView.clipsToBounds = true
         addSubview(avatarImageView)
         insertSubview(avatarImageBackground, belowSubview: avatarImageView)
+        insertSubview(closeButton, belowSubview: avatarImageView)
         insertSubview(fullNameLabel, belowSubview: avatarImageBackground)
         insertSubview(statusLabel, belowSubview: avatarImageBackground)
         insertSubview(statusTextField, belowSubview: avatarImageBackground)
@@ -220,6 +264,12 @@ class ProfileHeaderView: UIView {
             avatarImageView.widthAnchor.constraint(equalToConstant: picRadius),
             avatarImageView.leadingAnchor.constraint(equalTo: avatarImageBackground.leadingAnchor),
             avatarImageView.topAnchor.constraint(equalTo: avatarImageBackground.topAnchor),
+            
+            // close Button constraints
+            closeButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            closeButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            closeButton.heightAnchor.constraint(equalToConstant: 16),
+            closeButton.widthAnchor.constraint(equalToConstant: 16),
 
             // Name label view constraints
             fullNameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
