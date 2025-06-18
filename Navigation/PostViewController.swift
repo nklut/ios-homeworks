@@ -33,8 +33,8 @@ class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBrown
-        self.title = post.title
+        view.backgroundColor = .systemBrown
+        title = post.title
         
         // Adding Button to the Navigation Bar
         infoButton.addTarget(self, action: #selector(didPressButton), for: .touchUpInside)
