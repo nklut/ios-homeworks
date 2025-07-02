@@ -13,8 +13,11 @@ class ProfileViewController: UIViewController {
             style: .plain
         )
         
-        view.backgroundColor = .systemGray6
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray6
+        #if DEBUG
+        view.backgroundColor = .systemPink
+        #endif
         
         return view
     }()
@@ -56,6 +59,9 @@ class ProfileViewController: UIViewController {
     // Basic main design
     private func setupView() {
         view.backgroundColor = .systemGray6
+        #if DEBUG
+        view.backgroundColor = .systemPink
+        #endif
     }
     
     // Add table subview
