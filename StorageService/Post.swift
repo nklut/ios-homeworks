@@ -1,11 +1,11 @@
 
 // Structure of post for Profile Posts Table
-struct ProfilePost {
-    let author: String
-    let description: String
-    let image: String
-    let likes: Int
-    let views: Int
+public struct ProfilePost {
+    public let author: String
+    public let description: String
+    public let image: String
+    public let likes: Int
+    public let views: Int
 }
 
 let desc1 = """
@@ -60,4 +60,4 @@ let post4 = ProfilePost(
     views: 2023
 )
 
-var postList = [post1, post2, post3, post4]
+public var postList = [post1, post2, post3, post4]

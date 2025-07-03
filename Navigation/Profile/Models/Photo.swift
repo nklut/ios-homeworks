@@ -4,28 +4,13 @@ struct Photo {
 
 // List of Photos for the gallery
 extension Photo {
+    
     static func make() -> [Photo] {
-        [
-            Photo(imageName: "gallery1"),
-            Photo(imageName: "gallery2"),
-            Photo(imageName: "gallery3"),
-            Photo(imageName: "gallery4"),
-            Photo(imageName: "gallery5"),
-            Photo(imageName: "gallery6"),
-            Photo(imageName: "cat_news_1"),
-            Photo(imageName: "cat_news_2"),
-            Photo(imageName: "cat_news_3"),
-            Photo(imageName: "cat_news_4"),
-            Photo(imageName: "gallery1"),
-            Photo(imageName: "gallery2"),
-            Photo(imageName: "cat_news_1"),
-            Photo(imageName: "cat_news_2"),
-            Photo(imageName: "cat_news_3"),
-            Photo(imageName: "cat_news_4"),
-            Photo(imageName: "gallery3"),
-            Photo(imageName: "gallery4"),
-            Photo(imageName: "gallery5"),
-            Photo(imageName: "gallery6"),
-        ]
+        var galleryList = (1...6).map {Photo(imageName: "gallery\($0)")}
+        let newsList = (1...4).map {Photo(imageName: "cat_news_\($0)")}
+        galleryList.append(contentsOf: newsList)
+        galleryList.append(contentsOf: galleryList)
+        galleryList.append(contentsOf: newsList)
+        return galleryList
     }
 }

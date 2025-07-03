@@ -1,6 +1,8 @@
 import UIKit
+import StorageService
 
 class PostTableViewCell: UITableViewCell {
+    
     
     // Init table cell
     override init(
@@ -15,7 +17,7 @@ class PostTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder: not implemented")
-    }
+    }    
     
     // Cell design setup
     private func tuneView() {

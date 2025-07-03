@@ -79,25 +79,8 @@
 		11F42E6B2E15336D002733B3 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		11F42E792E1533A3002733B3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Post.swift,
-			);
-			target = 115413FB2C9291FE0051640B /* Navigation */;
-		};
-		11F42E7A2E1533A3002733B3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Post.swift,
-			);
-			target = 11F42E6A2E15336D002733B3 /* StorageService */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		11F42E6C2E15336D002733B3 /* StorageService */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (11F42E792E1533A3002733B3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 11F42E7A2E1533A3002733B3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = StorageService; sourceTree = "<group>"; };
+		11F42E6C2E15336D002733B3 /* StorageService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = StorageService; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
