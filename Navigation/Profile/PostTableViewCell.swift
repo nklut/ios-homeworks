@@ -29,7 +29,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     // Update and build the view for post view element
-    func update(_ post: profilePost) {
+    func update(_ post: ProfilePost) {
         
         // Post Label == Author
         lazy var postLabelView: UILabel = {
