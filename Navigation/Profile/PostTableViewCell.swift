@@ -1,5 +1,6 @@
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
     
@@ -49,7 +50,22 @@ class PostTableViewCell: UITableViewCell {
         
         // Post image
         lazy var postImage: UIImageView = {
-            let view = UIImageView(image: UIImage(named: post.image))
+            var img = UIImage(named: post.image)!
+            
+            let randomFilter = ColorFilter.allCases.randomElement()
+            
+
+            ImageProcessor().processImage(sourceImage: img, filter: randomFilter ?? .noir) { filteredImage in
+                if let filteredImage = filteredImage {
+                    img = filteredImage
+                } else {
+                    print("Cant apply filter")
+                }
+            }
+
+            
+            let view = UIImageView(image: img)
+            
             view.translatesAutoresizingMaskIntoConstraints = false
             view.backgroundColor = .black
         
