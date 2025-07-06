@@ -1,15 +1,15 @@
 import UIKit
 
-struct Post {
+struct PostItem {
     let title: String
 }
 
 class PostViewController: UIViewController {
     
-    var post: Post
+    var post: PostItem
     
     // Setup post init
-    init(post: Post) {
+    init(post: PostItem) {
         self.post = post
         super.init(nibName: nil, bundle: nil)
     }

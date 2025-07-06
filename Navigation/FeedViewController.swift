@@ -59,14 +59,14 @@ class FeedViewController: UIViewController {
     
     // Open post 1 for button 1
     @objc func openPost1() {
-        let currentPost = Post(title: "Post 1")
+        let currentPost = PostItem(title: "Post 1")
         let pvc = PostViewController(post: currentPost)
         self.navigationController?.pushViewController(pvc, animated: true)
     }
     
     // Open post 2 for button 2
     @objc func openPost2() {
-        let currentPost = Post(title: "Post 2")
+        let currentPost = PostItem(title: "Post 2")
         let pvc = PostViewController(post: currentPost)
         self.navigationController?.pushViewController(pvc, animated: true)
     }

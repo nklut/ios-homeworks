@@ -1,13 +1,15 @@
 import UIKit
+import SnapKit
 
 class ProfileHeaderView: UIView {
     
     private var picRadius = 150.0
     private var statusText = "Waiting for something..."
+
     
     private lazy var closeButton: UIButton = {
         let view = UIButton(type: .close)
-        view.translatesAutoresizingMaskIntoConstraints = false
+        // view.translatesAutoresizingMaskIntoConstraints = false
         
         view.backgroundColor = .white
         view.alpha = 0
@@ -23,7 +25,6 @@ class ProfileHeaderView: UIView {
         let view = UIImageView(image: UIImage(named: "cat"))
         
         // Design
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = picRadius / 2
         view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 3
@@ -44,7 +45,6 @@ class ProfileHeaderView: UIView {
     private lazy var avatarImageBackground: UIView = {
         let view = UIView()
         
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.alpha = 0
         view.backgroundColor = .systemGray6
         
@@ -58,7 +58,6 @@ class ProfileHeaderView: UIView {
         view.text = "Hipster Cat"
             
         // Design
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
         view.textColor = .black
         
@@ -72,7 +71,6 @@ class ProfileHeaderView: UIView {
         view.text = statusText
         
         // Design
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
         view.textColor = .gray
         
@@ -86,7 +84,6 @@ class ProfileHeaderView: UIView {
         view.placeholder = "Enter new status or title"
 
         // Design
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.textColor = .black
         view.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.regular)
@@ -112,7 +109,6 @@ class ProfileHeaderView: UIView {
         view.setTitle("Set status", for: .normal)
         
         // Design
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitleColor(UIColor.white, for: .normal)
         view.backgroundColor = .systemBlue
         view.layer.cornerRadius = 4
@@ -233,6 +229,7 @@ class ProfileHeaderView: UIView {
     }
     
     private func addSubviews() {
+        
         avatarImageView.clipsToBounds = true
         addSubview(avatarImageView)
         insertSubview(avatarImageBackground, belowSubview: avatarImageView)
@@ -246,64 +243,61 @@ class ProfileHeaderView: UIView {
     // Setup Constraints for Profile Header view
     private func setupConstraints() {
         
-        NSLayoutConstraint.activate([
-
-            // Avatar image view background constraints
-            avatarImageBackground.heightAnchor.constraint(equalToConstant: picRadius),
-            avatarImageBackground.widthAnchor.constraint(equalToConstant: picRadius),
-            avatarImageBackground.leadingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.leadingAnchor,
-                constant: 16.0
-            ),
-            avatarImageBackground.topAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.topAnchor,
-                constant: 16.0
-            ),
-            
-            // Avatar image view constraints
-            avatarImageView.heightAnchor.constraint(equalToConstant: picRadius),
-            avatarImageView.widthAnchor.constraint(equalToConstant: picRadius),
-            avatarImageView.leadingAnchor.constraint(equalTo: avatarImageBackground.leadingAnchor),
-            avatarImageView.topAnchor.constraint(equalTo: avatarImageBackground.topAnchor),
-            
-            // close Button constraints
-            closeButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            closeButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            closeButton.heightAnchor.constraint(equalToConstant: 16),
-            closeButton.widthAnchor.constraint(equalToConstant: 16),
-
-            // Name label view constraints
-            fullNameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            fullNameLabel.topAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.topAnchor,
-                constant: 27.0
-            ),
-            fullNameLabel.heightAnchor.constraint(equalToConstant: 18),
-            fullNameLabel.trailingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.trailingAnchor,
-                constant: -16),
-
-            // Status label view constraints
-            statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
-            statusLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 110),
-            statusLabel.trailingAnchor.constraint(equalTo: fullNameLabel.trailingAnchor),
-            statusLabel.heightAnchor.constraint(equalToConstant: 14),
-
-            // Status text field view constraints
-            statusTextField.trailingAnchor.constraint(equalTo: statusLabel.trailingAnchor),
-            statusTextField.leadingAnchor.constraint(equalTo: statusLabel.leadingAnchor),
-            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 16),
-            statusTextField.heightAnchor.constraint(equalToConstant: 40),
-
-            // Status Button view constraints
-            setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 50.0),
-            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            setStatusButton.trailingAnchor.constraint(equalTo: fullNameLabel.trailingAnchor),
-            setStatusButton.bottomAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.bottomAnchor,
-                constant: -16.0
-            )
-        ])
+        // close Button constraints
+        closeButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(safeAreaLayoutGuide).offset(16)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-16)
+            make.width.equalTo(16)
+            make.height.equalTo(16)
+        }
+        
+        // Avatar image view background constraints
+        avatarImageBackground.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(safeAreaLayoutGuide).offset(16)
+            make.top.equalTo(safeAreaLayoutGuide).offset(16)
+            make.width.equalTo(picRadius)
+            make.height.equalTo(picRadius)
+        }
+        
+        // Avatar image view constraints
+        avatarImageView.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(avatarImageBackground)
+            make.top.equalTo(avatarImageBackground)
+            make.width.equalTo(picRadius)
+            make.height.equalTo(picRadius)
+        }
+        
+        // Name label view constraints
+        fullNameLabel.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(safeAreaLayoutGuide.snp.centerX)
+            make.top.equalTo(safeAreaLayoutGuide).offset(27)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-16)
+            make.height.equalTo(18)
+        }
+        
+        // Status label view constraints
+        statusLabel.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(fullNameLabel)
+            make.top.equalTo(safeAreaLayoutGuide).offset(110)
+            make.trailing.equalTo(fullNameLabel)
+            make.height.equalTo(14)
+        }
+        
+        // Status text field view constraints
+        statusTextField.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(statusLabel)
+            make.top.equalTo(statusLabel.snp.bottom).offset(16)
+            make.trailing.equalTo(statusLabel)
+            make.height.equalTo(40)
+        }
+        
+        // Status Button view constraints
+        setStatusButton.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(safeAreaLayoutGuide).offset(16)
+            make.top.equalTo(statusTextField.snp.bottom).offset(16)
+            make.trailing.equalTo(fullNameLabel)
+            make.height.equalTo(50)
+            make.bottom.equalTo(safeAreaLayoutGuide).offset(-16)
+        }
     }
 }

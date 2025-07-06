@@ -1,6 +1,6 @@
 
 // Structure of post for Profile Posts Table
-public struct ProfilePost {
+public struct Post {
     public let author: String
     public let description: String
     public let image: String
@@ -28,7 +28,7 @@ let desc4 = """
 Персидский кот Чарли из Сан-Франциско стал звездой TikTok после того, как случайно активировал кухонный комбайн и устроил "кулинарный апокалипсис". В попытке поймать муку, рассыпанную по столу, он замесил лапами тесто, украсил его следом от колбасы и улегся спать прямо в миске. "Это его шедевр — торт 'Мышиный рай'", — шутит хозяйка. Уборка заняла 4 часа, но видео набрало миллион лайков. 
 """
 
-let post1 = ProfilePost(
+let post1 = Post(
     author: "DeepCat",
     description: desc1,
     image: "cat_news_1",
@@ -36,7 +36,7 @@ let post1 = ProfilePost(
     views: 200
 )
 
-let post2 = ProfilePost(
+let post2 = Post(
     author: "DeepNotDog",
     description: desc2,
     image: "cat_news_2",
@@ -44,7 +44,7 @@ let post2 = ProfilePost(
     views: 2000
 )
 
-let post3 = ProfilePost(
+let post3 = Post(
     author: "DeepKitty",
     description: desc3,
     image: "cat_news_3",
@@ -52,7 +52,7 @@ let post3 = ProfilePost(
     views: 2300
 )
 
-let post4 = ProfilePost(
+let post4 = Post(
     author: "Decat",
     description: desc4,
     image: "cat_news_4",
