@@ -15,9 +15,4 @@ class User {
 }
 
 
-let currentUser = User(
-    userLogin: "correctLogin",
-    userFullName: "Don Caton",
-    userAvatar: UIImage(named: "cat")!,
-    userStatus: "Don Caton is sleeping"
-)
+

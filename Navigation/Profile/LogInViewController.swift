@@ -165,8 +165,12 @@ class LogInViewController: UIViewController {
     // On login button press, clear fields and open Profile screen
     @objc func didTapButton() {
         
-        let loginService = CurentUserService(user: currentUser)
-        let user = loginService.chekUserLogin(userNameField.text!)
+        
+        var user = CurentUserService().chekUserLogin(userNameField.text!)
+        
+        #if DEBUG
+        user = TestUserService().chekUserLogin(userNameField.text!)
+        #endif
         
         if user != nil {
             let pvc = ProfileViewController(user: user!)
@@ -174,15 +178,16 @@ class LogInViewController: UIViewController {
             userNameField.text = ""
             self.navigationController?.pushViewController(pvc, animated: true)
         } else {
+            var alertMessage = "Please try again"
+            
+            #if DEBUG
+            alertMessage += ". \nDEBUG\n Correct Login: " + TestUserService().testUser.userLogin
+            #endif
             
             userNameField.text = ""
-            var alertMesage = "Please try again"
-            #if DEBUG
-            alertMesage = "DEBUG MODE.\n Correct one is: " + currentUser.userLogin
-            #endif
             let alert = UIAlertController(
                 title: "Wrong Login",
-                message: alertMesage,
+                message: alertMessage,
                 preferredStyle: .alert
             )
             

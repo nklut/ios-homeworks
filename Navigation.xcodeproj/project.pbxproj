@@ -29,6 +29,7 @@
 		11B662F92E1B88A90032A5B1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B662F82E1B88A90032A5B1 /* User.swift */; };
 		11B662FB2E1B89300032A5B1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B662FA2E1B89300032A5B1 /* UserService.swift */; };
 		11B662FD2E1B8A4A0032A5B1 /* CurrentUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B662FC2E1B8A4A0032A5B1 /* CurrentUserService.swift */; };
+		11B662FF2E1F49080032A5B1 /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B662FE2E1F49080032A5B1 /* TestUserService.swift */; };
 		11F42E732E15336E002733B3 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F42E6B2E15336D002733B3 /* StorageService.framework */; };
 		11F42E742E15336E002733B3 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11F42E6B2E15336D002733B3 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -82,6 +83,7 @@
 		11B662F82E1B88A90032A5B1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		11B662FA2E1B89300032A5B1 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		11B662FC2E1B8A4A0032A5B1 /* CurrentUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserService.swift; sourceTree = "<group>"; };
+		11B662FE2E1F49080032A5B1 /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
 		11F42E6B2E15336D002733B3 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -176,6 +178,7 @@
 				11B662F82E1B88A90032A5B1 /* User.swift */,
 				11B662FA2E1B89300032A5B1 /* UserService.swift */,
 				11B662FC2E1B8A4A0032A5B1 /* CurrentUserService.swift */,
+				11B662FE2E1F49080032A5B1 /* TestUserService.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				115C0FF62DE820D500C3EF99 /* Photo.swift in Sources */,
 				115414022C9291FE0051640B /* SceneDelegate.swift in Sources */,
 				115C0FF82DE8332700C3EF99 /* Reusable.swift in Sources */,
+				11B662FF2E1F49080032A5B1 /* TestUserService.swift in Sources */,
 				11B662FB2E1B89300032A5B1 /* UserService.swift in Sources */,
 				115C0FDC2DDC792200C3EF99 /* ProfileHeaderView.swift in Sources */,
 				11B662F92E1B88A90032A5B1 /* User.swift in Sources */,
