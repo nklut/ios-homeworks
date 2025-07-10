@@ -3,7 +3,14 @@ import UIKit
 class ProfileHeaderView: UIView {
     
     private var picRadius = 150.0
-    private var statusText = "Waiting for something..."
+    private var statusText = ""
+    
+    var user: User? {
+        didSet {
+            setUserInfo()
+        }
+    }
+    
     
     private lazy var closeButton: UIButton = {
         let view = UIButton(type: .close)
@@ -20,7 +27,7 @@ class ProfileHeaderView: UIView {
     // Add and setup Profile Avatar Image
     private lazy var avatarImageView: UIImageView = {
         // Declaration
-        let view = UIImageView(image: UIImage(named: "cat"))
+        let view = UIImageView()
         
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +62,6 @@ class ProfileHeaderView: UIView {
     private lazy var fullNameLabel: UILabel = {
         // Declaration
         let view = UILabel()
-        view.text = "Hipster Cat"
             
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -69,7 +75,6 @@ class ProfileHeaderView: UIView {
     private lazy var statusLabel: UILabel = {
         // Declaration
         let view = UILabel()
-        view.text = statusText
         
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -129,7 +134,6 @@ class ProfileHeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         backgroundColor = .systemGray6
         
         addSubviews()
@@ -158,6 +162,15 @@ class ProfileHeaderView: UIView {
     // Animation on close button Tap
     @objc func didTapCloseButton() {
         launchReversedAnimation()
+    }
+    
+    private func setUserInfo() {
+        guard let usr = user else { return }
+        
+        avatarImageView.image = usr.userAvatar
+        fullNameLabel.text = usr.userFullName
+        statusLabel.text = usr.userStatus
+        
     }
     
     // Avatar image animation

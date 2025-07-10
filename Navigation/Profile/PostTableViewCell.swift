@@ -3,7 +3,6 @@ import StorageService
 
 class PostTableViewCell: UITableViewCell {
     
-    
     // Init table cell
     override init(
         style: UITableViewCell.CellStyle,

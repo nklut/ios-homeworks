@@ -6,6 +6,16 @@ class ProfileViewController: UIViewController {
     // List of sample Posts(4 items)
     fileprivate let data = postList
     private var sectionsList = ["Photos", "Posts"]
+    private let user: User
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // Declare table for posts
     private lazy var tableView: UITableView = {
@@ -212,7 +222,7 @@ extension ProfileViewController: UITableViewDelegate {
             ) as? TableSectionFooterHeaderView else {
                 fatalError("could not dequeueReusableCell")
             }
-
+            headerView.user = user
             return headerView
         
         } else {

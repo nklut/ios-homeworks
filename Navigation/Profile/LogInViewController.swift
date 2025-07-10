@@ -164,10 +164,32 @@ class LogInViewController: UIViewController {
     
     // On login button press, clear fields and open Profile screen
     @objc func didTapButton() {
-        let pvc = ProfileViewController()
-        passwordField.text = ""
-        userNameField.text = ""
-        self.navigationController?.pushViewController(pvc, animated: true)
+        
+        let loginService = CurentUserService(user: currentUser)
+        let user = loginService.chekUserLogin(userNameField.text!)
+        
+        if user != nil {
+            let pvc = ProfileViewController(user: user!)
+            passwordField.text = ""
+            userNameField.text = ""
+            self.navigationController?.pushViewController(pvc, animated: true)
+        } else {
+            
+            userNameField.text = ""
+            var alertMesage = "Please try again"
+            #if DEBUG
+            alertMesage = "DEBUG MODE.\n Correct one is: " + currentUser.userLogin
+            #endif
+            let alert = UIAlertController(
+                title: "Wrong Login",
+                message: alertMesage,
+                preferredStyle: .alert
+            )
+            
+            func wrongLoginAlert(action: UIAlertAction) {}
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: wrongLoginAlert))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     // move text Fields higher on keyboard appearance
