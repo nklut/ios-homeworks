@@ -86,16 +86,6 @@ class LogInViewController: UIViewController {
         return view
     }()
     
-    // User Data content view for login subviews
-    private lazy var userDataContentView: UIView = {
-        let view = UIView()
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemBackground
-        
-        return view
-    }()
-    
     // Login Screen Log-in button
     private lazy var logInButton: UIButton = {
         let view = UIButton(type: .roundedRect)
@@ -164,12 +154,11 @@ class LogInViewController: UIViewController {
     
     // On login button press, clear fields and open Profile screen
     @objc func didTapButton() {
-        
-        
-        var user = CurentUserService().chekUserLogin(userNameField.text!)
-        
+       
         #if DEBUG
-        user = TestUserService().chekUserLogin(userNameField.text!)
+            let user = TestUserService().chekUserLogin(userNameField.text!)
+        #else
+            let user = CurentUserService().chekUserLogin(userNameField.text!)
         #endif
         
         if user != nil {
@@ -178,10 +167,10 @@ class LogInViewController: UIViewController {
             userNameField.text = ""
             self.navigationController?.pushViewController(pvc, animated: true)
         } else {
-            var alertMessage = "Please try again"
-            
             #if DEBUG
-            alertMessage += ". \nDEBUG\n Correct Login: " + TestUserService().testUser.userLogin
+                let alertMessage = "Please try again\nDEBUG\n Correct Login: " + TestUserService().testUser.userLogin
+            #else
+                let alertMessage = "Please try again"
             #endif
             
             userNameField.text = ""
@@ -242,13 +231,10 @@ class LogInViewController: UIViewController {
         // Add Logo to main content View
         contentView.addSubview(logInLogo)
         
-        // Add User Data Text Fields to User Data content View
-        userDataContentView.addSubview(userNameField)
-        userDataContentView.addSubview(separatorView)
-        userDataContentView.addSubview(passwordField)
-        
-        // Add User Data content View to User Data scroll View
-        userDataScrollView.addSubview(userDataContentView)
+        // Add User Data Text Fields
+        userDataScrollView.addSubview(userNameField)
+        userDataScrollView.addSubview(separatorView)
+        userDataScrollView.addSubview(passwordField)
         
         // Add User Data scroll view and Log-in Button to mai content view
         contentView.addSubview(userDataScrollView)
@@ -259,7 +245,6 @@ class LogInViewController: UIViewController {
     private func setupSubviewsConstraints() {
         
         NSLayoutConstraint.activate([
-            
             // Setup Logo position
             logInLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             logInLogo.heightAnchor.constraint(equalToConstant: 100),
@@ -273,26 +258,20 @@ class LogInViewController: UIViewController {
             userDataScrollView.heightAnchor.constraint(equalToConstant: 100.5),
             
             // Setup User Data content view position
-            userDataContentView.topAnchor.constraint(equalTo: userDataScrollView.bottomAnchor),
-            userDataContentView.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
-            userDataContentView.trailingAnchor.constraint(equalTo: userDataScrollView.trailingAnchor),
-            userDataContentView.bottomAnchor.constraint(equalTo: userDataScrollView.bottomAnchor),
-            
-            // Setup User name position
-            userNameField.topAnchor.constraint(equalTo: userDataContentView.topAnchor),
-            userNameField.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
+            userNameField.topAnchor.constraint(equalTo: userDataScrollView.topAnchor),
+            userNameField.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
             userNameField.heightAnchor.constraint(equalToConstant: 50),
             userNameField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
             
             // Setup text fields separator Line
             separatorView.topAnchor.constraint(equalTo: userNameField.bottomAnchor),
             separatorView.heightAnchor.constraint(equalToConstant: 0.5),
-            separatorView.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
+            separatorView.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
             separatorView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             
             // Setup Password position
             passwordField.topAnchor.constraint(equalTo: separatorView.bottomAnchor),
-            passwordField.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
+            passwordField.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
             passwordField.heightAnchor.constraint(equalToConstant: 50),
             passwordField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
             
@@ -333,7 +312,6 @@ extension LogInViewController: UITextFieldDelegate {
         _ textField: UITextField
     ) -> Bool {
         textField.resignFirstResponder()
-        
         return true
     }
 }
