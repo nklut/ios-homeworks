@@ -10,6 +10,7 @@ class CurentUserService: UserService {
     )
     
     func chekUserLogin(_ userLogin: String) -> User? {
-        currentUser.userLogin == userLogin ? currentUser : nil
+        //currentUser.userLogin == userLogin ? currentUser : nil
+        currentUser
     }
 }

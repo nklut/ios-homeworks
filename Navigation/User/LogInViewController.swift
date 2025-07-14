@@ -2,6 +2,8 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    var loginDelegate: LoginViewControllerDelegate = LoginInspector()
+    
     // Login screen Logo
     private lazy var logInLogo: UIImageView = {
         let view = UIImageView(image: UIImage(named: "logo"))
@@ -154,28 +156,35 @@ class LogInViewController: UIViewController {
     
     // On login button press, clear fields and open Profile screen
     @objc func didTapButton() {
+        
+        let userLogin = userNameField.text ?? "_"
+        let userPass = passwordField.text ?? "_"
+        let isCorrect = loginDelegate.check(userLogin: userLogin, userPass: userPass)
        
         #if DEBUG
-            let user = TestUserService().chekUserLogin(userNameField.text!)
+            let user = TestUserService().chekUserLogin(userLogin)
         #else
-            let user = CurentUserService().chekUserLogin(userNameField.text!)
+            let user = CurentUserService().chekUserLogin(userLogin)
         #endif
-        
-        if user != nil {
+       
+        if isCorrect {
             let pvc = ProfileViewController(user: user!)
             passwordField.text = ""
             userNameField.text = ""
             self.navigationController?.pushViewController(pvc, animated: true)
         } else {
+            
             #if DEBUG
-                let alertMessage = "Please try again\nDEBUG\n Correct Login: " + TestUserService().testUser.userLogin
+                let alertMessage = "DEBUG MODE. Login: 123, Pass: 123"
             #else
                 let alertMessage = "Please try again"
             #endif
             
             userNameField.text = ""
+            passwordField.text = ""
+            
             let alert = UIAlertController(
-                title: "Wrong Login",
+                title: "Wrong Login or Password",
                 message: alertMessage,
                 preferredStyle: .alert
             )

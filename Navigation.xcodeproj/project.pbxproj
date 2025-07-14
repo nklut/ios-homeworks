@@ -30,6 +30,9 @@
 		11B662FB2E1B89300032A5B1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B662FA2E1B89300032A5B1 /* UserService.swift */; };
 		11B662FD2E1B8A4A0032A5B1 /* CurrentUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B662FC2E1B8A4A0032A5B1 /* CurrentUserService.swift */; };
 		11B662FF2E1F49080032A5B1 /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B662FE2E1F49080032A5B1 /* TestUserService.swift */; };
+		11B663012E24ECDD0032A5B1 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B663002E24ECDD0032A5B1 /* Checker.swift */; };
+		11B663032E24EEED0032A5B1 /* LoginViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B663022E24EEED0032A5B1 /* LoginViewControllerDelegate.swift */; };
+		11B663052E24FA820032A5B1 /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B663042E24FA820032A5B1 /* LoginInspector.swift */; };
 		11F42E732E15336E002733B3 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F42E6B2E15336D002733B3 /* StorageService.framework */; };
 		11F42E742E15336E002733B3 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11F42E6B2E15336D002733B3 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -84,6 +87,9 @@
 		11B662FA2E1B89300032A5B1 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		11B662FC2E1B8A4A0032A5B1 /* CurrentUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserService.swift; sourceTree = "<group>"; };
 		11B662FE2E1F49080032A5B1 /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
+		11B663002E24ECDD0032A5B1 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		11B663022E24EEED0032A5B1 /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
+		11B663042E24FA820032A5B1 /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		11F42E6B2E15336D002733B3 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -152,7 +158,6 @@
 				115C0FF42DE820AA00C3EF99 /* Models */,
 				115C0FDB2DDC792200C3EF99 /* ProfileHeaderView.swift */,
 				115414152C9294290051640B /* ProfileViewController.swift */,
-				115C0FDE2DDF3EE500C3EF99 /* LogInViewController.swift */,
 				115C0FE42DE18A2500C3EF99 /* UITableViewExtensions.swift */,
 				115C0FE62DE1905600C3EF99 /* PostTableViewCell.swift */,
 				115C0FEC2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift */,
@@ -179,6 +184,10 @@
 				11B662FA2E1B89300032A5B1 /* UserService.swift */,
 				11B662FC2E1B8A4A0032A5B1 /* CurrentUserService.swift */,
 				11B662FE2E1F49080032A5B1 /* TestUserService.swift */,
+				11B663002E24ECDD0032A5B1 /* Checker.swift */,
+				11B663022E24EEED0032A5B1 /* LoginViewControllerDelegate.swift */,
+				115C0FDE2DDF3EE500C3EF99 /* LogInViewController.swift */,
+				11B663042E24FA820032A5B1 /* LoginInspector.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -302,8 +311,10 @@
 				115414182C9295440051640B /* PostViewController.swift in Sources */,
 				115414042C9291FE0051640B /* ViewController.swift in Sources */,
 				115C0FE52DE18A2500C3EF99 /* UITableViewExtensions.swift in Sources */,
+				11B663012E24ECDD0032A5B1 /* Checker.swift in Sources */,
 				115C0FDF2DDF3EE500C3EF99 /* LogInViewController.swift in Sources */,
 				115414002C9291FE0051640B /* AppDelegate.swift in Sources */,
+				11B663032E24EEED0032A5B1 /* LoginViewControllerDelegate.swift in Sources */,
 				1154141A2C92A12F0051640B /* InfoViewController.swift in Sources */,
 				115414162C9294290051640B /* ProfileViewController.swift in Sources */,
 				115414142C92941F0051640B /* FeedViewController.swift in Sources */,
@@ -312,6 +323,7 @@
 				11B662FD2E1B8A4A0032A5B1 /* CurrentUserService.swift in Sources */,
 				115C0FF62DE820D500C3EF99 /* Photo.swift in Sources */,
 				115414022C9291FE0051640B /* SceneDelegate.swift in Sources */,
+				11B663052E24FA820032A5B1 /* LoginInspector.swift in Sources */,
 				115C0FF82DE8332700C3EF99 /* Reusable.swift in Sources */,
 				11B662FF2E1F49080032A5B1 /* TestUserService.swift in Sources */,
 				11B662FB2E1B89300032A5B1 /* UserService.swift in Sources */,
