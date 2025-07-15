@@ -10,8 +10,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Login View delegate setup
         let loginViewController = LogInViewController()
-        loginViewController.loginDelegate = LoginInspector()
-        
+        let factory = MyLoginFactory()
+        loginViewController.loginDelegate = factory.makeLoginInspector()
+      
         // Feed Nav Controller Setup
         let feedNavigationController = UINavigationController()
         feedNavigationController.tabBarItem.title = "Feed"

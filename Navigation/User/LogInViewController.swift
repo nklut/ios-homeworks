@@ -2,8 +2,6 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
-    var loginDelegate: LoginViewControllerDelegate = LoginInspector()
-    
     // Login screen Logo
     private lazy var logInLogo: UIImageView = {
         let view = UIImageView(image: UIImage(named: "logo"))
@@ -70,6 +68,8 @@ class LogInViewController: UIViewController {
         
         return view
     }()
+    
+    var loginDelegate: LoginViewControllerDelegate = LoginInspector()
     
     // Scroll view for position adaptation when keyboard appears
     private lazy var userDataScrollView: UIScrollView = {
@@ -150,17 +150,17 @@ class LogInViewController: UIViewController {
     // Keyboard disappears handler
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         removeKeyboardObservers()
     }
     
     // On login button press, clear fields and open Profile screen
     @objc func didTapButton() {
         
+        
         let userLogin = userNameField.text ?? "_"
         let userPass = passwordField.text ?? "_"
         let isCorrect = loginDelegate.check(userLogin: userLogin, userPass: userPass)
-       
+        
         #if DEBUG
             let user = TestUserService().chekUserLogin(userLogin)
         #else
@@ -169,19 +169,17 @@ class LogInViewController: UIViewController {
        
         if isCorrect {
             let pvc = ProfileViewController(user: user!)
-            passwordField.text = ""
-            userNameField.text = ""
             self.navigationController?.pushViewController(pvc, animated: true)
         } else {
+            
+            userNameField.text = ""
+            passwordField.text = ""
             
             #if DEBUG
                 let alertMessage = "DEBUG MODE. Login: 123, Pass: 123"
             #else
                 let alertMessage = "Please try again"
             #endif
-            
-            userNameField.text = ""
-            passwordField.text = ""
             
             let alert = UIAlertController(
                 title: "Wrong Login or Password",
