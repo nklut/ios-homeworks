@@ -44,8 +44,10 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     }
     
     // setup image by image name in photos list
-    func setup(with photo: Photo) {
-        galleryImage.image = UIImage(named: photo.imageName)
+    func setup(with photo: UIImage) {
+        galleryImage.image = photo
     }
 
 }
+
+

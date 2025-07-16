@@ -1,10 +1,19 @@
 import UIKit
+import iOSIntPackage
 
 class PhotosViewController: UIViewController {
     
     // Define spacing between photos and list of photos
     private let layoutSpacing = 8.0
-    fileprivate lazy var photos: [Photo] = Photo.make()
+    fileprivate lazy var photos: [UIImage] = Photo.make()
+    
+    // Create Gallery with user images and update View after image addition
+    private var imagesStorage = ImagePublisherFacade()
+    private var imagesGallery: [UIImage] = [] {
+        didSet {
+            photoCollectionView.reloadData()
+        }
+    }
     
     // Create instance of collection view for the Photo Gallery
     private let photoCollectionView: UICollectionView = {
@@ -23,13 +32,36 @@ class PhotosViewController: UIViewController {
         return view
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Setup Publisher for Gallery images
+        let delay = 0.5
+        let repeatCount = 20
+        let images = photos
+        setupPublisher(delay, repeatCount, images)
+
         // Setup views and positions
         setupView()
         setupSubviews()
         setupConstraints()
+    }
+    
+    private func setupPublisher(_ delay: TimeInterval, _ repeatCount: Int, _ images: [UIImage]) {
+        
+        // Subscribe to publisher
+        imagesStorage.subscribe(self)
+        
+        // Add user images to the gallery. Using updated Photo Model
+        // addImagesWithTimer method is using "random pick" to get each picture from entire user gallery
+        imagesStorage.addImagesWithTimer(time: delay, repeat: repeatCount, userImages: images)
+        
+        // Remove subscription after time needed for gallery fulfilment
+        let timeToPublish: Double = delay * Double(repeatCount) + 2
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeToPublish) {
+            self.imagesStorage.removeSubscription(for: self)
+        }
     }
     
     // Main view setup
@@ -41,7 +73,6 @@ class PhotosViewController: UIViewController {
     // Subviews setup
     private func setupSubviews() {
         view.addSubview(photoCollectionView)
-        
         photoCollectionView.dataSource = self
         photoCollectionView.delegate = self
     }
@@ -51,16 +82,13 @@ class PhotosViewController: UIViewController {
         let safeArea = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            
             photoCollectionView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             photoCollectionView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
             photoCollectionView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            photoCollectionView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            
+            photoCollectionView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
         ])
     }
 }
-
 
 extension PhotosViewController: UICollectionViewDataSource {
         
@@ -69,7 +97,7 @@ extension PhotosViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        photos.count
+        imagesGallery.count
     }
         
     // create and update cell using photo name from photoList
@@ -81,8 +109,9 @@ extension PhotosViewController: UICollectionViewDataSource {
             withReuseIdentifier: PhotosCollectionViewCell.identifier,
             for: indexPath
         ) as! PhotosCollectionViewCell
-
-        let photo = photos[indexPath.row]
+        
+        // Use Gallery image as Cell View Image
+        let photo = imagesGallery[indexPath.row]
         cell.setup(with: photo)
         
         return cell
@@ -145,5 +174,12 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
         layoutSpacing
+    }
+}
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        // Add images to the Gallery
+        self.imagesGallery = images
     }
 }

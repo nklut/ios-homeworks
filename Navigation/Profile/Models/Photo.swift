@@ -1,16 +1,18 @@
+import UIKit
+
 struct Photo {
-    let imageName: String
+    let image: UIImage
 }
 
 // List of Photos for the gallery
 extension Photo {
     
-    static func make() -> [Photo] {
-        var galleryList = (1...6).map {Photo(imageName: "gallery\($0)")}
-        let newsList = (1...4).map {Photo(imageName: "cat_news_\($0)")}
-        galleryList.append(contentsOf: newsList)
-        galleryList.append(contentsOf: galleryList)
-        galleryList.append(contentsOf: newsList)
-        return galleryList
+    static func make() -> [UIImage] {
+        var imagesList: [UIImage] = []
+        let galleryList: [UIImage] = (1...6).map {UIImage(named: "gallery\($0)")!}
+        let newsList: [UIImage] = (1...4).map {UIImage(named: "cat_news_\($0)")!}
+        imagesList.append(contentsOf: newsList)
+        imagesList.append(contentsOf: galleryList)
+        return imagesList
     }
 }
