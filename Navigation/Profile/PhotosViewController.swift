@@ -9,11 +9,7 @@ class PhotosViewController: UIViewController {
     
     // Create Gallery with user images and update View after image addition
     private var imagesStorage = ImagePublisherFacade()
-    private var imagesGallery: [UIImage] = [] {
-        didSet {
-            photoCollectionView.reloadData()
-        }
-    }
+    private var imagesGallery: [UIImage] = []
     
     // Create instance of collection view for the Photo Gallery
     private let photoCollectionView: UICollectionView = {
@@ -181,5 +177,10 @@ extension PhotosViewController: ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
         // Add images to the Gallery
         self.imagesGallery = images
+        photoCollectionView.reloadData()
+        
+        // Scroll to latest added image
+        let item = IndexPath(item: images.count - 1, section: 0)
+        photoCollectionView.scrollToItem(at: item, at: .bottom, animated: true)
     }
 }
