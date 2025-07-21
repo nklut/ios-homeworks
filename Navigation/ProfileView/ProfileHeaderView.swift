@@ -98,6 +98,10 @@ class ProfileHeaderView: UIView {
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
         view.layer.cornerRadius = 12
+        view.autocorrectionType = UITextAutocorrectionType.no
+        view.keyboardType = UIKeyboardType.default
+        view.returnKeyType = UIReturnKeyType.done
+        view.clearButtonMode = UITextField.ViewMode.whileEditing
         
         // Padding
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: 5.0, height: 0))
@@ -111,9 +115,9 @@ class ProfileHeaderView: UIView {
     }()
     
     // Add Set Status Button
-    private lazy var setStatusButton: UIButton = {
+    private lazy var setStatusButton: CustomButton = {
         // Declaration
-        let view = CustomButton(frame: CGRect(), title: "Set status", titleColor: .white, for: .touchUpInside, constraints: false)
+        let view = CustomButton(title: "Set status", titleColor: .white, forEvent: .touchUpInside, constraints: false)
         
         // Design
         view.backgroundColor = .systemBlue

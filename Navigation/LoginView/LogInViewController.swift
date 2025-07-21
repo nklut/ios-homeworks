@@ -89,8 +89,8 @@ class LogInViewController: UIViewController {
     }()
     
     // Login Screen Log-in button
-    private lazy var logInButton: UIButton = {
-        let view = CustomButton(frame: CGRect(), title: "Log In", titleColor: .white, for: .touchUpInside, constraints: false)
+    private lazy var logInButton: CustomButton = {
+        let view = CustomButton(title: "Log In", titleColor: .white, forEvent: .touchUpInside, constraints: false)
     
         view.layer.cornerRadius = 10.0
         view.setBackgroundImage(UIImage(named: "logInButton"), for: .normal)

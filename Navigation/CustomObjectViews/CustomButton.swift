@@ -8,12 +8,13 @@ class CustomButton: UIButton {
     var eventOnTap: (() -> Void)?
     private var isConstraintsDesign: Bool
     
-    init(frame: CGRect, title: String, titleColor: UIColor, for eventType: UIControl.Event, constraints isConstraintsDesign: Bool) {
+    init(title: String, titleColor: UIColor, forEvent eventType: UIControl.Event, constraints isConstraintsDesign: Bool) {
         self.title = title
         self.titleColor = titleColor
         self.eventType = eventType
         self.isConstraintsDesign = isConstraintsDesign
-        super.init(frame: frame)
+
+        super.init(frame: .zero)
         
         self.setTitleColor(self.titleColor, for: .normal)
         self.setTitle(self.title, for: .normal)
