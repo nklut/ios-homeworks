@@ -25,12 +25,6 @@ class PostViewController: UIViewController {
         return button
     }()
     
-    // Open Info on press
-    @objc func didPressButton() {
-        let ivc = InfoViewController()
-        self.navigationController?.pushViewController(ivc, animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBrown
@@ -39,5 +33,11 @@ class PostViewController: UIViewController {
         // Adding Button to the Navigation Bar
         infoButton.addTarget(self, action: #selector(didPressButton), for: .touchUpInside)
         self.navigationItem.setRightBarButton(UIBarButtonItem(customView: infoButton), animated: true)
+    }
+    
+    // Open Info on press
+    @objc func didPressButton() {
+        let ivc = InfoViewController()
+        self.navigationController?.pushViewController(ivc, animated: true)
     }
 }

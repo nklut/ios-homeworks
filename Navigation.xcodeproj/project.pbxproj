@@ -35,6 +35,7 @@
 		11B663052E24FA820032A5B1 /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B663042E24FA820032A5B1 /* LoginInspector.swift */; };
 		11B663072E2516310032A5B1 /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B663062E2516310032A5B1 /* LoginFactory.swift */; };
 		11B6630E2E2678180032A5B1 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 11B6630D2E2678180032A5B1 /* iOSIntPackage */; };
+		11B663112E2E32C70032A5B1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B663102E2E32C70032A5B1 /* CustomButton.swift */; };
 		11F42E732E15336E002733B3 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F42E6B2E15336D002733B3 /* StorageService.framework */; };
 		11F42E742E15336E002733B3 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11F42E6B2E15336D002733B3 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -93,6 +94,7 @@
 		11B663022E24EEED0032A5B1 /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
 		11B663042E24FA820032A5B1 /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		11B663062E2516310032A5B1 /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
+		11B663102E2E32C70032A5B1 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		11F42E6B2E15336D002733B3 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -141,6 +143,8 @@
 		115413FE2C9291FE0051640B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				11B663122E2E34690032A5B1 /* LoginView */,
+				11B6630F2E2E329A0032A5B1 /* CustomObjectViews */,
 				11B662F72E1B884C0032A5B1 /* User */,
 				115C0FDD2DDC923D00C3EF99 /* Profile */,
 				115413FF2C9291FE0051640B /* AppDelegate.swift */,
@@ -189,12 +193,27 @@
 				11B662FC2E1B8A4A0032A5B1 /* CurrentUserService.swift */,
 				11B662FE2E1F49080032A5B1 /* TestUserService.swift */,
 				11B663002E24ECDD0032A5B1 /* Checker.swift */,
-				11B663022E24EEED0032A5B1 /* LoginViewControllerDelegate.swift */,
-				115C0FDE2DDF3EE500C3EF99 /* LogInViewController.swift */,
 				11B663042E24FA820032A5B1 /* LoginInspector.swift */,
 				11B663062E2516310032A5B1 /* LoginFactory.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		11B6630F2E2E329A0032A5B1 /* CustomObjectViews */ = {
+			isa = PBXGroup;
+			children = (
+				11B663102E2E32C70032A5B1 /* CustomButton.swift */,
+			);
+			path = CustomObjectViews;
+			sourceTree = "<group>";
+		};
+		11B663122E2E34690032A5B1 /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				11B663022E24EEED0032A5B1 /* LoginViewControllerDelegate.swift */,
+				115C0FDE2DDF3EE500C3EF99 /* LogInViewController.swift */,
+			);
+			path = LoginView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11B663112E2E32C70032A5B1 /* CustomButton.swift in Sources */,
 				115414182C9295440051640B /* PostViewController.swift in Sources */,
 				115414042C9291FE0051640B /* ViewController.swift in Sources */,
 				115C0FE52DE18A2500C3EF99 /* UITableViewExtensions.swift in Sources */,

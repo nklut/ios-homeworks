@@ -113,21 +113,16 @@ class ProfileHeaderView: UIView {
     // Add Set Status Button
     private lazy var setStatusButton: UIButton = {
         // Declaration
-        let view = UIButton(type: .roundedRect)
-        view.setTitle("Set status", for: .normal)
+        let view = CustomButton(frame: CGRect(), title: "Set status", titleColor: .white, for: .touchUpInside, constraints: false)
         
         // Design
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitleColor(UIColor.white, for: .normal)
         view.backgroundColor = .systemBlue
         view.layer.cornerRadius = 4
         view.layer.shadowOffset = CGSize(width: 4, height: 4)
         view.layer.shadowRadius = 4
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.7
-        
-        // Functions
-        view.addTarget(self, action: #selector(didPressStatusButton), for: .touchUpInside)
+        view.eventOnTap = didPressStatusButton
         
         return view
     }()

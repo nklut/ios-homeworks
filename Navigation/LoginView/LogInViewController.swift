@@ -90,15 +90,11 @@ class LogInViewController: UIViewController {
     
     // Login Screen Log-in button
     private lazy var logInButton: UIButton = {
-        let view = UIButton(type: .roundedRect)
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let view = CustomButton(frame: CGRect(), title: "Log In", titleColor: .white, for: .touchUpInside, constraints: false)
+    
         view.layer.cornerRadius = 10.0
-        view.setTitle("Log In", for: .normal)
-        view.setTitleColor(.white, for: .normal)
         view.setBackgroundImage(UIImage(named: "logInButton"), for: .normal)
-        
-        view.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        view.eventOnTap = didTapButton
         
         return view
     }()
@@ -154,8 +150,7 @@ class LogInViewController: UIViewController {
     }
     
     // On login button press, clear fields and open Profile screen
-    @objc func didTapButton() {
-        
+    @objc func didTapButton() -> Void {
         
         let userLogin = userNameField.text ?? "_"
         let userPass = passwordField.text ?? "_"
