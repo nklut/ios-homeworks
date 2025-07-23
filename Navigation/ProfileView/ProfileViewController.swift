@@ -3,6 +3,8 @@ import StorageService
 
 class ProfileViewController: UIViewController {
     
+    weak var coordinator: ProfileCoordinator?
+    
     // List of sample Posts(4 items)
     fileprivate let data = postList
     private var sectionsList = ["Photos", "Posts"]
@@ -128,17 +130,12 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDataSource {
     
     // Define Number of Sections
-    func numberOfSections(
-        in tableView: UITableView
-    ) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         sectionsList.count
     }
     
     // Define Number of cells in 1 section equal to the Amount of posts in postList
-    func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
-    ) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
             return postList.count
         } else {
@@ -147,10 +144,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
 
     // Add post to cell according to index(Path)
-    func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 1
         {
             guard let cell = tableView.dequeueReusableCell(
@@ -179,30 +173,16 @@ extension ProfileViewController: UITableViewDataSource {
 extension ProfileViewController: UITableViewDelegate {
     
     // Define header height
-    func tableView(
-        _ tableView: UITableView,
-        heightForHeaderInSection section: Int
-    ) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return UITableView.automaticDimension
     }
     
-    func tableView(
-        _ tableView: UITableView,
-        heightForFooterInSection section: Int
-    ) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0
     }
     
-    func tableView(
-        _ tableView: UITableView,
-        heightForRowAt indexPath: IndexPath
-    ) -> CGFloat {
-        if indexPath.section == 0 {
-            return UITableView.automaticDimension
-        }
-        else {
-            return UITableView.automaticDimension
-        }
+    func tableView(_ tableView: UITableView,heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -212,10 +192,7 @@ extension ProfileViewController: UITableViewDelegate {
     }
 
     // Set header as Profile Header View
-    func tableView(
-        _ tableView: UITableView,
-        viewForHeaderInSection section: Int
-    ) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             guard let headerView = tableView.dequeueReusableHeaderFooterView(
                 withIdentifier: HeaderFooterReuseID.base.rawValue
@@ -230,12 +207,8 @@ extension ProfileViewController: UITableViewDelegate {
         }
     }
     
-    func tableView(
-        _ tableView: UITableView,
-        viewForFooterInSection section: Int
-    ) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
-
     }
     
 }

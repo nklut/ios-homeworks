@@ -3,6 +3,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var navigationCoordinator: NavigationCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -12,24 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let loginViewController = LogInViewController()
         let factory = MyLoginFactory()
         loginViewController.loginDelegate = factory.makeLoginInspector()
-      
-        // Feed Nav Controller Setup
-        let feedNavigationController = UINavigationController()
-        feedNavigationController.tabBarItem.title = "Feed"
-        feedNavigationController.tabBarItem.image = UIImage(systemName: "book.pages")
-        feedNavigationController.viewControllers = [FeedViewController()]
         
-        // Profile Nav Controller Setup
-        let profileNavigationController = UINavigationController()
-        profileNavigationController.tabBarItem.title = "Profile"
-        profileNavigationController.tabBarItem.image = UIImage(systemName: "person")
-        profileNavigationController.viewControllers = [LogInViewController()]
+        // Init coordinator tree
+        navigationCoordinator = NavigationCoordinator(window: window)
+        navigationCoordinator?.start()
         
-        // Tab bar Controller Setup
-        let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [profileNavigationController, feedNavigationController]
-           
-        window.rootViewController = tabBarController
         window.makeKeyAndVisible()
         self.window = window
         

@@ -2,6 +2,9 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
+    // Add coordinator
+    weak var coordinator: FeedCoordinator?
+    
     // Add button for Post 1
     private lazy var openPostButton1: UIButton = {
         // Declararion
@@ -27,7 +30,6 @@ class FeedViewController: UIViewController {
     private lazy var guessTextField: UITextField = {
         let view = UITextField()
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
-
         
         view.translatesAutoresizingMaskIntoConstraints = false
         view.placeholder = "Input your guess"
@@ -92,7 +94,6 @@ class FeedViewController: UIViewController {
         return view
     }()
     
-
     override func viewDidLoad() {
         // Setup main view
         super.viewDidLoad()
@@ -104,7 +105,6 @@ class FeedViewController: UIViewController {
         
         // Positioning
         makeConstraints()
-
     }
     
     private func makeConstraints() {

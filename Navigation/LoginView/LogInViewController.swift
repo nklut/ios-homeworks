@@ -2,6 +2,8 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    var coordinator: LoginCoordinator?
+    
     // Login screen Logo
     private lazy var logInLogo: UIImageView = {
         let view = UIImageView(image: UIImage(named: "logo"))
@@ -163,8 +165,7 @@ class LogInViewController: UIViewController {
         #endif
        
         if isCorrect {
-            let pvc = ProfileViewController(user: user!)
-            self.navigationController?.pushViewController(pvc, animated: true)
+            coordinator?.loginDone()
         } else {
             
             userNameField.text = ""
@@ -310,9 +311,7 @@ class LogInViewController: UIViewController {
 // Responder for textfield text input
 extension LogInViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(
-        _ textField: UITextField
-    ) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
