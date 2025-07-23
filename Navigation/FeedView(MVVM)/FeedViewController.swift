@@ -120,9 +120,9 @@ class FeedViewController: UIViewController {
     // MAke a guess on button tap and show result as alert msg
     @objc func checkGuessTapped() {
         var resultMessage: String
-        let feed = FeedModel()
+        let feed = FeedViewModel()
         
-        if feed.check(guessWord: guessTextField.text!) {
+        if feed.check(guessTextField.text!) == .correct {
             resultMessage = "Correct"
             guessTextField.text = ""
             resultLabel.text = resultMessage

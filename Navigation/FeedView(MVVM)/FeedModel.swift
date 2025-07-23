@@ -1,8 +1,10 @@
+protocol FeedViewModelOutput {
+    var secretWord: String { get }
+    var guessStatus: Guess { get set }
+    func check(_ guessWord: String) -> Guess
+}
 
-class FeedModel {
-    private let secretWord = "secret"
-    
-    func check(guessWord: String) -> Bool {
-        return (secretWord == guessWord)
-    }
+enum Guess {
+    case correct
+    case wrong
 }
