@@ -159,15 +159,12 @@
 		115413FE2C9291FE0051640B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				11B6631A2E30C5CA0032A5B1 /* Coordinators */,
+				11B6632B2E371E5B0032A5B1 /* AppDelegate */,
 				11B663142E2E3E060032A5B1 /* Models */,
 				11B663132E2E3DED0032A5B1 /* FeedView(MVVM) */,
 				11B663122E2E34690032A5B1 /* LoginView */,
 				11B6630F2E2E329A0032A5B1 /* CustomObjectViews */,
 				115C0FDD2DDC923D00C3EF99 /* ProfileView */,
-				115413FF2C9291FE0051640B /* AppDelegate.swift */,
-				115414012C9291FE0051640B /* SceneDelegate.swift */,
-				115414032C9291FE0051640B /* ViewController.swift */,
 				115414082C9292000051640B /* Assets.xcassets */,
 				1154140A2C9292000051640B /* LaunchScreen.storyboard */,
 				1154140D2C9292000051640B /* Info.plist */,
@@ -189,6 +186,7 @@
 				115C0FF72DE8332700C3EF99 /* Reusable.swift */,
 				115C0FDB2DDC792200C3EF99 /* ProfileHeaderView.swift */,
 				115C0FEC2DE4283E00C3EF99 /* TableSectionFooterHeaderView.swift */,
+				11B663212E30C74B0032A5B1 /* ProfileCoordinator.swift */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";
@@ -228,6 +226,7 @@
 			children = (
 				11B663022E24EEED0032A5B1 /* LoginViewControllerDelegate.swift */,
 				115C0FDE2DDF3EE500C3EF99 /* LogInViewController.swift */,
+				11B663252E30D2550032A5B1 /* LoginCoordinator.swift */,
 			);
 			path = LoginView;
 			sourceTree = "<group>";
@@ -238,6 +237,7 @@
 				115414132C92941F0051640B /* FeedViewController.swift */,
 				11B663292E30E1570032A5B1 /* FeedViewModel.swift */,
 				11B663182E2E45F10032A5B1 /* FeedModel.swift */,
+				11B6631F2E30C7300032A5B1 /* FeedCoordinator.swift */,
 			);
 			path = "FeedView(MVVM)";
 			sourceTree = "<group>";
@@ -259,17 +259,17 @@
 			path = FeedModels;
 			sourceTree = "<group>";
 		};
-		11B6631A2E30C5CA0032A5B1 /* Coordinators */ = {
+		11B6632B2E371E5B0032A5B1 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
 				11B6631B2E30C5EE0032A5B1 /* MainCoordinator.swift */,
 				11B6631D2E30C6CA0032A5B1 /* NavigationCoordinator.swift */,
-				11B6631F2E30C7300032A5B1 /* FeedCoordinator.swift */,
-				11B663252E30D2550032A5B1 /* LoginCoordinator.swift */,
-				11B663212E30C74B0032A5B1 /* ProfileCoordinator.swift */,
 				11B663272E30D5020032A5B1 /* TabBarCoordinator.swift */,
+				115413FF2C9291FE0051640B /* AppDelegate.swift */,
+				115414012C9291FE0051640B /* SceneDelegate.swift */,
+				115414032C9291FE0051640B /* ViewController.swift */,
 			);
-			path = Coordinators;
+			path = AppDelegate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

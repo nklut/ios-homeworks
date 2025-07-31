@@ -1,6 +1,7 @@
 import UIKit
 
 class TabBarCoordinator: MainCoordinator {
+    
     var navigationController: UINavigationController
     private let window: UIWindow
     
@@ -13,9 +14,7 @@ class TabBarCoordinator: MainCoordinator {
     func start() {
         
         let tabBarController = UITabBarController()
-        
         let feedCoordinator = FeedCoordinator(navigationController: UINavigationController())
-        
         let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
          
         profileCoordinator.start()
