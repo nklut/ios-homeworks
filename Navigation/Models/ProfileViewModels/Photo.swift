@@ -1,4 +1,5 @@
 import UIKit
+import iOSIntPackage
 
 struct Photo {
     let image: UIImage
@@ -13,6 +14,8 @@ extension Photo {
         let newsList: [UIImage] = (1...4).map {UIImage(named: "cat_news_\($0)")!}
         imagesList.append(contentsOf: newsList)
         imagesList.append(contentsOf: galleryList)
+        imagesList.append(contentsOf: galleryList)
+        imagesList.append(contentsOf: newsList)
         return imagesList
     }
 }

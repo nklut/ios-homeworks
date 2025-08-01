@@ -6,10 +6,13 @@ class PhotosViewController: UIViewController {
     // Define spacing between photos and list of photos
     private let layoutSpacing = 8.0
     fileprivate lazy var photos: [UIImage] = Photo.make()
+    fileprivate lazy var filteredPhotos: [UIImage] = []
+    private let imageProcessor = ImageProcessor()
     
+
     // Create Gallery with user images and update View after image addition
-    private var imagesStorage = ImagePublisherFacade()
-    private var imagesGallery: [UIImage] = []
+//    private var imagesStorage = ImagePublisherFacade()
+//    private var imagesGallery: [UIImage] = []
     
     // Create instance of collection view for the Photo Gallery
     private let photoCollectionView: UICollectionView = {
@@ -28,15 +31,22 @@ class PhotosViewController: UIViewController {
         return view
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Setup Publisher for Gallery images
-        let delay = 0.5
-        let repeatCount = 20
-        let images = photos
-        setupPublisher(delay, repeatCount, images)
+        // Setup Publisher for Gallery images
+//        let delay = 0.5
+//        let repeatCount = 20
+//        let images = photos
+//        setupPublisher(delay, repeatCount, images)
+        
+        // Setup filter options
+        let sourceImages: [UIImage] = photos
+        let filter: ColorFilter = .noir
+        let qualityOfService: QualityOfService = .background
+        
+        // Apply filter to photos
+        applyFilter(sourceImages, filter, qualityOfService)
 
         // Setup views and positions
         setupView()
@@ -44,19 +54,42 @@ class PhotosViewController: UIViewController {
         setupConstraints()
     }
     
-    private func setupPublisher(_ delay: TimeInterval, _ repeatCount: Int, _ images: [UIImage]) {
-        
-        // Subscribe to publisher
-        imagesStorage.subscribe(self)
-        
-        // Add user images to the gallery. Using updated Photo Model
-        // addImagesWithTimer method is using "random pick" to get each picture from entire user gallery
-        imagesStorage.addImagesWithTimer(time: delay, repeat: repeatCount, userImages: images)
-        
-        // Remove subscription after time needed for gallery fulfilment
-        let timeToPublish: Double = delay * Double(repeatCount) + 2
-        DispatchQueue.main.asyncAfter(deadline: .now() + timeToPublish) {
-            self.imagesStorage.removeSubscription(for: self)
+//    private func setupPublisher(_ delay: TimeInterval, _ repeatCount: Int, _ images: [UIImage]) {
+//        
+//        // Subscribe to publisher
+//        imagesStorage.subscribe(self)
+//        
+//        // Add user images to the gallery. Using updated Photo Model
+//        // addImagesWithTimer method is using "random pick" to get each picture from entire user gallery
+//        imagesStorage.addImagesWithTimer(time: delay, repeat: repeatCount, userImages: images)
+//        
+//        // Remove subscription after time needed for gallery fulfilment
+//        let timeToPublish: Double = delay * Double(repeatCount) + 2
+//        DispatchQueue.main.asyncAfter(deadline: .now() + timeToPublish) {
+//            self.imagesStorage.removeSubscription(for: self)
+//        }
+//    }
+    
+    private func applyFilter(_ sourceImages: [UIImage], _ filter: ColorFilter, _ qualityOfService: QualityOfService) {
+    // Start processing
+        imageProcessor.processImagesOnThread(
+            sourceImages: sourceImages,
+            filter: filter,
+            qos: qualityOfService
+        ) { [weak self] filteredPhotos in
+            guard let self else { return }
+            
+    // Convert CGImage back to UIImage
+            let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
+                guard let cgImage = cgImage else { return nil }
+                return UIImage(cgImage: cgImage)
+            }
+            
+    // Relaod Collection on the main thread
+            DispatchQueue.main.async {
+                self.filteredPhotos = processedImages
+                self.photoCollectionView.reloadData()
+            }
         }
     }
     
@@ -93,7 +126,7 @@ extension PhotosViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        imagesGallery.count
+        filteredPhotos.count
     }
         
     // create and update cell using photo name from photoList
@@ -107,9 +140,8 @@ extension PhotosViewController: UICollectionViewDataSource {
         ) as! PhotosCollectionViewCell
         
         // Use Gallery image as Cell View Image
-        let photo = imagesGallery[indexPath.row]
+        let photo = filteredPhotos[indexPath.row]
         cell.setup(with: photo)
-        
         return cell
     }
 }
@@ -173,14 +205,14 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        // Add images to the Gallery
-        self.imagesGallery = images
-        photoCollectionView.reloadData()
-        
-        // Scroll to latest added image
-        let item = IndexPath(item: images.count - 1, section: 0)
-        photoCollectionView.scrollToItem(at: item, at: .bottom, animated: true)
-    }
-}
+//extension PhotosViewController: ImageLibrarySubscriber {
+//    func receive(images: [UIImage]) {
+//        // Add images to the Gallery
+//        self.imagesGallery = images
+//        photoCollectionView.reloadData()
+//        
+//        // Scroll to latest added image
+//        let item = IndexPath(item: images.count - 1, section: 0)
+//        photoCollectionView.scrollToItem(at: item, at: .bottom, animated: true)
+//    }
+//}
