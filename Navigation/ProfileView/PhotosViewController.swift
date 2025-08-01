@@ -41,12 +41,18 @@ class PhotosViewController: UIViewController {
 //        setupPublisher(delay, repeatCount, images)
         
         // Setup filter options
-        let sourceImages: [UIImage] = photos
         let filter: ColorFilter = .noir
+        let sourceImages: [UIImage] = photos
         let qualityOfService: QualityOfService = .background
         
+        #if DEBUG
+        // QOS Perfomance testing
+        let qualityOfServiceTestCases: [QualityOfService] = [.background, .default, .userInitiated, .userInteractive]
+        applyFilterDebug(sourceImages, filter, qualityOfServiceTestCases)
+        #else
         // Apply filter to photos
         applyFilter(sourceImages, filter, qualityOfService)
+        #endif
 
         // Setup views and positions
         setupView()
@@ -71,26 +77,55 @@ class PhotosViewController: UIViewController {
 //    }
     
     private func applyFilter(_ sourceImages: [UIImage], _ filter: ColorFilter, _ qualityOfService: QualityOfService) {
-    // Start processing
-        imageProcessor.processImagesOnThread(
-            sourceImages: sourceImages,
-            filter: filter,
-            qos: qualityOfService
-        ) { [weak self] filteredPhotos in
-            guard let self else { return }
+        
+        // Start processing
+        imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qualityOfService) {
+            [weak self] filteredPhotos in guard let self else { return }
             
-    // Convert CGImage back to UIImage
+            // Convert CGImage back to UIImage
             let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
                 guard let cgImage = cgImage else { return nil }
                 return UIImage(cgImage: cgImage)
             }
             
-    // Relaod Collection on the main thread
+            // Relaod Collection on the main thread
             DispatchQueue.main.async {
                 self.filteredPhotos = processedImages
                 self.photoCollectionView.reloadData()
             }
         }
+    }
+    
+    // Perfomance testing
+    private func applyFilterDebug(_ sourceImages: [UIImage], _ filter: ColorFilter, _ qualityOfService: [QualityOfService]) {
+        
+        // Perfomance test for the list of different QAual
+        for qos in qualityOfService {
+            
+            let startTime = CFAbsoluteTimeGetCurrent()
+            
+            // Start processing
+            imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qos) {
+                [weak self] filteredPhotos in guard let self else { return }
+                
+                // Convert CGImage back to UIImage
+                let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
+                    guard let cgImage = cgImage else { return nil }
+                    return UIImage(cgImage: cgImage)
+                }
+                
+                // Relaod Collection on the main thread
+                DispatchQueue.main.async {
+                    self.filteredPhotos = processedImages
+                    self.photoCollectionView.reloadData()
+                }
+                
+                let executionTime = CFAbsoluteTimeGetCurrent() - startTime
+                print("Execution time for QualityOfService \(qos.rawValue) is: \(executionTime) seconds")
+                
+            }
+        }
+
     }
     
     // Main view setup
