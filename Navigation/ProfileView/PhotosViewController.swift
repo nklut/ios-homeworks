@@ -47,8 +47,13 @@ class PhotosViewController: UIViewController {
         
         #if DEBUG
         // QOS Perfomance testing
-        let qualityOfServiceTestCases: [QualityOfService] = [.background, .default, .userInitiated, .userInteractive]
-        applyFilterDebug(sourceImages, filter, qualityOfServiceTestCases)
+        let qualityOfServiceTestCases: [QualityOfService] = [.background, .default, .userInteractive, .utility]
+        let filterList: [ColorFilter] = [.noir, .fade, .bloom(intensity: 1), .tonal]
+        
+        //applyFilterDebug(sourceImages, filter, qualityOfServiceTestCases)
+        Task {
+            await qosPerfomance(sourceImages, filterList, qualityOfServiceTestCases)
+        }
         #else
         // Apply filter to photos
         applyFilter(sourceImages, filter, qualityOfService)
@@ -99,33 +104,138 @@ class PhotosViewController: UIViewController {
     // Perfomance testing
     private func applyFilterDebug(_ sourceImages: [UIImage], _ filter: ColorFilter, _ qualityOfService: [QualityOfService]) {
         
-        // Perfomance test for the list of different QAual
-        for qos in qualityOfService {
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
+        // Start processing .background QoS
+//        imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qualityOfService[0]) {
+//            [weak self] filteredPhotos in guard let self else { return }
+//            
+//            // Convert CGImage back to UIImage
+//            let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
+//                guard let cgImage = cgImage else { return nil }
+//                return UIImage(cgImage: cgImage)
+//            }
+//            
+//            // Relaod Collection on the main thread
+//            DispatchQueue.main.async {
+//                self.filteredPhotos = processedImages
+//                self.photoCollectionView.reloadData()
+//            }
+//            
+//            let executionTime = CFAbsoluteTimeGetCurrent() - startTime
+//            print("Execution time for QualityOfService \(qualityOfService[0].rawValue) is: \(executionTime) seconds")
+//        }
+        
+        // Start processing .default QoS
+        imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qualityOfService[1]) {
+            [weak self] filteredPhotos in guard let self else { return }
             
-            let startTime = CFAbsoluteTimeGetCurrent()
+            // Convert CGImage back to UIImage
+            let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
+                guard let cgImage = cgImage else { return nil }
+                return UIImage(cgImage: cgImage)
+            }
             
-            // Start processing
-            imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qos) {
-                [weak self] filteredPhotos in guard let self else { return }
-                
-                // Convert CGImage back to UIImage
-                let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
-                    guard let cgImage = cgImage else { return nil }
-                    return UIImage(cgImage: cgImage)
-                }
-                
-                // Relaod Collection on the main thread
-                DispatchQueue.main.async {
-                    self.filteredPhotos = processedImages
-                    self.photoCollectionView.reloadData()
-                }
-                
-                let executionTime = CFAbsoluteTimeGetCurrent() - startTime
-                print("Execution time for QualityOfService \(qos.rawValue) is: \(executionTime) seconds")
-                
+            // Relaod Collection on the main thread
+            DispatchQueue.main.async {
+                self.filteredPhotos = processedImages
+                self.photoCollectionView.reloadData()
+            }
+            
+            let executionTime = CFAbsoluteTimeGetCurrent() - startTime
+            print("Execution time for QualityOfService \(qualityOfService[1].rawValue) is: \(executionTime) seconds")
+        }
+        
+        // Start processing .userInteractive QoS
+//        imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qualityOfService[2]) {
+//            [weak self] filteredPhotos in guard let self else { return }
+//            
+//            // Convert CGImage back to UIImage
+//            let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
+//                guard let cgImage = cgImage else { return nil }
+//                return UIImage(cgImage: cgImage)
+//            }
+//            
+//            // Relaod Collection on the main thread
+//            DispatchQueue.main.async {
+//                self.filteredPhotos = processedImages
+//                self.photoCollectionView.reloadData()
+//            }
+//            
+//            let executionTime = CFAbsoluteTimeGetCurrent() - startTime
+//            print("Execution time for QualityOfService \(qualityOfService[2].rawValue) is: \(executionTime) seconds")
+//        }
+        
+        // Start processing .utility QoS
+//        imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qualityOfService[3]) {
+//            [weak self] filteredPhotos in guard let self else { return }
+//            
+//            // Convert CGImage back to UIImage
+//            let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
+//                guard let cgImage = cgImage else { return nil }
+//                return UIImage(cgImage: cgImage)
+//            }
+//            
+//            // Relaod Collection on the main thread
+//            DispatchQueue.main.async {
+//                self.filteredPhotos = processedImages
+//                self.photoCollectionView.reloadData()
+//            }
+//            
+//            let executionTime = CFAbsoluteTimeGetCurrent() - startTime
+//            print("Execution time for QualityOfService \(qualityOfService[3].rawValue) is: \(executionTime) seconds")
+//        }
+//
+    }
+    
+    func qosPerfomance(_ sourceImages: [UIImage], _ filter: [ColorFilter], _ qosList: [QualityOfService]) async {
+        
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask(priority: .background) {
+                await self.task(sourceImages, filter[0], qosList[0])
             }
         }
+        
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask(priority: nil) {
+                await self.task(sourceImages, filter[1], qosList[1])
+            }
+        }
+        
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask(priority: .high) {
+                await self.task(sourceImages, filter[2], qosList[2])
+            }
+        }
+        
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask(priority: .low) {
+                await self.task(sourceImages, filter[3], qosList[3])
+            }
+        }
+    }
+    
+    func task(_ sourceImages: [UIImage], _ filter: ColorFilter, _ qos: QualityOfService) {
+        let startTime = CFAbsoluteTimeGetCurrent()
 
+        imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qos) {
+            [weak self] filteredPhotos in guard let self else { return }
+            
+            // Convert CGImage back to UIImage
+            let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
+                guard let cgImage = cgImage else { return nil }
+                return UIImage(cgImage: cgImage)
+            }
+            
+            // Relaod Collection on the main thread
+            DispatchQueue.main.async {
+                self.filteredPhotos = processedImages
+                self.photoCollectionView.reloadData()
+            }
+            
+            let executionTime = CFAbsoluteTimeGetCurrent() - startTime
+            print("Execution time for QualityOfService \(qos.rawValue) is: \(executionTime) seconds")
+        }
     }
     
     // Main view setup
