@@ -44,7 +44,7 @@ class FeedViewController: UIViewController {
         view.keyboardType = UIKeyboardType.default
         view.returnKeyType = UIReturnKeyType.done
         view.clearButtonMode = UITextField.ViewMode.whileEditing
-
+        
         return view
     }()
     
@@ -150,8 +150,8 @@ class FeedViewController: UIViewController {
     
     // Open post 2 for button 2
     @objc func openPost2() {
-        let currentPost = Post(title: "Post 2")
-        let pvc = PostViewController(post: currentPost)
-        self.navigationController?.pushViewController(pvc, animated: true)
+        //        let currentPost = Post(title: "Post 2")
+        //        let pvc = PostViewController(post: currentPost)
+        //        self.navigationController?.pushViewController(pvc, animated: true)
     }
 }
