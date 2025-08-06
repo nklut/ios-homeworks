@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11337A962E41E71E001A145C /* PasswordBruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11337A952E41E713001A145C /* PasswordBruteForce.swift */; };
 		115414002C9291FE0051640B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115413FF2C9291FE0051640B /* AppDelegate.swift */; };
 		115414022C9291FE0051640B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115414012C9291FE0051640B /* SceneDelegate.swift */; };
 		115414042C9291FE0051640B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115414032C9291FE0051640B /* ViewController.swift */; };
@@ -73,6 +74,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		11337A952E41E713001A145C /* PasswordBruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordBruteForce.swift; sourceTree = "<group>"; };
 		115413FC2C9291FE0051640B /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		115413FF2C9291FE0051640B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		115414012C9291FE0051640B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 		11B663142E2E3E060032A5B1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				11337A952E41E713001A145C /* PasswordBruteForce.swift */,
 				11B663172E2E45DF0032A5B1 /* FeedModels */,
 				11B662F72E1B884C0032A5B1 /* UserModels */,
 				115C0FF42DE820AA00C3EF99 /* ProfileViewModels */,
@@ -394,6 +397,7 @@
 				11B663112E2E32C70032A5B1 /* CustomButton.swift in Sources */,
 				11B663192E2E45F10032A5B1 /* FeedModel.swift in Sources */,
 				115414182C9295440051640B /* PostViewController.swift in Sources */,
+				11337A962E41E71E001A145C /* PasswordBruteForce.swift in Sources */,
 				115414042C9291FE0051640B /* ViewController.swift in Sources */,
 				115C0FE52DE18A2500C3EF99 /* UITableViewExtensions.swift in Sources */,
 				11B663012E24ECDD0032A5B1 /* Checker.swift in Sources */,

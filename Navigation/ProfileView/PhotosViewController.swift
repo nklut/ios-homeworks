@@ -108,7 +108,8 @@ class PhotosViewController: UIViewController {
         DispatchQueue.global().sync {
             print("Background Priority")
             imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qualityOfService[0]) {
-                [weak self] filteredPhotos in guard let self else { return }
+                [weak self] filteredPhotos in
+                guard let self else { return }
                 
                 // Convert CGImage back to UIImage
                 let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in

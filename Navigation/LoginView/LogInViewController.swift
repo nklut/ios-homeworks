@@ -4,6 +4,9 @@ class LogInViewController: UIViewController {
     
     var coordinator: LoginCoordinator?
     
+    // init Brute forcer
+    private let bruteForcer = PasswordBruteForce()
+    
     // Login screen Logo
     private lazy var logInLogo: UIImageView = {
         let view = UIImageView(image: UIImage(named: "logo"))
@@ -90,6 +93,26 @@ class LogInViewController: UIViewController {
         return view
     }()
     
+    private lazy var passwordBruteButton: UIButton = {
+        let view = CustomButton(title: "Brute force password", titleColor: .white, forEvent: .touchUpInside, constraints: false)
+    
+        view.layer.cornerRadius = 10.0
+        view.setBackgroundImage(UIImage(named: "logInButton"), for: .normal)
+        view.eventOnTap = bruteButtonPressed
+        
+        return view
+    }()
+    
+    private lazy var bruteForceActivity: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.style = .medium
+        view.color = .systemBlue
+        
+        return view
+    }()
+    
     // Login Screen Log-in button
     private lazy var logInButton: CustomButton = {
         let view = CustomButton(title: "Log In", titleColor: .white, forEvent: .touchUpInside, constraints: false)
@@ -149,6 +172,29 @@ class LogInViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardObservers()
+    }
+    
+    @objc func bruteButtonPressed() {
+        
+        // Create random password
+        let randomPassword = bruteForcer.generateRandomPassword(withLength: 4)
+        
+        // Start activity animation
+        bruteForceActivity.startAnimating()
+
+        // Brute force password
+        bruteForcer.bruteForce(realPassword: randomPassword, completion: { [weak self] result in
+                // Stop activity animation
+                self?.bruteForceActivity.stopAnimating()
+            
+                // On correct Guess pass pasword to password field and show it
+                if let password = result {
+                    print("Пароль найден: \(password)")
+                    self!.passwordField.isSecureTextEntry = false
+                    self!.passwordField.text = password
+                }
+            }
+        )
     }
     
     // On login button press, clear fields and open Profile screen
@@ -242,6 +288,8 @@ class LogInViewController: UIViewController {
         // Add User Data scroll view and Log-in Button to mai content view
         contentView.addSubview(userDataScrollView)
         contentView.addSubview(logInButton)
+        contentView.addSubview(passwordBruteButton)
+        contentView.addSubview(bruteForceActivity)
     }
     
     // Setup subviews positions for elements inside scrollview
@@ -278,12 +326,24 @@ class LogInViewController: UIViewController {
             passwordField.heightAnchor.constraint(equalToConstant: 50),
             passwordField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
             
+            // Setup Brute Froce activity indicator position
+            bruteForceActivity.topAnchor.constraint(equalTo: passwordField.topAnchor),
+            bruteForceActivity.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor),
+            bruteForceActivity.heightAnchor.constraint(equalToConstant: 50),
+            bruteForceActivity.widthAnchor.constraint(equalToConstant: 50),
+            
             // Setup Log-in button position
             logInButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
-            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            
+            passwordBruteButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
+            passwordBruteButton.heightAnchor.constraint(equalToConstant: 50),
+            passwordBruteButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            passwordBruteButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
+            passwordBruteButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            
         ])
     }
     
