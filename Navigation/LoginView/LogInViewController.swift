@@ -202,15 +202,17 @@ class LogInViewController: UIViewController {
                 guard let self else { return }
                 print("counter: ", counter)
                 counter -= 1
-                
+                passwordTimerLabel.isUserInteractionEnabled = false
                 passwordTimerLabel.numberOfLines = 2
                 passwordTimerLabel.text = counter <= 0 ? "Request Password" : "Password was sent.\nWait \(counter) seconds to request again"
                 
                 if counter <= 0 {
                     self.timer?.invalidate()
+                    passwordTimerLabel.isUserInteractionEnabled = true
+                    passwordTimerLabel.numberOfLines = 1
                 }
             }
-        passwordTimerLabel.numberOfLines = 1
+        
     }
     
     @objc func bruteButtonPressed() {
