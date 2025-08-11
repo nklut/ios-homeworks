@@ -11,7 +11,6 @@ class ProfileHeaderView: UIView {
         }
     }
     
-    
     private lazy var closeButton: UIButton = {
         let view = UIButton(type: .close)
         view.translatesAutoresizingMaskIntoConstraints = false

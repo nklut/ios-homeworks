@@ -3,6 +3,7 @@ import UIKit
 class LogInViewController: UIViewController {
     
     var coordinator: LoginCoordinator?
+    private var timer: Timer?
     
     // init Brute forcer
     private let bruteForcer = PasswordBruteForce()
@@ -124,6 +125,25 @@ class LogInViewController: UIViewController {
         return view
     }()
     
+    //Request Password through sms for registred phone
+    private lazy var passwordTimerLabel: UILabel = {
+        let view = UILabel()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.text = "Request password"
+        view.font = UIFont.systemFont(ofSize: 10, weight: .thin)
+        view.textColor = .systemGray2
+        view.textAlignment = .right
+        
+        // Add gesture on tap
+        let tapPasswordRequest = UITapGestureRecognizer(target: self, action: #selector(didRequestPassword))
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapPasswordRequest)
+        
+        return view
+    }()
+    
+    
     // Scroll view for position adaptation when keyboard appears
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -174,7 +194,31 @@ class LogInViewController: UIViewController {
         removeKeyboardObservers()
     }
     
+    @objc func didRequestPassword() {
+        var counter = 10
+        timer = Timer.scheduledTimer(
+            withTimeInterval: 1,
+            repeats: true) { [weak self] timer in
+                guard let self else { return }
+                print("counter: ", counter)
+                counter -= 1
+                
+                passwordTimerLabel.numberOfLines = 2
+                passwordTimerLabel.text = counter <= 0 ? "Request Password" : "Password was sent.\nWait \(counter) seconds to request again"
+                
+                if counter <= 0 {
+                    self.timer?.invalidate()
+                }
+            }
+        passwordTimerLabel.numberOfLines = 1
+    }
+    
     @objc func bruteButtonPressed() {
+        
+        // hide Password request label
+        DispatchQueue.main.async {
+            self.passwordTimerLabel.textColor = .systemGray6
+        }
         
         // Create random password
         let randomPassword = bruteForcer.generateRandomPassword(withLength: 4)
@@ -192,6 +236,7 @@ class LogInViewController: UIViewController {
                     print("Пароль найден: \(password)")
                     self!.passwordField.isSecureTextEntry = false
                     self!.passwordField.text = password
+                    
                 }
             }
         )
@@ -284,6 +329,7 @@ class LogInViewController: UIViewController {
         userDataScrollView.addSubview(userNameField)
         userDataScrollView.addSubview(separatorView)
         userDataScrollView.addSubview(passwordField)
+        userDataScrollView.addSubview(passwordTimerLabel)
         
         // Add User Data scroll view and Log-in Button to mai content view
         contentView.addSubview(userDataScrollView)
@@ -325,6 +371,10 @@ class LogInViewController: UIViewController {
             passwordField.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
             passwordField.heightAnchor.constraint(equalToConstant: 50),
             passwordField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
+            
+            // Setup Password request position
+            passwordTimerLabel.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor, constant: -10),
+            passwordTimerLabel.centerYAnchor.constraint(equalTo: passwordField.centerYAnchor),
             
             // Setup Brute Froce activity indicator position
             bruteForceActivity.topAnchor.constraint(equalTo: passwordField.topAnchor),
