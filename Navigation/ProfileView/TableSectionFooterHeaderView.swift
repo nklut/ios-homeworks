@@ -2,6 +2,13 @@ import UIKit
 
 class TableSectionFooterHeaderView: UITableViewHeaderFooterView {
     
+    //MARK: -TODO
+    var user: User? {
+        didSet {
+            setUserData()
+        }
+    }
+    
     private lazy var profileHeader: ProfileHeaderView = {
         let profileHeader = ProfileHeaderView()
         profileHeader.translatesAutoresizingMaskIntoConstraints = false
@@ -17,6 +24,10 @@ class TableSectionFooterHeaderView: UITableViewHeaderFooterView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setUserData() {
+        profileHeader.user = user
     }
     
     private func addSubviews() {

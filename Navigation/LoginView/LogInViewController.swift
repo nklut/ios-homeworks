@@ -2,6 +2,12 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    var coordinator: LoginCoordinator?
+    private var timer: Timer?
+    
+    // init Brute forcer
+    private let bruteForcer = PasswordBruteForce()
+    
     // Login screen Logo
     private lazy var logInLogo: UIImageView = {
         let view = UIImageView(image: UIImage(named: "logo"))
@@ -69,6 +75,8 @@ class LogInViewController: UIViewController {
         return view
     }()
     
+    var loginDelegate: LoginViewControllerDelegate = LoginInspector()
+    
     // Scroll view for position adaptation when keyboard appears
     private lazy var userDataScrollView: UIScrollView = {
         let view = UIScrollView()
@@ -86,30 +94,55 @@ class LogInViewController: UIViewController {
         return view
     }()
     
-    // User Data content view for login subviews
-    private lazy var userDataContentView: UIView = {
-        let view = UIView()
+    private lazy var passwordBruteButton: UIButton = {
+        let view = CustomButton(title: "Brute force password", titleColor: .white, forEvent: .touchUpInside, constraints: false)
+    
+        view.layer.cornerRadius = 10.0
+        view.setBackgroundImage(UIImage(named: "logInButton"), for: .normal)
+        view.eventOnTap = bruteButtonPressed
+        
+        return view
+    }()
+    
+    private lazy var bruteForceActivity: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemBackground
+        view.style = .medium
+        view.color = .systemBlue
         
         return view
     }()
     
     // Login Screen Log-in button
-    private lazy var logInButton: UIButton = {
-        let view = UIButton(type: .roundedRect)
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var logInButton: CustomButton = {
+        let view = CustomButton(title: "Log In", titleColor: .white, forEvent: .touchUpInside, constraints: false)
+    
         view.layer.cornerRadius = 10.0
-        view.setTitle("Log In", for: .normal)
-        view.setTitleColor(.white, for: .normal)
         view.setBackgroundImage(UIImage(named: "logInButton"), for: .normal)
-        
-        view.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        view.eventOnTap = didTapButton
         
         return view
     }()
+    
+    //Request Password through sms for registred phone
+    private lazy var passwordTimerLabel: UILabel = {
+        let view = UILabel()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.text = "Request password"
+        view.font = UIFont.systemFont(ofSize: 10, weight: .thin)
+        view.textColor = .systemGray2
+        view.textAlignment = .right
+        
+        // Add gesture on tap
+        let tapPasswordRequest = UITapGestureRecognizer(target: self, action: #selector(didRequestPassword))
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapPasswordRequest)
+        
+        return view
+    }()
+    
     
     // Scroll view for position adaptation when keyboard appears
     private lazy var scrollView: UIScrollView = {
@@ -158,16 +191,95 @@ class LogInViewController: UIViewController {
     // Keyboard disappears handler
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         removeKeyboardObservers()
     }
     
+    @objc func didRequestPassword() {
+        var counter = 10
+        timer = Timer.scheduledTimer(
+            withTimeInterval: 1,
+            repeats: true) { [weak self] timer in
+                guard let self else { return }
+                print("counter: ", counter)
+                counter -= 1
+                passwordTimerLabel.isUserInteractionEnabled = false
+                passwordTimerLabel.numberOfLines = 2
+                passwordTimerLabel.text = counter <= 0 ? "Request Password" : "Password was sent.\nWait \(counter) seconds to request again"
+                
+                if counter <= 0 {
+                    self.timer?.invalidate()
+                    passwordTimerLabel.isUserInteractionEnabled = true
+                    passwordTimerLabel.numberOfLines = 1
+                }
+            }
+        
+    }
+    
+    @objc func bruteButtonPressed() {
+        
+        // hide Password request label
+        DispatchQueue.main.async {
+            self.passwordTimerLabel.textColor = .systemGray6
+        }
+        
+        // Create random password
+        let randomPassword = bruteForcer.generateRandomPassword(withLength: 4)
+        
+        // Start activity animation
+        bruteForceActivity.startAnimating()
+
+        // Brute force password
+        bruteForcer.bruteForce(realPassword: randomPassword, completion: { [weak self] result in
+                // Stop activity animation
+                self?.bruteForceActivity.stopAnimating()
+            
+                // On correct Guess pass pasword to password field and show it
+                if let password = result {
+                    print("Пароль найден: \(password)")
+                    self!.passwordField.isSecureTextEntry = false
+                    self!.passwordField.text = password
+                    
+                }
+            }
+        )
+    }
+    
     // On login button press, clear fields and open Profile screen
-    @objc func didTapButton() {
-        let pvc = ProfileViewController()
-        passwordField.text = ""
-        userNameField.text = ""
-        self.navigationController?.pushViewController(pvc, animated: true)
+    @objc func didTapButton() -> Void {
+        
+        let userLogin = userNameField.text ?? "_"
+        let userPass = passwordField.text ?? "_"
+        let isCorrect = loginDelegate.check(userLogin: userLogin, userPass: userPass)
+        
+        #if DEBUG
+            let user = TestUserService().chekUserLogin(userLogin)
+        #else
+            let user = CurentUserService().chekUserLogin(userLogin)
+        #endif
+       
+        if isCorrect {
+            coordinator?.loginDone()
+        } else {
+            
+            userNameField.text = ""
+            passwordField.text = ""
+            
+            #if DEBUG
+                let alertMessage = "DEBUG MODE. Login: 123, Pass: 123"
+            #else
+                let alertMessage = "Please try again"
+            #endif
+            
+            let alert = UIAlertController(
+                title: "Wrong Login or Password",
+                message: alertMessage,
+                preferredStyle: .alert
+            )
+            
+            func wrongLoginAlert(action: UIAlertAction) {}
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: wrongLoginAlert))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     // move text Fields higher on keyboard appearance
@@ -215,24 +327,23 @@ class LogInViewController: UIViewController {
         // Add Logo to main content View
         contentView.addSubview(logInLogo)
         
-        // Add User Data Text Fields to User Data content View
-        userDataContentView.addSubview(userNameField)
-        userDataContentView.addSubview(separatorView)
-        userDataContentView.addSubview(passwordField)
-        
-        // Add User Data content View to User Data scroll View
-        userDataScrollView.addSubview(userDataContentView)
+        // Add User Data Text Fields
+        userDataScrollView.addSubview(userNameField)
+        userDataScrollView.addSubview(separatorView)
+        userDataScrollView.addSubview(passwordField)
+        userDataScrollView.addSubview(passwordTimerLabel)
         
         // Add User Data scroll view and Log-in Button to mai content view
         contentView.addSubview(userDataScrollView)
         contentView.addSubview(logInButton)
+        contentView.addSubview(passwordBruteButton)
+        contentView.addSubview(bruteForceActivity)
     }
     
     // Setup subviews positions for elements inside scrollview
     private func setupSubviewsConstraints() {
         
         NSLayoutConstraint.activate([
-            
             // Setup Logo position
             logInLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             logInLogo.heightAnchor.constraint(equalToConstant: 100),
@@ -246,35 +357,45 @@ class LogInViewController: UIViewController {
             userDataScrollView.heightAnchor.constraint(equalToConstant: 100.5),
             
             // Setup User Data content view position
-            userDataContentView.topAnchor.constraint(equalTo: userDataScrollView.bottomAnchor),
-            userDataContentView.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
-            userDataContentView.trailingAnchor.constraint(equalTo: userDataScrollView.trailingAnchor),
-            userDataContentView.bottomAnchor.constraint(equalTo: userDataScrollView.bottomAnchor),
-            
-            // Setup User name position
-            userNameField.topAnchor.constraint(equalTo: userDataContentView.topAnchor),
-            userNameField.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
+            userNameField.topAnchor.constraint(equalTo: userDataScrollView.topAnchor),
+            userNameField.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
             userNameField.heightAnchor.constraint(equalToConstant: 50),
             userNameField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
             
             // Setup text fields separator Line
             separatorView.topAnchor.constraint(equalTo: userNameField.bottomAnchor),
             separatorView.heightAnchor.constraint(equalToConstant: 0.5),
-            separatorView.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
+            separatorView.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
             separatorView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             
             // Setup Password position
             passwordField.topAnchor.constraint(equalTo: separatorView.bottomAnchor),
-            passwordField.leadingAnchor.constraint(equalTo: userDataContentView.leadingAnchor),
+            passwordField.leadingAnchor.constraint(equalTo: userDataScrollView.leadingAnchor),
             passwordField.heightAnchor.constraint(equalToConstant: 50),
             passwordField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
+            
+            // Setup Password request position
+            passwordTimerLabel.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor, constant: -10),
+            passwordTimerLabel.centerYAnchor.constraint(equalTo: passwordField.centerYAnchor),
+            
+            // Setup Brute Froce activity indicator position
+            bruteForceActivity.topAnchor.constraint(equalTo: passwordField.topAnchor),
+            bruteForceActivity.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor),
+            bruteForceActivity.heightAnchor.constraint(equalToConstant: 50),
+            bruteForceActivity.widthAnchor.constraint(equalToConstant: 50),
             
             // Setup Log-in button position
             logInButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
-            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            
+            passwordBruteButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
+            passwordBruteButton.heightAnchor.constraint(equalToConstant: 50),
+            passwordBruteButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            passwordBruteButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
+            passwordBruteButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            
         ])
     }
     
@@ -302,11 +423,8 @@ class LogInViewController: UIViewController {
 // Responder for textfield text input
 extension LogInViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(
-        _ textField: UITextField
-    ) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        
         return true
     }
 }

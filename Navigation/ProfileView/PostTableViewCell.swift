@@ -1,4 +1,5 @@
 import UIKit
+import StorageService
 
 class PostTableViewCell: UITableViewCell {
     
@@ -15,7 +16,7 @@ class PostTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder: not implemented")
-    }
+    }    
     
     // Cell design setup
     private func tuneView() {
@@ -29,7 +30,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     // Update and build the view for post view element
-    func update(_ post: profilePost) {
+    func update(_ post: ProfilePost) {
         
         // Post Label == Author
         lazy var postLabelView: UILabel = {
