@@ -212,6 +212,7 @@ class LogInViewController: UIViewController {
                     passwordTimerLabel.numberOfLines = 1
                 }
             }
+        
     }
     
     @objc func bruteButtonPressed() {
