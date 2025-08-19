@@ -3,7 +3,13 @@ import UIKit
 class ProfileHeaderView: UIView {
     
     private var picRadius = 150.0
-    private var statusText = "Waiting for something..."
+    private var statusText = ""
+    
+    var user: User? {
+        didSet {
+            setUserInfo()
+        }
+    }
     
     private lazy var closeButton: UIButton = {
         let view = UIButton(type: .close)
@@ -20,7 +26,7 @@ class ProfileHeaderView: UIView {
     // Add and setup Profile Avatar Image
     private lazy var avatarImageView: UIImageView = {
         // Declaration
-        let view = UIImageView(image: UIImage(named: "cat"))
+        let view = UIImageView()
         
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +61,6 @@ class ProfileHeaderView: UIView {
     private lazy var fullNameLabel: UILabel = {
         // Declaration
         let view = UILabel()
-        view.text = "Hipster Cat"
             
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -69,7 +74,6 @@ class ProfileHeaderView: UIView {
     private lazy var statusLabel: UILabel = {
         // Declaration
         let view = UILabel()
-        view.text = statusText
         
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -93,6 +97,10 @@ class ProfileHeaderView: UIView {
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
         view.layer.cornerRadius = 12
+        view.autocorrectionType = UITextAutocorrectionType.no
+        view.keyboardType = UIKeyboardType.default
+        view.returnKeyType = UIReturnKeyType.done
+        view.clearButtonMode = UITextField.ViewMode.whileEditing
         
         // Padding
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: 5.0, height: 0))
@@ -106,30 +114,24 @@ class ProfileHeaderView: UIView {
     }()
     
     // Add Set Status Button
-    private lazy var setStatusButton: UIButton = {
+    private lazy var setStatusButton: CustomButton = {
         // Declaration
-        let view = UIButton(type: .roundedRect)
-        view.setTitle("Set status", for: .normal)
+        let view = CustomButton(title: "Set status", titleColor: .white, forEvent: .touchUpInside, constraints: false)
         
         // Design
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitleColor(UIColor.white, for: .normal)
         view.backgroundColor = .systemBlue
         view.layer.cornerRadius = 4
         view.layer.shadowOffset = CGSize(width: 4, height: 4)
         view.layer.shadowRadius = 4
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.7
-        
-        // Functions
-        view.addTarget(self, action: #selector(didPressStatusButton), for: .touchUpInside)
+        view.eventOnTap = didPressStatusButton
         
         return view
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         backgroundColor = .systemGray6
         
         addSubviews()
@@ -158,6 +160,15 @@ class ProfileHeaderView: UIView {
     // Animation on close button Tap
     @objc func didTapCloseButton() {
         launchReversedAnimation()
+    }
+    
+    private func setUserInfo() {
+        guard let usr = user else { return }
+        
+        avatarImageView.image = usr.userAvatar
+        fullNameLabel.text = usr.userFullName
+        statusLabel.text = usr.userStatus
+        
     }
     
     // Avatar image animation
