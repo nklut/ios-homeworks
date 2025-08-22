@@ -10,24 +10,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
         
         // Network Request
-        let appConfiguration: AppConfiguration = AppConfiguration.allCases.randomElement() ?? .planet1
+        let appConfiguration = AppConfiguration.allCases.randomElement() ?? .planet1
+        let nwManager = NetworkManager()
         
         // Error: An SSL error has occurred and a secure connection to the server cannot be made.
         // NetworkManager().request(for: appConfiguration) { result in
         
         // Chuck Norris works...
-        NetworkManager().request(for: .testURL) { result in
-            
-            switch result {
-            case .success(let messageText):
-                DispatchQueue.main.async {
-                    print(messageText)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                break
-            }
-        }
+//        nwManager.request(for: .testURL) { result in
+//            
+//            switch result {
+//            case .success(let messageText):
+//                DispatchQueue.main.async {
+//                    print(messageText)
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//                break
+//            }
+//        }
         
         // Login View delegate setup
         let loginViewController = LogInViewController()
