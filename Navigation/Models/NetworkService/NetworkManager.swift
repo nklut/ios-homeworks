@@ -78,6 +78,7 @@ extension NetworkManager {
         task.resume()
     }
     
+    // IOSDT-2
     func requestTodos(from url: AppConfiguration, completition: ((String) -> Void)?) {
         
         let session = URLSession.shared
@@ -112,7 +113,8 @@ extension NetworkManager {
         task.resume()
     }
     
-    func requestPlanets(from url: AppConfiguration, completition: ((Planets) -> Void)?) {
+    // IOSDT-2
+    func requestPlanets(from url: AppConfiguration, completition: ((Planet) -> Void)?) {
         
         let session = URLSession.shared
         let url = URL(string: url.rawValue)
@@ -135,7 +137,7 @@ extension NetworkManager {
             }
             
             do {
-                let message = try JSONDecoder().decode(Planets.self, from: data)
+                let message = try JSONDecoder().decode(Planet.self, from: data)
                 completition?(message)
             } catch {
                 print(error.localizedDescription)

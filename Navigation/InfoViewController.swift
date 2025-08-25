@@ -1,6 +1,8 @@
 import UIKit
 
 class InfoViewController: UIViewController {
+        
+    private var loadingTask: Task<Void, Never>?
     
     // Show allert Button setup
     private lazy var button: UIButton = {
@@ -34,6 +36,16 @@ class InfoViewController: UIViewController {
         return view
     }()
     
+    // IOSDT-1
+    @objc func didTapTodos() {
+        NetworkManager().requestTodos(from: .toDoListJSON) { result in
+            DispatchQueue.main.async {
+                self.jsonLabel.text = "Title is: \(result)"
+            }
+        }
+    }
+    
+    // IOSDT-2
     private lazy var buttonPlanets: UIButton = {
         let view = UIButton(type: .roundedRect)
         
@@ -43,35 +55,14 @@ class InfoViewController: UIViewController {
         
         return view
     }()
-    
-    private lazy var buttonCitizens: UIButton = {
-        let view = UIButton(type: .roundedRect)
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitle("Get Planet Citizens", for: .normal)
-        view.addTarget(self, action: #selector(didTapCitizens), for: .touchUpInside)
-        
-        return view
-    }()
-    
-    @objc func didTapTodos() {
-        NetworkManager().requestTodos(from: .toDoListJSON) { result in
-            DispatchQueue.main.async {
-                self.jsonLabel.text = "Title is: \(result)"
-            }
-        }
-    }
-    
+
+    // IOSDT-2
     @objc func didTapPlanets() {
         NetworkManager().requestPlanets(from: .planetsJSON) { result in
             DispatchQueue.main.async {
                 self.jsonLabel.text = "Orbital period is: \(result.orbital_period)"
             }
         }
-    }
-    
-    @objc func didTapCitizens() {
-        jsonLabel.text = "Citizens"
     }
     
     // Show Alert on button press
@@ -95,6 +86,16 @@ class InfoViewController: UIViewController {
         // Show Alert
         self.present(alert, animated: true, completion: nil)
     }
+    
+    private func handleSuccess(_ residents: [Resident]) {
+        print(residents)
+//        activityIndicator.stopAnimating()
+//        statusLabel.text = "Загружено: \(users.count) пользователей"
+//        tableView.reloadData()
+    }
+    private func handleError(_ error: Error) {
+        print("Error description: \(error.localizedDescription)")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,7 +108,6 @@ class InfoViewController: UIViewController {
         view.addSubview(jsonLabel)
         view.addSubview(buttonTodos)
         view.addSubview(buttonPlanets)
-        view.addSubview(buttonCitizens)
         
         
         let safeArea = view.safeAreaLayoutGuide
@@ -125,11 +125,7 @@ class InfoViewController: UIViewController {
             buttonPlanets.leadingAnchor.constraint(equalTo: jsonLabel.leadingAnchor),
             buttonPlanets.trailingAnchor.constraint(equalTo: jsonLabel.trailingAnchor),
             
-            buttonCitizens.topAnchor.constraint(equalTo: buttonPlanets.bottomAnchor, constant: 10),
-            buttonCitizens.leadingAnchor.constraint(equalTo: jsonLabel.leadingAnchor),
-            buttonCitizens.trailingAnchor.constraint(equalTo: jsonLabel.trailingAnchor),
-            
-            button.topAnchor.constraint(equalTo: buttonCitizens.bottomAnchor, constant: 10),
+            button.topAnchor.constraint(equalTo: buttonPlanets.bottomAnchor, constant: 10),
             button.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
         ])
         

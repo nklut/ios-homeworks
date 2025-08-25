@@ -10,13 +10,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
         
         // Network Request
-        let appConfiguration = AppConfiguration.allCases.randomElement() ?? .planet1
-        let nwManager = NetworkManager()
+//        let appConfiguration = AppConfiguration.allCases.randomElement() ?? .planet1
+//        let nwManager = NetworkManager()
         
-        // Error: An SSL error has occurred and a secure connection to the server cannot be made.
-        // NetworkManager().request(for: appConfiguration) { result in
-        
-        // Chuck Norris works...
+//         Error: An SSL error has occurred and a secure connection to the server cannot be made.
+//         NetworkManager().request(for: appConfiguration) { result in
+//        
+//         Chuck Norris works...
 //        nwManager.request(for: .testURL) { result in
 //            
 //            switch result {
