@@ -36,7 +36,7 @@ class InfoViewController: UIViewController {
         return view
     }()
     
-    // IOSDT-1
+    // IOSDT-2
     @objc func didTapTodos() {
         NetworkManager().requestTodos(from: .toDoListJSON) { result in
             DispatchQueue.main.async {
@@ -85,16 +85,6 @@ class InfoViewController: UIViewController {
         
         // Show Alert
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    private func handleSuccess(_ residents: [Resident]) {
-        print(residents)
-//        activityIndicator.stopAnimating()
-//        statusLabel.text = "Загружено: \(users.count) пользователей"
-//        tableView.reloadData()
-    }
-    private func handleError(_ error: Error) {
-        print("Error description: \(error.localizedDescription)")
     }
 
     override func viewDidLoad() {
