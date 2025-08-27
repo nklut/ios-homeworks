@@ -113,7 +113,7 @@ extension NetworkManager {
         task.resume()
     }
     
-    // IOSDT-2
+    // IOSDT-2 
     func requestPlanets(from url: AppConfiguration, completition: ((Planet) -> Void)?) {
         
         let session = URLSession.shared
