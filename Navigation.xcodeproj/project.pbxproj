@@ -34,7 +34,6 @@
 		111D0E882E5EDAEB00017034 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 111D0E872E5EDAEB00017034 /* FirebaseRemoteConfig */; };
 		111D0E8A2E5EDAEB00017034 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 111D0E892E5EDAEB00017034 /* FirebaseStorage */; };
 		111D0E8C2E5EDAEB00017034 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 111D0E8B2E5EDAEB00017034 /* FirebaseStorageCombine-Community */; };
-		111D0E8E2E5EFB4E00017034 /* ExamplesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111D0E8D2E5EFB3D00017034 /* ExamplesCoordinator.swift */; };
 		11337A962E41E71E001A145C /* PasswordBruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11337A952E41E713001A145C /* PasswordBruteForce.swift */; };
 		115414002C9291FE0051640B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115413FF2C9291FE0051640B /* AppDelegate.swift */; };
 		115414022C9291FE0051640B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115414012C9291FE0051640B /* SceneDelegate.swift */; };
@@ -105,7 +104,6 @@
 		111D0E502E57165100017034 /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
 		111D0E592E572E1C00017034 /* Planets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
 		111D0E5B2E5EC91D00017034 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
-		111D0E8D2E5EFB3D00017034 /* ExamplesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesCoordinator.swift; sourceTree = "<group>"; };
 		11337A952E41E713001A145C /* PasswordBruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordBruteForce.swift; sourceTree = "<group>"; };
 		115413FC2C9291FE0051640B /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		115413FF2C9291FE0051640B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -207,7 +205,6 @@
 		112953B22E6011EA00B3175B /* ExamplesView */ = {
 			isa = PBXGroup;
 			children = (
-				111D0E8D2E5EFB3D00017034 /* ExamplesCoordinator.swift */,
 			);
 			path = ExamplesView;
 			sourceTree = "<group>";
@@ -470,7 +467,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				11B663112E2E32C70032A5B1 /* CustomButton.swift in Sources */,
-				111D0E8E2E5EFB4E00017034 /* ExamplesCoordinator.swift in Sources */,
 				11B663192E2E45F10032A5B1 /* FeedModel.swift in Sources */,
 				115414182C9295440051640B /* PostViewController.swift in Sources */,
 				11337A962E41E71E001A145C /* PasswordBruteForce.swift in Sources */,
