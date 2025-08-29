@@ -204,6 +204,14 @@
 			path = NetworkService;
 			sourceTree = "<group>";
 		};
+		112953B22E6011EA00B3175B /* ExamplesView */ = {
+			isa = PBXGroup;
+			children = (
+				111D0E8D2E5EFB3D00017034 /* ExamplesCoordinator.swift */,
+			);
+			path = ExamplesView;
+			sourceTree = "<group>";
+		};
 		115413F32C9291FE0051640B = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +233,7 @@
 		115413FE2C9291FE0051640B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				112953B22E6011EA00B3175B /* ExamplesView */,
 				11B6632B2E371E5B0032A5B1 /* AppDelegate */,
 				11B663142E2E3E060032A5B1 /* Models */,
 				11B663132E2E3DED0032A5B1 /* FeedView(MVVM) */,
@@ -331,7 +340,6 @@
 		11B6632B2E371E5B0032A5B1 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				111D0E8D2E5EFB3D00017034 /* ExamplesCoordinator.swift */,
 				11B6631B2E30C5EE0032A5B1 /* MainCoordinator.swift */,
 				11B6631D2E30C6CA0032A5B1 /* NavigationCoordinator.swift */,
 				11B663272E30D5020032A5B1 /* TabBarCoordinator.swift */,

@@ -11,7 +11,7 @@ final class ExamplesCoordinator: MainCoordinator {
     }
     
     func start() {
-        let exampleViewController = ExampleViewController()
+        let exampleViewController = ExamplesViewController()
         exampleViewController.coordinator = self
         navigationController.pushViewController(feedViewController, animated: true)
     }
