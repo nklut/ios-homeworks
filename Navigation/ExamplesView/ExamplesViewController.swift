@@ -11,7 +11,7 @@ class ExamplesViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        //fireBaseExample()
+        fireBaseExample()
         
     }
     
@@ -22,6 +22,8 @@ class ExamplesViewController: UIViewController {
                 return
             }
             self?.events = events
+            
+            print("Table contents:")
             print(self?.events ?? "No events")
             
         }
