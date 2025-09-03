@@ -9,7 +9,7 @@ enum userLoginStatus {
     case shortPassword
     case emailInUse
     case success
-    
+    case error(Error)
 }
 
 func signOutWithCompletion(completion: @escaping (Bool) -> Void) {
@@ -33,6 +33,8 @@ final class CheckerService: CheckerServiceProtocol {
     
     func checkCredentials(email userEmail: String, password userPassword: String) -> userLoginStatus {
         
+        var loginStatus: userLoginStatus = .noData
+        
         if userEmail.isEmpty {
             return .emptyEmail
         }
@@ -41,25 +43,21 @@ final class CheckerService: CheckerServiceProtocol {
             return .shortPassword
         }
         
-        Auth.auth().signIn(withEmail: userEmail, password: userPassword)
-        
-        print("User:")
-        print(Auth.auth().currentUser?.email)
-        
-        if Auth.auth().currentUser != nil {
-            return .success
+        Auth.auth().signIn(withEmail: userEmail, password: userPassword) { result, error in
+            if let signInError = error {
+                loginStatus = .error(signInError)
+            } else {
+                loginStatus = .success
+            }
         }
-    
-        return .noData
+        return loginStatus
     }
     
     func signUp(email userEmail: String, password userPassword: String) {
         
-        Auth.auth().createUser(withEmail: userEmail, password: userPassword) { authResult, error in
-             
-            if let error {
-                let err = error as NSError
-                print(err.localizedDescription)
+        Auth.auth().createUser(withEmail: userEmail, password: userPassword) { result, error in
+            if let creationError = error {
+                print(creationError.localizedDescription)
             }
         }
     }
