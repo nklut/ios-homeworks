@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -10,24 +11,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
         
         // Network Request
-        let appConfiguration: AppConfiguration = AppConfiguration.allCases.randomElement() ?? .planet1
+//        let appConfiguration = AppConfiguration.allCases.randomElement() ?? .planet1
+//        let nwManager = NetworkManager()
         
-        // Error: An SSL error has occurred and a secure connection to the server cannot be made.
-        // NetworkManager().request(for: appConfiguration) { result in
-        
-        // Chuck Norris works...
-        NetworkManager().request(for: .testURL) { result in
-            
-            switch result {
-            case .success(let messageText):
-                DispatchQueue.main.async {
-                    print(messageText)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                break
-            }
-        }
+//         Error: An SSL error has occurred and a secure connection to the server cannot be made.
+//         NetworkManager().request(for: appConfiguration) { result in
+//        
+//         Chuck Norris works...
+//        nwManager.request(for: .testURL) { result in
+//            
+//            switch result {
+//            case .success(let messageText):
+//                DispatchQueue.main.async {
+//                    print(messageText)
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//                break
+//            }
+//        }
         
         // Login View delegate setup
         let loginViewController = LogInViewController()
@@ -44,10 +46,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        
+        signOutWithCompletion { success in
+                print("Sign out completed: \(success)")
+            }
+
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -73,4 +76,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
+
 

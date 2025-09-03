@@ -16,13 +16,16 @@ class TabBarCoordinator: MainCoordinator {
         let tabBarController = UITabBarController()
         let feedCoordinator = FeedCoordinator(navigationController: UINavigationController())
         let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
+        let examplesCoordinator = ExamplesCoordinator(navigationController: UINavigationController())
          
         profileCoordinator.start()
         feedCoordinator.start()
+        examplesCoordinator.start()
         
         tabBarController.viewControllers = [
             profileCoordinator.navigationController,
             feedCoordinator.navigationController,
+            examplesCoordinator.navigationController
         ]
         
         tabBarController.tabBar.isHidden = false

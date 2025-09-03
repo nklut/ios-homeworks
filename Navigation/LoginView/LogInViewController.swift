@@ -4,6 +4,7 @@ class LogInViewController: UIViewController {
     
     var coordinator: LoginCoordinator?
     private var timer: Timer?
+    private var userChecker = CheckerService()
     
     // init Brute forcer
     private let bruteForcer = PasswordBruteForce()
@@ -120,7 +121,7 @@ class LogInViewController: UIViewController {
     
         view.layer.cornerRadius = 10.0
         view.setBackgroundImage(UIImage(named: "logInButton"), for: .normal)
-        view.eventOnTap = didTapButton
+        view.eventOnTap = didTapLoginButton
         
         return view
     }()
@@ -139,6 +140,16 @@ class LogInViewController: UIViewController {
         let tapPasswordRequest = UITapGestureRecognizer(target: self, action: #selector(didRequestPassword))
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(tapPasswordRequest)
+        
+        return view
+    }()
+    
+    private lazy var signupButton: UIButton = {
+        let view = CustomButton(title: "Sign Up", titleColor: .white, forEvent: .touchUpInside, constraints: false)
+    
+        view.layer.cornerRadius = 10.0
+        view.setBackgroundImage(UIImage(named: "logInButton"), for: .normal)
+        view.eventOnTap = didTapSignupButton
         
         return view
     }()
@@ -184,7 +195,6 @@ class LogInViewController: UIViewController {
     // Keyboard appears handler
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupKeyboardObservers()
     }
     
@@ -192,6 +202,10 @@ class LogInViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardObservers()
+    }
+    
+    private func signUpSuccessful(action: UIAlertAction) {
+        coordinator?.loginDone()
     }
     
     @objc func didRequestPassword() {
@@ -212,7 +226,6 @@ class LogInViewController: UIViewController {
                     passwordTimerLabel.numberOfLines = 1
                 }
             }
-        
     }
     
     @objc func bruteButtonPressed() {
@@ -235,7 +248,7 @@ class LogInViewController: UIViewController {
             
                 // On correct Guess pass pasword to password field and show it
                 if let password = result {
-                    print("Пароль найден: \(password)")
+                    print("Password found: \(password)")
                     self!.passwordField.isSecureTextEntry = false
                     self!.passwordField.text = password
                     
@@ -244,42 +257,131 @@ class LogInViewController: UIViewController {
         )
     }
     
-    // On login button press, clear fields and open Profile screen
-    @objc func didTapButton() -> Void {
+    @objc func didTapSignupButton() {
         
-        let userLogin = userNameField.text ?? "_"
-        let userPass = passwordField.text ?? "_"
-        let isCorrect = loginDelegate.check(userLogin: userLogin, userPass: userPass)
+        let userLogin = userNameField.text ?? ""
+        let userPass = passwordField.text ?? ""
+        
+        userChecker.signUp(email: userLogin, password: userPass)
+        
+        let userAddedAlert = UIAlertController(title: "Welcome", message: "Sign up succesful", preferredStyle: .alert)
+        let userAddedAlertAction = UIAlertAction(title: "OK", style: .cancel) { [weak self] alertHandler in
+            DispatchQueue.main.async {
+                self!.coordinator?.loginDone()
+            }
+        }
+        
+        userAddedAlert.addAction(userAddedAlertAction)
+        
+        DispatchQueue.main.async {
+            self.present(userAddedAlert, animated: true)
+        }
+        
+    }
+    
+    // On login button press, clear fields and open Profile screen
+    @objc func didTapLoginButton() -> Void {
+
+        let userLogin = userNameField.text ?? ""
+        let userPass = passwordField.text ?? ""
+        //let isCorrect = loginDelegate.check(userLogin: userLogin, userPass: userPass)
         
         #if DEBUG
             let user = TestUserService().chekUserLogin(userLogin)
         #else
             let user = CurentUserService().chekUserLogin(userLogin)
         #endif
-       
-        if isCorrect {
-            coordinator?.loginDone()
-        } else {
-            
-            userNameField.text = ""
-            passwordField.text = ""
-            
-            #if DEBUG
-                let alertMessage = "DEBUG MODE. Login: 123, Pass: 123"
-            #else
-                let alertMessage = "Please try again"
-            #endif
-            
-            let alert = UIAlertController(
-                title: "Wrong Login or Password",
-                message: alertMessage,
-                preferredStyle: .alert
-            )
-            
-            func wrongLoginAlert(action: UIAlertAction) {}
-            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: wrongLoginAlert))
-            self.present(alert, animated: true, completion: nil)
+        
+        let loginStatus: userLoginStatus = userChecker.checkCredentials(email: userLogin, password: userPass)
+        let loginAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        
+        func LoginFailed(action: UIAlertAction){
+            self.logInButton.isUserInteractionEnabled = true
+            self.logInButton.alpha = 1.0
         }
+        
+        func doSignUp(action: UIAlertAction) {
+            let userAddedAlert = UIAlertController(title: "Welcome", message: "Sign up succesful", preferredStyle: .alert)
+            let userAddedAlertAction = UIAlertAction(title: "OK", style: .cancel, handler: signUpSuccessful)
+            
+            loginAlert.dismiss(animated: true)
+            userChecker.signUp(email: userLogin, password: userPass)
+            
+            DispatchQueue.main.async {
+                self.logInButton.isUserInteractionEnabled = true
+                self.logInButton.alpha = 1.0
+                
+                userAddedAlert.addAction(userAddedAlertAction)
+                self.present(userAddedAlert, animated: true, completion: nil)
+            }
+        }
+        
+        switch loginStatus {
+            
+        case .success:
+            coordinator?.loginDone()
+            
+        case .emptyEmail:
+            // show alert empty email
+            loginAlert.message = "Empty email field"
+            loginAlert.title = "Login Failed"
+            loginAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: LoginFailed))
+            self.present(loginAlert, animated: true, completion: nil)
+            
+        case .shortPassword:
+            // show alert short or empty password
+            loginAlert.message = "Incorrect password or too short password(less than 6 symbols)"
+            loginAlert.title = "Login Failed"
+            loginAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: LoginFailed))
+            self.present(loginAlert, animated: true, completion: nil)
+            
+        case .noData:
+            loginAlert.message = "We dont know you yet. Want to sign up?"
+            loginAlert.title = "Login Failed"
+            
+            DispatchQueue.main.async {
+                self.logInButton.isUserInteractionEnabled = false
+                self.logInButton.alpha = 0.1
+                
+                loginAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: doSignUp))
+                loginAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: LoginFailed))
+                
+                self.present(loginAlert, animated: true, completion: nil)
+            }
+            
+        case .emailInUse:
+            loginAlert.message = "Password is incorrect"
+            loginAlert.title = "Login Failed"
+            loginAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: LoginFailed))
+            self.present(loginAlert, animated: true, completion: nil)
+            
+        case .error(_):
+            print("Error")
+        }
+       
+//        if isCorrect {
+//            coordinator?.loginDone()
+//        } else {
+//            
+//            userNameField.text = ""
+//            passwordField.text = ""
+//            
+//            #if DEBUG
+//                let alertMessage = "DEBUG MODE. Login: 123, Pass: 123"
+//            #else
+//                let alertMessage = "Please try again"
+//            #endif
+//            
+//            let alert = UIAlertController(
+//                title: "Wrong Login or Password",
+//                message: alertMessage,
+//                preferredStyle: .alert
+//            )
+//            
+//            func wrongLoginAlert(action: UIAlertAction) {}
+//            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: wrongLoginAlert))
+//            self.present(alert, animated: true, completion: nil)
+//        }
     }
     
     // move text Fields higher on keyboard appearance
@@ -336,6 +438,7 @@ class LogInViewController: UIViewController {
         // Add User Data scroll view and Log-in Button to mai content view
         contentView.addSubview(userDataScrollView)
         contentView.addSubview(logInButton)
+        contentView.addSubview(signupButton)
         contentView.addSubview(passwordBruteButton)
         contentView.addSubview(bruteForceActivity)
     }
@@ -388,7 +491,13 @@ class LogInViewController: UIViewController {
             logInButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            logInButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
+            logInButton.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -8),
+            
+            // Setup Sign-up button position
+            signupButton.topAnchor.constraint(equalTo: logInButton.topAnchor),
+            signupButton.heightAnchor.constraint(equalToConstant: 50),
+            signupButton.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 8),
+            signupButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             passwordBruteButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
             passwordBruteButton.heightAnchor.constraint(equalToConstant: 50),
