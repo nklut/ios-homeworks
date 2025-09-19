@@ -385,18 +385,10 @@
 				111D0E5B2E5EC91D00017034 /* StoreManager.swift */,
 				111D0E4D2E543C0800017034 /* NetworkService */,
 				11337A952E41E713001A145C /* PasswordBruteForce.swift */,
-				11B663172E2E45DF0032A5B1 /* FeedModels */,
 				11B662F72E1B884C0032A5B1 /* UserModels */,
 				115C0FF42DE820AA00C3EF99 /* ProfileViewModels */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		11B663172E2E45DF0032A5B1 /* FeedModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FeedModels;
 			sourceTree = "<group>";
 		};
 		11B6632B2E371E5B0032A5B1 /* AppDelegate */ = {
