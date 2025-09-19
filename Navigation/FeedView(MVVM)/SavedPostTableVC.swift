@@ -1,5 +1,6 @@
 import UIKit
 
+
 class SavedPostTableVC: UITableViewController {
     
     private let coreDataManager = CoreDataManager.shared
@@ -30,8 +31,8 @@ class SavedPostTableVC: UITableViewController {
         let cell = UITableViewCell()
         var cfg = UIListContentConfiguration.cell()
         
-        cfg.text = savedPosts[indexPath.row].author
-        cfg.secondaryText = savedPosts[indexPath.row].text
+        cfg.text = savedPosts[indexPath.row].postAuthor
+        cfg.secondaryText = savedPosts[indexPath.row].postText
 
         cell.contentConfiguration = cfg
 

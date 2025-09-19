@@ -37,6 +37,9 @@
 		11337A962E41E71E001A145C /* PasswordBruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11337A952E41E713001A145C /* PasswordBruteForce.swift */; };
 		113FE9892E7D64C000FA651C /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113FE9882E7D64AD00FA651C /* FeedTableViewController.swift */; };
 		113FE98B2E7D64EF00FA651C /* SavedPostTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113FE98A2E7D64E600FA651C /* SavedPostTableVC.swift */; };
+		113FE98D2E7D654300FA651C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113FE98C2E7D653D00FA651C /* CoreDataManager.swift */; };
+		113FE9952E7D666600FA651C /* PostModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 113FE9932E7D666600FA651C /* PostModel.xcdatamodeld */; };
+		113FE9962E7D666600FA651C /* PostModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 113FE9932E7D666600FA651C /* PostModel.xcdatamodeld */; };
 		115414002C9291FE0051640B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115413FF2C9291FE0051640B /* AppDelegate.swift */; };
 		115414022C9291FE0051640B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115414012C9291FE0051640B /* SceneDelegate.swift */; };
 		115414092C9292000051640B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 115414082C9292000051640B /* Assets.xcassets */; };
@@ -137,6 +140,9 @@
 		11337A952E41E713001A145C /* PasswordBruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordBruteForce.swift; sourceTree = "<group>"; };
 		113FE9882E7D64AD00FA651C /* FeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
 		113FE98A2E7D64E600FA651C /* SavedPostTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPostTableVC.swift; sourceTree = "<group>"; };
+		113FE98C2E7D653D00FA651C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		113FE98F2E7D662E00FA651C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		113FE9942E7D666600FA651C /* PostModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostModel.xcdatamodel; sourceTree = "<group>"; };
 		115413FC2C9291FE0051640B /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		115413FF2C9291FE0051640B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		115414012C9291FE0051640B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -270,13 +276,23 @@
 			path = ExamplesView;
 			sourceTree = "<group>";
 		};
+		113FE98E2E7D662E00FA651C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				113FE98F2E7D662E00FA651C /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		115413F32C9291FE0051640B = {
 			isa = PBXGroup;
 			children = (
+				113FE9932E7D666600FA651C /* PostModel.xcdatamodeld */,
 				115413FE2C9291FE0051640B /* Navigation */,
 				11F42E6C2E15336D002733B3 /* StorageService */,
 				115413FD2C9291FE0051640B /* Products */,
 				11E479762E654A3B002C79B2 /* GoogleService-Info.plist */,
+				113FE98E2E7D662E00FA651C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -382,6 +398,7 @@
 		11B663142E2E3E060032A5B1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				113FE98C2E7D653D00FA651C /* CoreDataManager.swift */,
 				111D0E5B2E5EC91D00017034 /* StoreManager.swift */,
 				111D0E4D2E543C0800017034 /* NetworkService */,
 				11337A952E41E713001A145C /* PasswordBruteForce.swift */,
@@ -533,6 +550,7 @@
 				115C0FE52DE18A2500C3EF99 /* UITableViewExtensions.swift in Sources */,
 				11B663012E24ECDD0032A5B1 /* Checker.swift in Sources */,
 				11B6631C2E30C5EE0032A5B1 /* MainCoordinator.swift in Sources */,
+				113FE98D2E7D654300FA651C /* CoreDataManager.swift in Sources */,
 				115C0FDF2DDF3EE500C3EF99 /* LogInViewController.swift in Sources */,
 				111D0E512E57169D00017034 /* ToDoList.swift in Sources */,
 				11E479732E619D3E002C79B2 /* ExamplesViewController.swift in Sources */,
@@ -556,6 +574,7 @@
 				11B663052E24FA820032A5B1 /* LoginInspector.swift in Sources */,
 				115C0FF82DE8332700C3EF99 /* Reusable.swift in Sources */,
 				113FE9892E7D64C000FA651C /* FeedTableViewController.swift in Sources */,
+				113FE9962E7D666600FA651C /* PostModel.xcdatamodeld in Sources */,
 				11B662FF2E1F49080032A5B1 /* TestUserService.swift in Sources */,
 				111D0E5A2E572E1C00017034 /* Planets.swift in Sources */,
 				11B662FB2E1B89300032A5B1 /* UserService.swift in Sources */,
@@ -573,6 +592,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				113FE9952E7D666600FA651C /* PostModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1159,6 +1179,19 @@
 			productName = "FirebaseStorageCombine-Community";
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		113FE9932E7D666600FA651C /* PostModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				113FE9942E7D666600FA651C /* PostModel.xcdatamodel */,
+			);
+			currentVersion = 113FE9942E7D666600FA651C /* PostModel.xcdatamodel */;
+			path = PostModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 115413F42C9291FE0051640B /* Project object */;
 }
