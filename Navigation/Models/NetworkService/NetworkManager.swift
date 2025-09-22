@@ -12,6 +12,10 @@ enum AppConfiguration: String, CaseIterable {
     
     // This one works
     case testURL = "https://api.chucknorris.io/jokes/random"
+    
+    //iosdt-2
+    case toDoListJSON = "https://jsonplaceholder.typicode.com/todos/"
+    case planetsJSON = "https://swapi.py4e.com/api/planets/1/"
 }
 
 enum APIErrors: Error {
@@ -21,6 +25,8 @@ enum APIErrors: Error {
 }
 
 extension NetworkManager {
+    
+    // Iosdt - 1
     func request(for configuration: AppConfiguration, completition: ((Result<String, APIErrors>) -> Void)?) {
         let session = URLSession.shared
         let url = URL(string: configuration.rawValue)
@@ -71,4 +77,74 @@ extension NetworkManager {
         }
         task.resume()
     }
+    
+    // IOSDT-2
+    func requestTodos(from url: AppConfiguration, completition: ((String) -> Void)?) {
+        
+        let session = URLSession.shared
+        let url = URL(string: url.rawValue)
+        let task = session.dataTask(with: url!) { data, response, error in
+            
+            if error != nil {
+                print(error?.localizedDescription ?? "Unknown Error")
+                return
+            }
+            
+            if let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode != 200 {
+                print("URL response error")
+            }
+            
+            guard let data else {
+                print("No data")
+                print(error?.localizedDescription ?? "Unknown Error")
+                return
+            }
+            
+            do {
+                let message = try JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]]
+                let item = message[0]
+                let title = item["title"] as! String
+                completition?(title)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        task.resume()
+    }
+    
+    // IOSDT-2 
+    func requestPlanets(from url: AppConfiguration, completition: ((Planet) -> Void)?) {
+        
+        let session = URLSession.shared
+        let url = URL(string: url.rawValue)
+        let task = session.dataTask(with: url!) { data, response, error in
+            
+            if error != nil {
+                print("Error != nil!")
+                print(error?.localizedDescription ?? "Unknown Error")
+                return
+            }
+            
+            if let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode != 200 {
+                print("URL response error")
+            }
+            
+            guard let data else {
+                print("No data")
+                print(error?.localizedDescription ?? "Unknown Error")
+                return
+            }
+            
+            do {
+                let message = try JSONDecoder().decode(Planet.self, from: data)
+                completition?(message)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        task.resume()
+    }
+    
 }
