@@ -45,10 +45,7 @@ class FeedTableViewController: UITableViewController {
             let author: String = content.text ?? "Unknown author"
             let text: String = content.secondaryText ?? "Post text is absent"
             
-            //coreDataManager.addPost(author: author, text: text)
-            
-            // Debug
-           // print(coreDataManager.fetchPosts())
+            coreDataManager.addPost(postAuthor: author, postText: text)
         }
     }
 }

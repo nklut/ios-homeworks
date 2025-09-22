@@ -36,10 +36,9 @@
 		111D0E8C2E5EDAEB00017034 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 111D0E8B2E5EDAEB00017034 /* FirebaseStorageCombine-Community */; };
 		11337A962E41E71E001A145C /* PasswordBruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11337A952E41E713001A145C /* PasswordBruteForce.swift */; };
 		113FE9892E7D64C000FA651C /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113FE9882E7D64AD00FA651C /* FeedTableViewController.swift */; };
-		113FE98B2E7D64EF00FA651C /* SavedPostTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113FE98A2E7D64E600FA651C /* SavedPostTableVC.swift */; };
 		113FE98D2E7D654300FA651C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113FE98C2E7D653D00FA651C /* CoreDataManager.swift */; };
-		113FE9952E7D666600FA651C /* PostModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 113FE9932E7D666600FA651C /* PostModel.xcdatamodeld */; };
 		113FE9962E7D666600FA651C /* PostModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 113FE9932E7D666600FA651C /* PostModel.xcdatamodeld */; };
+		113FE99A2E7D7BBB00FA651C /* PostModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 113FE9932E7D666600FA651C /* PostModel.xcdatamodeld */; };
 		115414002C9291FE0051640B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115413FF2C9291FE0051640B /* AppDelegate.swift */; };
 		115414022C9291FE0051640B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115414012C9291FE0051640B /* SceneDelegate.swift */; };
 		115414092C9292000051640B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 115414082C9292000051640B /* Assets.xcassets */; };
@@ -139,7 +138,6 @@
 		111D0E5B2E5EC91D00017034 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		11337A952E41E713001A145C /* PasswordBruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordBruteForce.swift; sourceTree = "<group>"; };
 		113FE9882E7D64AD00FA651C /* FeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
-		113FE98A2E7D64E600FA651C /* SavedPostTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPostTableVC.swift; sourceTree = "<group>"; };
 		113FE98C2E7D653D00FA651C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		113FE98F2E7D662E00FA651C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		113FE9942E7D666600FA651C /* PostModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostModel.xcdatamodel; sourceTree = "<group>"; };
@@ -188,6 +186,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		113FE99B2E81352000FA651C /* SavedPost */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SavedPost; sourceTree = "<group>"; };
 		11F42E6C2E15336D002733B3 /* StorageService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = StorageService; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -308,6 +307,7 @@
 		115413FE2C9291FE0051640B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				113FE99B2E81352000FA651C /* SavedPost */,
 				112953B22E6011EA00B3175B /* ExamplesView */,
 				11B6632B2E371E5B0032A5B1 /* AppDelegate */,
 				11B663142E2E3E060032A5B1 /* Models */,
@@ -385,7 +385,6 @@
 		11B663132E2E3DED0032A5B1 /* FeedView(MVVM) */ = {
 			isa = PBXGroup;
 			children = (
-				113FE98A2E7D64E600FA651C /* SavedPostTableVC.swift */,
 				113FE9882E7D64AD00FA651C /* FeedTableViewController.swift */,
 				115414132C92941F0051640B /* FeedViewController.swift */,
 				11B663292E30E1570032A5B1 /* FeedViewModel.swift */,
@@ -446,6 +445,9 @@
 			);
 			dependencies = (
 				11F42E722E15336E002733B3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				113FE99B2E81352000FA651C /* SavedPost */,
 			);
 			name = Navigation;
 			productName = Navigation;
@@ -543,7 +545,6 @@
 				11B663112E2E32C70032A5B1 /* CustomButton.swift in Sources */,
 				11B663192E2E45F10032A5B1 /* FeedModel.swift in Sources */,
 				115414182C9295440051640B /* PostViewController.swift in Sources */,
-				113FE98B2E7D64EF00FA651C /* SavedPostTableVC.swift in Sources */,
 				11337A962E41E71E001A145C /* PasswordBruteForce.swift in Sources */,
 				11E479AF2E66A951002C79B2 /* CheckerService.swift in Sources */,
 				111D0E4F2E543C2000017034 /* NetworkManager.swift in Sources */,
@@ -592,7 +593,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				113FE9952E7D666600FA651C /* PostModel.xcdatamodeld in Sources */,
+				113FE99A2E7D7BBB00FA651C /* PostModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
