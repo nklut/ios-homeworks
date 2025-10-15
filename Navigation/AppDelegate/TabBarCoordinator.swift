@@ -17,17 +17,20 @@ class TabBarCoordinator: MainCoordinator {
         let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
         let savedPostCoordinator = SavedPostCoordinator(navigationController: UINavigationController())
         //let examplesCoordinator = ExamplesCoordinator(navigationController: UINavigationController())
+        let mapViewCoordinator = MapViewCoordinator(navigationController: UINavigationController())
          
         profileCoordinator.start()
         feedCoordinator.start()
         savedPostCoordinator.start()
         //examplesCoordinator.start()
+        mapViewCoordinator.start()
         
         tabBarController.viewControllers = [
             profileCoordinator.navigationController,
             feedCoordinator.navigationController,
-            savedPostCoordinator.navigationController
+            savedPostCoordinator.navigationController,
             //examplesCoordinator.navigationController
+            mapViewCoordinator.navigationController,
         ]
         
         tabBarController.tabBar.isHidden = false
