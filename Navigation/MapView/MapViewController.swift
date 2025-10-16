@@ -5,8 +5,12 @@ final class MapViewController: UIViewController {
     
     weak var coordinator: MapViewCoordinator?
     private let mapView = MKMapView()
-    private let pinCoordinate = CLLocationCoordinate2D(latitude: 59.9341, longitude: 30.3062)
-    private let userCoordinate = CLLocationCoordinate2D(latitude: 59.8341, longitude: 30.2062)
+    private let locationMananger = CLLocationManager()
+    
+    // CLLocationCoordinate2D(latitude: 59.9341, longitude: 30.3062)
+    // CLLocationCoordinate2D(latitude: 59.8341, longitude: 30.2062)
+    private var destinationCoordinate: CLLocationCoordinate2D?
+    private var userCoordinate: CLLocationCoordinate2D?
     
     private lazy var buildRouteButton: UIButton = {
         let view = UIButton(type: .roundedRect)
@@ -26,17 +30,26 @@ final class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         
-        view.addSubview(mapView)
-        view.addSubview(buildRouteButton)
-        view.addSubview(deleteRouteButton)
+        let alert = UIAlertController(title: "Short desc", message: "Long press to put a pin. Build and delete route buutons are at the bottom of the screen", preferredStyle: .alert)
+        let shortIntro = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(shortIntro)
+        self.present(alert, animated: true, completion: nil)
+        
         setupUI()
         setupMap()
+        setupLocation()
+        setupLongPressGesture()
     }
     
     private func setupUI() {
         let safeArea = view.safeAreaLayoutGuide
+        
+        view.backgroundColor = .systemBackground
+        view.addSubview(mapView)
+        view.addSubview(buildRouteButton)
+        view.addSubview(deleteRouteButton)
+        
         NSLayoutConstraint.activate([
             mapView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             mapView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
@@ -52,69 +65,96 @@ final class MapViewController: UIViewController {
     }
     
     private func setupMap() {
-        let customPin = MKPointAnnotation()
-        let region = MKCoordinateRegion(center: userCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-        
-        customPin.coordinate = pinCoordinate
-        customPin.title = "Saint Petersburg"
-        customPin.subtitle = "Saint Isaac's Cathedral"
-        
         mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.showsUserLocation = true
         mapView.delegate = self
-        
-        mapView.setRegion(region, animated: true)
-        mapView.addAnnotation(customPin)
-
+        mapView.userTrackingMode = .follow
     }
     
-    private func routeToPin(from currentLocation: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D) {
-        
-        let locationPlacemark = MKPlacemark(coordinate: currentLocation)
-        let destinationPlacemark = MKPlacemark(coordinate: destination)
-        
+    private func setupLocation() {
+        locationMananger.delegate = self
+        locationMananger.requestWhenInUseAuthorization()
+        locationMananger.startUpdatingLocation()
+    }
+    
+    private func routeToDestination(from currentLocation: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D) {
         let request = MKDirections.Request()
-        request.source = MKMapItem(placemark: locationPlacemark)
-        request.destination = MKMapItem(placemark: destinationPlacemark)
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: currentLocation))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination))
         request.transportType = .automobile
         
-        let directions = MKDirections(request: request)
-        
-        directions.calculate() { [weak self] response, error in
-            
-            guard let self = self else { return }
-            
+        MKDirections(request: request).calculate { [weak self] response, error in
             if let error = error {
-                print("Route calculation error: ", error.localizedDescription)
+                print("Route error:", error.localizedDescription)
                 return
             }
-            
             guard let route = response?.routes.first else {
-                print("Route not found")
+                print("Rout not found")
                 return
             }
-            
-            print("Route distance: ", route.distance)
-            
-            self.mapView.removeOverlays(self.mapView.overlays)
-            self.mapView.addOverlay(route.polyline)
-            
-            self.mapView.setVisibleMapRect(
-                route.polyline.boundingMapRect,
-                edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
-                animated: true
-            )
+            self?.mapView.removeOverlays(self?.mapView.overlays ?? [])
+            self?.mapView.addOverlay(route.polyline)
+            self?.mapView.setVisibleMapRect(route.polyline.boundingMapRect,
+                                            edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
+                                            animated: true)
+            print("Route distance: \(route.distance) m")
         }
     }
+    
+    private func setupLongPressGesture() {
+           let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+           longPress.minimumPressDuration = 0.5
+           mapView.addGestureRecognizer(longPress)
+       }
     
     @objc private func didTapDeleteRoute() {
         self.mapView.removeOverlays(self.mapView.overlays)
     }
     
-    @objc private func didTapBuildRoute() {
-        routeToPin(from: userCoordinate, to: pinCoordinate)
+    @objc private func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            let point = gestureRecognizer.location(in: mapView)
+            let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
+            destinationCoordinate = coordinate
+               
+            // Delete old Pins and route
+            mapView.annotations.forEach {
+                if !($0 is MKUserLocation) {
+                    mapView.removeAnnotation($0)
+                }
+            }
+            self.mapView.removeOverlays(self.mapView.overlays)
+               
+            // Add new Pin
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "Destination"
+            mapView.addAnnotation(annotation)
+        }
     }
+    
+    @objc private func didTapBuildRoute() {
+        guard let userCoordinate = userCoordinate else {
+            print("User location not found")
+            return
+        }
+        guard let destinationCoordinate = destinationCoordinate else {
+            print("Destination location not found")
+            return
+        }
+        routeToDestination(from: userCoordinate, to: destinationCoordinate)
+    }
+    
+}
 
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.first else { return }
+        userCoordinate = location.coordinate
+    }
+    
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -122,7 +162,7 @@ extension MapViewController: MKMapViewDelegate {
         if let polyline = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: polyline)
             renderer.strokeColor = .systemCyan
-            renderer.lineWidth = 5
+            renderer.lineWidth = 3
             return renderer
         }
         return MKOverlayRenderer()
