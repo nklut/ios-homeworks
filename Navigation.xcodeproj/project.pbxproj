@@ -141,6 +141,7 @@
 		113FE98C2E7D653D00FA651C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		113FE98F2E7D662E00FA651C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		113FE9942E7D666600FA651C /* PostModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostModel.xcdatamodel; sourceTree = "<group>"; };
+		113FEA132EA247A600FA651C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		115413FC2C9291FE0051640B /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		115413FF2C9291FE0051640B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		115414012C9291FE0051640B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		113FE99B2E81352000FA651C /* SavedPost */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SavedPost; sourceTree = "<group>"; };
 		113FEA0C2E9F9C7200FA651C /* MapView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MapView; sourceTree = "<group>"; };
+		113FEA142EA247B600FA651C /* Localization */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Localization; sourceTree = "<group>"; };
 		11F42E6C2E15336D002733B3 /* StorageService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = StorageService; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -308,6 +310,7 @@
 		115413FE2C9291FE0051640B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				113FEA142EA247B600FA651C /* Localization */,
 				113FEA0C2E9F9C7200FA651C /* MapView */,
 				113FE99B2E81352000FA651C /* SavedPost */,
 				112953B22E6011EA00B3175B /* ExamplesView */,
@@ -451,6 +454,7 @@
 			fileSystemSynchronizedGroups = (
 				113FE99B2E81352000FA651C /* SavedPost */,
 				113FEA0C2E9F9C7200FA651C /* MapView */,
+				113FEA142EA247B600FA651C /* Localization */,
 			);
 			name = Navigation;
 			productName = Navigation;
@@ -503,6 +507,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 115413F32C9291FE0051640B;
 			packageReferences = (
@@ -615,6 +620,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1154140B2C9292000051640B /* Base */,
+				113FEA132EA247A600FA651C /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -627,6 +633,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -691,6 +698,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
