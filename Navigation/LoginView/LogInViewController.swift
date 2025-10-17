@@ -21,7 +21,7 @@ class LogInViewController: UIViewController {
     // Login Screen USername Field
     private lazy var userNameField: UITextField = {
         let view = UITextField()
-        view.placeholder = "E-mail or phone"
+        //view.placeholder = "E-mail or phone"
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .black
         view.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
@@ -45,7 +45,7 @@ class LogInViewController: UIViewController {
     // Login Screen Pasword Field
     private lazy var passwordField: UITextField = { [unowned self] in
         let view = UITextField()
-        view.placeholder = "Password"
+        //view.placeholder = "Password"
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .black
         view.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
@@ -190,6 +190,7 @@ class LogInViewController: UIViewController {
         setupConstraints()
         addContentSubviews()
         setupSubviewsConstraints()
+        setupLocalization()
     }
     
     // Keyboard appears handler
@@ -218,7 +219,7 @@ class LogInViewController: UIViewController {
                 counter -= 1
                 passwordTimerLabel.isUserInteractionEnabled = false
                 passwordTimerLabel.numberOfLines = 2
-                passwordTimerLabel.text = counter <= 0 ? "Request Password" : "Password was sent.\nWait \(counter) seconds to request again"
+//                passwordTimerLabel.text = counter <= 0 ? "Request Password" : "Password was sent.\nWait \(counter) seconds to request again"
                 
                 if counter <= 0 {
                     self.timer?.invalidate()
@@ -441,6 +442,19 @@ class LogInViewController: UIViewController {
         contentView.addSubview(signupButton)
         contentView.addSubview(passwordBruteButton)
         contentView.addSubview(bruteForceActivity)
+    }
+    
+    private func setupLocalization() {
+        userNameField.placeholder = NSLocalizedString("E-mail_or_phone", comment: "")
+        passwordField.placeholder = NSLocalizedString("Password", comment: "")
+        
+        
+        passwordBruteButton.setTitle(NSLocalizedString("Brute_force_password", comment: ""), for: .normal)
+        logInButton.setTitle(NSLocalizedString("Log_In", comment: ""), for: .normal)
+        signupButton.setTitle(NSLocalizedString("Sign_Up", comment: ""), for: .normal)
+        
+        passwordTimerLabel.text = NSLocalizedString("Request_password", comment: "")
+
     }
     
     // Setup subviews positions for elements inside scrollview
