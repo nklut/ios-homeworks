@@ -13,8 +13,8 @@ class PhotosTableViewCell: UITableViewCell {
     }
     
     private func tuneView() {
-        backgroundColor = .tertiarySystemBackground
-        contentView.backgroundColor = .tertiarySystemBackground
+        backgroundColor = UIColor(named: "profilePhotosCollectionBackground")
+        contentView.backgroundColor = UIColor(named: "profilePhotosCollectionBackground")
         textLabel?.backgroundColor = .clear
         detailTextLabel?.backgroundColor = .clear
         imageView?.backgroundColor = .clear
@@ -29,7 +29,7 @@ class PhotosTableViewCell: UITableViewCell {
             let view = UIView()
             
             view.translatesAutoresizingMaskIntoConstraints = false
-            view.backgroundColor = .white
+            view.backgroundColor = UIColor(named: "profilePhotosCollectionBackground")
             
             return view
             
@@ -41,7 +41,7 @@ class PhotosTableViewCell: UITableViewCell {
             view.translatesAutoresizingMaskIntoConstraints = false
             view.text = "Photos"
             view.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-            view.textColor = .black
+            view.textColor = UIColor(named: "profileHeaderTextColor")
             
             return view
         }()

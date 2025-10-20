@@ -52,7 +52,7 @@ class ProfileHeaderView: UIView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alpha = 0
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .systemBackground
         
         return view
     }()
@@ -65,7 +65,7 @@ class ProfileHeaderView: UIView {
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
-        view.textColor = .black
+        view.textColor = UIColor(named: "profileHeaderTextColor")
         
         return view
         }()
@@ -78,7 +78,7 @@ class ProfileHeaderView: UIView {
         // Design
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
-        view.textColor = .gray
+        view.textColor = UIColor(named: "profileHeaderTextColor")
         
         return view
     }()
@@ -132,7 +132,7 @@ class ProfileHeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemGray6
+        backgroundColor = UIColor(named: "profilePhotosCollectionBackground")
         
         addSubviews()
         setupConstraints()

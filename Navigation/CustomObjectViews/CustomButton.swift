@@ -22,7 +22,6 @@ class CustomButton: UIButton {
         if !isConstraintsDesign {
             self.translatesAutoresizingMaskIntoConstraints = false
         }
-
         
         self.addTarget(self, action: #selector(buttonTapped), for: self.eventType)
     }
