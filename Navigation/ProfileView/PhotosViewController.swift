@@ -20,7 +20,7 @@ class PhotosViewController: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = UIColor(named: "profilePhotosCollectionBackground")
         
         // Register collection cell ID
         view.register(

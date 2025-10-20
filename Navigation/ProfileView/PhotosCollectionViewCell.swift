@@ -21,7 +21,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         
         // setup main view
         contentView.clipsToBounds = true
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = UIColor(named: "profilePhotosCollectionBackground")
         
         // add and setup subviews
         addSubviews()
