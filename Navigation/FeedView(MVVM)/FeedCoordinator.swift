@@ -11,8 +11,8 @@ final class FeedCoordinator: MainCoordinator {
     }
     
     func start() {
-//        let feedViewController = FeedViewController()
-        let feedViewController = FeedTableViewController()
+        let feedViewController = FeedViewController()
+ //       let feedViewController = FeedTableViewController()
         feedViewController.coordinator = self
         navigationController.pushViewController(feedViewController, animated: true)
     }

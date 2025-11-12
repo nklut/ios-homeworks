@@ -1,13 +1,33 @@
 import UIKit
 
+protocol LoginCoordinating: AnyObject {
+    func loginDone()
+}
+
+protocol CheckerServicing {
+    func signUp(email: String, password: String)
+    func checkCredentials(email: String, password: String) -> userLoginStatus
+}
+
+protocol PasswordBruteForcing {
+    func bruteForce(realPassword: String, completion: @escaping (String?) -> Void)
+    func generateRandomPassword(withLength length: Int) -> String
+}
+
 class LogInViewController: UIViewController {
     
-    var coordinator: LoginCoordinator?
+//    var coordinator: LoginCoordinator?
+    var coordinator: LoginCoordinating?
+    
     private var timer: Timer?
-    private var userChecker = CheckerService()
+    
+    
+//    private var userChecker = CheckerService()
+    var userChecker: CheckerServicing = CheckerService()
     
     // init Brute forcer
-    private let bruteForcer = PasswordBruteForce()
+//    private let bruteForcer = PasswordBruteForce()
+    var bruteForcer: PasswordBruteForcing = PasswordBruteForce()
     
     // Login screen Logo
     private lazy var logInLogo: UIImageView = {
@@ -226,7 +246,7 @@ class LogInViewController: UIViewController {
                     passwordTimerLabel.isUserInteractionEnabled = true
                     passwordTimerLabel.numberOfLines = 1
                 }
-            }
+        }
     }
     
     @objc func bruteButtonPressed() {

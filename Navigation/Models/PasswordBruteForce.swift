@@ -1,6 +1,6 @@
 import Foundation
 
-final class PasswordBruteForce {
+final class PasswordBruteForce: PasswordBruteForcing {
     
     private var isCancelled = false
     private let characters: [Character] = {

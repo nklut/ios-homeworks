@@ -29,7 +29,7 @@ protocol CheckerServiceProtocol {
     func signUp(email userEmail: String, password userPassword: String)
 }
 
-final class CheckerService: CheckerServiceProtocol {
+final class CheckerService: CheckerServiceProtocol, CheckerServicing {
     
     func checkCredentials(email userEmail: String, password userPassword: String) -> userLoginStatus {
         
