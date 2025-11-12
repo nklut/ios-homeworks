@@ -20,7 +20,7 @@ class PhotosViewController: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = UIColor(named: "profilePhotosCollectionBackground")
         
         // Register collection cell ID
         view.register(
@@ -48,7 +48,7 @@ class PhotosViewController: UIViewController {
         #if DEBUG
         // QOS Perfomance testing
         let qualityOfServiceTestCases: [QualityOfService] = [.background, .default, .userInteractive, .utility]
-        let filterList: [ColorFilter] = [.noir, .fade, .bloom(intensity: 1), .tonal]
+        //let filterList: [ColorFilter] = [.noir, .fade, .bloom(intensity: 1), .tonal]
         applyFilterDebug(sourceImages, filter, qualityOfServiceTestCases)
         
         #else
@@ -109,13 +109,13 @@ class PhotosViewController: UIViewController {
             print("Background Priority")
             imageProcessor.processImagesOnThread(sourceImages: sourceImages, filter: filter, qos: qualityOfService[0]) {
                 [weak self] filteredPhotos in
-                guard let self else { return }
+                guard self != nil else { return }
                 
                 // Convert CGImage back to UIImage
-                let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
-                    guard let cgImage = cgImage else { return nil }
-                    return UIImage(cgImage: cgImage)
-                }
+//                let processedImages = filteredPhotos.compactMap { cgImage -> UIImage? in
+//                    guard let cgImage = cgImage else { return nil }
+//                    return UIImage(cgImage: cgImage)
+//                }
                 
                 // Relaod Collection on the main thread
 //                DispatchQueue.main.async {

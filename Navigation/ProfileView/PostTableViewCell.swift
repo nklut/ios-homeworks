@@ -20,8 +20,8 @@ class PostTableViewCell: UITableViewCell {
     
     // Cell design setup
     private func tuneView() {
-        backgroundColor = .tertiarySystemBackground
-        contentView.backgroundColor = .tertiarySystemBackground
+        backgroundColor = UIColor(named: "profilePhotosCollectionBackground")
+        contentView.backgroundColor = UIColor(named: "profilePhotosCollectionBackground")
         textLabel?.backgroundColor = .clear
         detailTextLabel?.backgroundColor = .clear
         imageView?.backgroundColor = .clear
@@ -38,7 +38,7 @@ class PostTableViewCell: UITableViewCell {
             view.translatesAutoresizingMaskIntoConstraints = false
             
             view.text = post.author
-            view.textColor = .black
+            view.textColor = UIColor(named: "profileHeaderTextColor")
             view.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)
             view.numberOfLines = 2
             view.sizeToFit()
@@ -76,7 +76,7 @@ class PostTableViewCell: UITableViewCell {
             
             view.text = String(format: "%@%d", "Likes: ", post.likes)
             view.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
-            view.textColor = .black
+            view.textColor = UIColor(named: "profileHeaderTextColor")
             view.sizeToFit()
             
             return view
@@ -89,7 +89,7 @@ class PostTableViewCell: UITableViewCell {
             
             view.text = String(format: "%@%d", "Views: ", post.views)
             view.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
-            view.textColor = .black
+            view.textColor = UIColor(named: "profileHeaderTextColor")
             view.sizeToFit()
             
             return view
