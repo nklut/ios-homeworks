@@ -4,6 +4,7 @@ import StorageService
 class ProfileViewController: UIViewController {
     
     weak var coordinator: ProfileCoordinator?
+    let notificationCenter = LocalNotificationsService()
     
     // List of sample Posts(4 items)
     fileprivate let data = postList
@@ -57,7 +58,13 @@ class ProfileViewController: UIViewController {
         setupView()
         addSubviews()
         setupConstraints()
-        setupTableView()        
+        setupTableView()
+        
+        // Push-notifications
+        notificationCenter.regiserForLatestUpdatesIfPossible()
+//        NotificationCenter.default.addObserver(forName: NSNotification.sceneDidBecomeActive, object: nil, queue: .main) { [weak self] _ in
+//            self?.setStatus()
+//        }
     }
     
     // Table handler
@@ -66,6 +73,12 @@ class ProfileViewController: UIViewController {
         
         tableView.indexPathsForSelectedRows?.forEach{ indexPath in
             tableView.deselectRow(at: indexPath, animated: animated)
+        }
+    }
+    
+    private func setStatus() {
+        Task {
+            await notificationCenter.isPermited() ? print("permited") : notificationCenter.requestPermission()
         }
     }
 
@@ -210,5 +223,4 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
-    
 }

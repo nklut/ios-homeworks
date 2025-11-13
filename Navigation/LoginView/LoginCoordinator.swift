@@ -4,7 +4,7 @@ protocol LoginDelegate: AnyObject {
     func didLogin()
 }
 
-final class LoginCoordinator: MainCoordinator {
+final class LoginCoordinator: MainCoordinator, LoginCoordinating {
     
     var navigationController: UINavigationController
     weak var delegate: LoginDelegate?

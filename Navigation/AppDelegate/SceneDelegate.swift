@@ -1,4 +1,11 @@
 import UIKit
+import FirebaseAuth
+
+extension NSNotification {
+    static var sceneDidBecomeActive: NSNotification.Name {
+        NSNotification.Name("sceneDidBecomeActive")
+    }
+}
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -8,6 +15,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
+        
+        // Network Request
+//        let appConfiguration = AppConfiguration.allCases.randomElement() ?? .planet1
+//        let nwManager = NetworkManager()
+        
+//         Error: An SSL error has occurred and a secure connection to the server cannot be made.
+//         NetworkManager().request(for: appConfiguration) { result in
+//        
+//         Chuck Norris works...
+//        nwManager.request(for: .testURL) { result in
+//            
+//            switch result {
+//            case .success(let messageText):
+//                DispatchQueue.main.async {
+//                    print(messageText)
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//                break
+//            }
+//        }
         
         // Login View delegate setup
         let loginViewController = LogInViewController()
@@ -24,15 +52,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        
+        signOutWithCompletion { success in
+                print("Sign out completed: \(success)")
+            }
+
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        NotificationCenter.default.post(name: NSNotification.sceneDidBecomeActive, object: nil)
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -53,4 +81,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
+
 
