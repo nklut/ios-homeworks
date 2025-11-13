@@ -31,9 +31,6 @@ final class LocalNotificationsService {
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: triger)
                 
                 try await UNUserNotificationCenter.current().add(request)
-                
-            } else {
-                requestPermission()
             }
         }
     }

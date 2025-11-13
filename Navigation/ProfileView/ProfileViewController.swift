@@ -60,11 +60,11 @@ class ProfileViewController: UIViewController {
         setupConstraints()
         setupTableView()
         
-        // Ask for push-notifications
+        // Push-notifications
         notificationCenter.regiserForLatestUpdatesIfPossible()
-        NotificationCenter.default.addObserver(forName: NSNotification.sceneDidBecomeActive, object: nil, queue: .main) { [weak self] _ in
-            self?.setStatus()
-        }
+//        NotificationCenter.default.addObserver(forName: NSNotification.sceneDidBecomeActive, object: nil, queue: .main) { [weak self] _ in
+//            self?.setStatus()
+//        }
     }
     
     // Table handler
