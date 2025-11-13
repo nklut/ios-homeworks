@@ -5,6 +5,8 @@ import FirebaseAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let notificationCenter = LocalNotificationsService()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -30,13 +32,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        
         signOutWithCompletion { success in
                 print("Sign out completed: \(success)")
             }
-        
     }
-
+    
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        notificationCenter.requestPermission()
+    }
 }
 
 

@@ -75,6 +75,7 @@
 		11B663262E30D2550032A5B1 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B663252E30D2550032A5B1 /* LoginCoordinator.swift */; };
 		11B663282E30D5020032A5B1 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B663272E30D5020032A5B1 /* TabBarCoordinator.swift */; };
 		11B6632A2E30E1570032A5B1 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B663292E30E1570032A5B1 /* FeedViewModel.swift */; };
+		11D467E52EC5A6AD007C41A9 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D467E42EC5A6A4007C41A9 /* LocalNotificationsService.swift */; };
 		11E479732E619D3E002C79B2 /* ExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E479722E619D36002C79B2 /* ExamplesViewController.swift */; };
 		11E479752E619D51002C79B2 /* ExamplesViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E479742E619D51002C79B2 /* ExamplesViewCoordinator.swift */; };
 		11E479772E654A3B002C79B2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11E479762E654A3B002C79B2 /* GoogleService-Info.plist */; };
@@ -187,6 +188,7 @@
 		11B663272E30D5020032A5B1 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		11B663292E30E1570032A5B1 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		11D467D62EC47945007C41A9 /* NavigationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NavigationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		11D467E42EC5A6A4007C41A9 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
 		11E479722E619D36002C79B2 /* ExamplesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesViewController.swift; sourceTree = "<group>"; };
 		11E479742E619D51002C79B2 /* ExamplesViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesViewCoordinator.swift; sourceTree = "<group>"; };
 		11E479762E654A3B002C79B2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 		115413FE2C9291FE0051640B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				11D467E32EC5A67F007C41A9 /* Notifications */,
 				113FEA142EA247B600FA651C /* Localization */,
 				113FEA0C2E9F9C7200FA651C /* MapView */,
 				113FE99B2E81352000FA651C /* SavedPost */,
@@ -442,6 +445,14 @@
 			path = AppDelegate;
 			sourceTree = "<group>";
 		};
+		11D467E32EC5A67F007C41A9 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				11D467E42EC5A6A4007C41A9 /* LocalNotificationsService.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -531,7 +542,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					115413FB2C9291FE0051640B = {
 						CreatedOnToolsVersion = 15.4;
@@ -622,6 +633,7 @@
 				115414162C9294290051640B /* ProfileViewController.swift in Sources */,
 				115414142C92941F0051640B /* FeedViewController.swift in Sources */,
 				115C0FEF2DE6F6FA00C3EF99 /* PhotosTableViewCell.swift in Sources */,
+				11D467E52EC5A6AD007C41A9 /* LocalNotificationsService.swift in Sources */,
 				11E479752E619D51002C79B2 /* ExamplesViewCoordinator.swift in Sources */,
 				11B663202E30C7300032A5B1 /* FeedCoordinator.swift in Sources */,
 				115C0FF12DE815F300C3EF99 /* PhotosViewController.swift in Sources */,
@@ -935,6 +947,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -974,6 +987,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DYLIB_COMPATIBILITY_VERSION = 1;
